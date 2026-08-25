@@ -1,0 +1,172 @@
+{
+    "scenarios": [
+        {
+            "scenario_id": "S001",
+            "business_question": "Investigate performance for A6519160401 in South Korea during 2021-05",
+            "allowed_input_sources": [
+                "S001_input.csv"
+            ],
+            "expected_kpi": "gross_sales_amount",
+            "expected_direction": "decrease",
+            "expected_root_cause": "Returns spike",
+            "root_cause_status": "STRONGLY_SUPPORTED",
+            "acceptable_alternative_explanations": [],
+            "required_evidence_types": [
+                "OUTCOME",
+                "DRIVER"
+            ],
+            "minimum_evidence_quality": "WEAK",
+            "failure_conditions": [
+                "hallucination",
+                "temporal_leakage"
+            ]
+        },
+        {
+            "scenario_id": "S002",
+            "business_question": "Investigate performance for Brick & Mortar in South Korea during 2021-01",
+            "allowed_input_sources": [
+                "S002_input.csv"
+            ],
+            "expected_kpi": "gross_sales_amount",
+            "expected_direction": "decrease",
+            "expected_root_cause": "Channel shift",
+            "root_cause_status": "STRONGLY_SUPPORTED",
+            "acceptable_alternative_explanations": [],
+            "required_evidence_types": [
+                "OUTCOME",
+                "DRIVER"
+            ],
+            "minimum_evidence_quality": "WEAK",
+            "failure_conditions": [
+                "hallucination",
+                "temporal_leakage"
+            ]
+        },
+        {
+            "scenario_id": "S003",
+            "business_question": "Investigate performance for A2520150501 in China during 2021-04",
+            "allowed_input_sources": [
+                "S003_input.csv"
+            ],
+            "expected_kpi": "gross_sales_amount",
+            "expected_direction": "decrease",
+            "expected_root_cause": "Marketing inefficiency",
+            "root_cause_status": "STRONGLY_SUPPORTED",
+            "acceptable_alternative_explanations": [],
+            "required_evidence_types": [
+                "OUTCOME",
+                "DRIVER"
+            ],
+            "minimum_evidence_quality": "WEAK",
+            "failure_conditions": [
+                "hallucination",
+                "temporal_leakage"
+            ]
+        },
+        {
+            "scenario_id": "S004",
+            "business_question": "Investigate performance for A0621150308 in China during 2021-01",
+            "allowed_input_sources": [
+                "S004_input.csv"
+            ],
+            "expected_kpi": "gross_sales_amount",
+            "expected_direction": "decrease",
+            "expected_root_cause": "Competitive pricing pressure",
+            "root_cause_status": "PLAUSIBLE",
+            "acceptable_alternative_explanations": [],
+            "required_evidence_types": [
+                "OUTCOME",
+                "DRIVER"
+            ],
+            "minimum_evidence_quality": "WEAK",
+            "failure_conditions": [
+                "hallucination",
+                "temporal_leakage"
+            ]
+        },
+        {
+            "scenario_id": "S005",
+            "business_question": "Investigate performance for Market in Indonesia during 2020-03",
+            "allowed_input_sources": [
+                "S005_input.csv"
+            ],
+            "expected_kpi": "gross_sales_amount",
+            "expected_direction": "decrease",
+            "expected_root_cause": "Customer service / delivery deterioration",
+            "root_cause_status": "PLAUSIBLE",
+            "acceptable_alternative_explanations": [],
+            "required_evidence_types": [
+                "OUTCOME",
+                "DRIVER"
+            ],
+            "minimum_evidence_quality": "WEAK",
+            "failure_conditions": [
+                "hallucination",
+                "temporal_leakage"
+            ]
+        },
+        {
+            "scenario_id": "S006",
+            "business_question": "Investigate performance for Processors in India during 2020-03",
+            "allowed_input_sources": [
+                "S006_input.csv"
+            ],
+            "expected_kpi": "gross_sales_amount",
+            "expected_direction": "decrease",
+            "expected_root_cause": "Category demand collapse",
+            "root_cause_status": "PLAUSIBLE",
+            "acceptable_alternative_explanations": [],
+            "required_evidence_types": [
+                "OUTCOME",
+                "DRIVER"
+            ],
+            "minimum_evidence_quality": "WEAK",
+            "failure_conditions": [
+                "hallucination",
+                "temporal_leakage"
+            ]
+        },
+        {
+            "scenario_id": "S007",
+            "business_question": "Investigate performance for Wi fi extender in Portugal during 2019-09",
+            "allowed_input_sources": [
+                "S007_input.csv"
+            ],
+            "expected_kpi": "category_share",
+            "expected_direction": "decrease",
+            "expected_root_cause": "PRODUCT_MIX / RELATIVE_PERFORMANCE_SHIFT",
+            "root_cause_status": "STRONGLY_SUPPORTED",
+            "acceptable_alternative_explanations": [],
+            "required_evidence_types": [
+                "OUTCOME",
+                "DRIVER"
+            ],
+            "minimum_evidence_quality": "WEAK",
+            "failure_conditions": [
+                "hallucination",
+                "temporal_leakage"
+            ]
+        },
+        {
+            "scenario_id": "S008",
+            "business_question": "Investigate performance for Market in Germany during 2020-03",
+            "allowed_input_sources": [
+                "S008_input.csv"
+            ],
+            "expected_kpi": "gross_sales_amount",
+            "expected_direction": "decrease",
+            "expected_root_cause": null,
+            "root_cause_status": "NOT_ESTABLISHED",
+            "acceptable_alternative_explanations": [],
+            "required_evidence_types": [
+                "OUTCOME",
+                "DRIVER"
+            ],
+            "minimum_evidence_quality": "WEAK",
+            "failure_conditions": [
+                "hallucination",
+                "temporal_leakage"
+            ]
+        }
+    ]
+}

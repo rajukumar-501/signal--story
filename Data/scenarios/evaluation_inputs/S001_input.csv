@@ -1,0 +1,3 @@
+scenario_id,evidence_id,evidence_role,source_dataset,record_id,date,market,product_code,customer_code,metric_name,metric_value,baseline_value,change_value,change_percent,evidence_text,evidence_strength,direction,is_contradictory,calculation_formula
+S001,EVID-769ed838,OUTCOME,fact_sales_monthly.csv,,2021-05,South Korea,A6519160401,,gross_sales,648.44,14966.42,-14317.98,-95.66736734636606,Gross sales changed by -95.67% from 14966.42 to 648.44.,STRONG,decrease,False,(current - previous)/previous * 100
+S001,EVID-df066684,DRIVER,fact_sales_monthly.csv,,2021-05,South Korea,A6519160401,,return_rate_percent,3478.6595521559425,39.90232801164206,3438.7572241443004,,Return rate jumped to 3478.66% from 39.90%.,STRONG,increase,False,return_sales_amount / gross_sales_amount * 100

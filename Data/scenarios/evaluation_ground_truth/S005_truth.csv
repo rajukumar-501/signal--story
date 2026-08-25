@@ -1,0 +1,2 @@
+scenario_id,scenario_type,date_start,date_end,information_cutoff_date,market,entity_type,entity,primary_kpi,kpi_before,kpi_after,kpi_change_percent,true_root_cause,root_cause_status,confidence,secondary_factors,alternative_explanations,supporting_evidence_sources,contradictory_evidence_sources,known_limitations
+S005,market,2020-03-01,2020-03-28,2020-03-28,Indonesia,market,Market,gross_sales_amount,415600.68,51834.59,-87.52778989678265,Customer service / delivery deterioration,PLAUSIBLE,MEDIUM,,Insufficient structured driver,"Sales, Marketing, Pricing, Support",,

@@ -1,0 +1,9 @@
+date,market,customer_code,product_code,channel,gross_sales_amount,return_sales_amount,signed_sales_amount
+2021-04-01,South Korea,80007196,A6519160401,Distributor,5310.08,0.0,5310.08
+2021-04-01,South Korea,80007195,A6519160401,Distributor,7138.74,0.0,7138.74
+2021-04-01,South Korea,70007198,A6519160401,Direct,0.0,5971.95,-5971.95
+2021-04-01,South Korea,70007199,A6519160401,Direct,2517.6,0.0,2517.6
+2021-05-01,South Korea,90007197,A6519160401,Retailer,648.44,0.0,648.44
+2021-05-01,South Korea,80007195,A6519160401,Distributor,0.0,16523.35,-16523.35
+2021-05-01,South Korea,70007198,A6519160401,Direct,0.0,4013.44,-4013.44
+2021-05-01,South Korea,70007199,A6519160401,Direct,0.0,2020.23,-2020.23

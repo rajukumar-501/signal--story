@@ -1,0 +1,6 @@
+date,market,customer_code,product_code,channel,gross_sales_amount,return_sales_amount,signed_sales_amount
+2021-03-01,China,90001020,A2520150501,Retailer,2114.93,0.0,2114.93
+2021-03-01,China,90001021,A2520150501,Retailer,1107.52,0.0,1107.52
+2021-03-01,China,80001019,A2520150501,Distributor,3787.15,0.0,3787.15
+2021-04-01,China,90001020,A2520150501,Retailer,994.25,0.0,994.25
+2021-04-01,China,80001019,A2520150501,Distributor,0.0,8094.0,-8094.0

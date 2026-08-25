@@ -1,0 +1,2 @@
+scenario_id,scenario_type,date_start,date_end,information_cutoff_date,market,entity_type,entity,primary_kpi,kpi_before,kpi_after,kpi_change_percent,true_root_cause,root_cause_status,confidence,secondary_factors,alternative_explanations,supporting_evidence_sources,contradictory_evidence_sources,known_limitations
+S007,category,2019-09-01,2019-09-28,2019-09-28,Portugal,category,Wi fi extender,category_share,25.689291654871894,11.541221276288443,-14.148070378583451,PRODUCT_MIX / RELATIVE_PERFORMANCE_SHIFT,STRONGLY_SUPPORTED,HIGH,,,"Sales, Marketing, Pricing, Support",,

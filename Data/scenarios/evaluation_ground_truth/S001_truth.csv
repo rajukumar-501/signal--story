@@ -1,0 +1,2 @@
+scenario_id,scenario_type,date_start,date_end,information_cutoff_date,market,entity_type,entity,primary_kpi,kpi_before,kpi_after,kpi_change_percent,true_root_cause,root_cause_status,confidence,secondary_factors,alternative_explanations,supporting_evidence_sources,contradictory_evidence_sources,known_limitations
+S001,product,2021-05-01,2021-05-28,2021-05-28,South Korea,product,A6519160401,gross_sales_amount,14966.42,648.44,-95.66736734636606,Returns spike,STRONGLY_SUPPORTED,HIGH,,,"Sales, Marketing, Pricing",,Evidence unavailable in current dataset.

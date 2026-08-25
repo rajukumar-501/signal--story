@@ -1,0 +1,9 @@
+scenario_id,scenario_type,primary_kpi,kpi_change_percent,root_cause_status,confidence,evidence_quality,structured_source_count,unstructured_source_count,contradictory_evidence_count,alternative_explanation_count,evaluation_priority
+S001,product,gross_sales_amount,-95.66736734636606,STRONGLY_SUPPORTED,HIGH,C,3,0,0,1,High
+S002,platform,gross_sales_amount,-68.49748755240745,STRONGLY_SUPPORTED,HIGH,B,3,1,0,1,High
+S003,product,gross_sales_amount,-85.8158810773796,STRONGLY_SUPPORTED,HIGH,C,3,0,0,1,High
+S004,product,gross_sales_amount,-98.28515932998711,PLAUSIBLE,MEDIUM,C,3,0,0,1,High
+S005,market,gross_sales_amount,-87.52778989678265,PLAUSIBLE,MEDIUM,B,3,1,0,1,High
+S006,category,gross_sales_amount,-88.02397302316047,PLAUSIBLE,MEDIUM,B,3,1,0,1,High
+S007,category,category_share,-14.148070378583451,STRONGLY_SUPPORTED,HIGH,B,3,1,0,1,High
+S008,market,gross_sales_amount,-87.78240301598515,NOT_ESTABLISHED,LOW,B,3,1,0,1,High

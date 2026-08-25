@@ -1,0 +1,13 @@
+rank,candidate_scenario,period,market,entity,observed_signal,evidence_sources,strength,recommended_use
+1,Channel shift / customer segment,2021-01,South Korea,Brick & Mortar,Gross sales -68.5%; E-Commerce +21.9%,Sales + Customer + Platform,Strong,Evaluation
+2,Returns spike,2021-05,South Korea,A6519160401,Gross sales -95.7%; return rate 39.91% vs 0.30% in Apr,Sales,Very strong,Evaluation + Demo
+3,Marketing inefficiency,2021-04,China,A2520150501,Gross sales -85.8%; spend +132.5%; CVR 7.88%→3.63%,Sales + Marketing,Strong,Evaluation + Demo
+4,Competitive pricing pressure,2021-01,China,A0621150308,Gross sales -98.3%; price gap 4.14pp; gap widened 8.39pp,Sales + Pricing,Strong but unconfirmed,Evaluation + Demo
+5,Customer service / delivery deterioration,2020-03,Indonesia,Market,Gross sales -87.5%; 10 tickets; 50% negative; 5 delivery tickets,Sales + Support,Moderate,Evaluation
+6,Category demand collapse,2020-03,India,Processors,Gross sales -88.0% vs prior month,Sales + Product + Market,Strong anomaly,Evaluation
+7,Product-mix shift,2019-09,Portugal,Wi fi extender,Category share -14.15 percentage points,Sales + Product + Market,Strong anomaly,Evaluation
+8,Market-wide demand shock / unexplained,2020-03,Germany,Market,Gross sales -87.8%; return rate +4.50pp,Sales + Market,"Strong anomaly, cause unknown",Evaluation
+9,Channel deterioration,2020-01,South Korea,Brick & Mortar,Gross sales -69.8%; E-Commerce essentially flat (+0.4%),Sales + Customer,Strong,Evaluation
+10,Marketing overspend + conversion deterioration,2021-05,South Korea,A3019150205,Gross sales -87.0%; spend +77.5%; CVR -5.32pp,Sales + Marketing,Strong anomaly,Evaluation
+11,Marketing overspend + conversion deterioration,2021-02,Indonesia,A2620150602,Gross sales -80.5%; spend +151.3%; CVR -2.02pp,Sales + Marketing,Strong anomaly,Evaluation
+12,Competitive price-gap event,2020-03,France,A3019150205,Gross sales -87.3%; price gap 4.27pp; gap widened 7.55pp,Sales + Pricing,Strong but unconfirmed,Evaluation

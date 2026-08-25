@@ -1,0 +1,77 @@
+dataset,category,file_size_mb,total_rows,total_cols,column_name,data_type,null_count,null_pct,unique_values,min_val,max_val,mean,std,sample_or_distribution
+dim_product,raw_master,0.02,298,6,product_code,str,0,0.0,298,298 distinct text/id values,,,,e.g. A5721110508
+dim_product,raw_master,0.02,298,6,division,str,0,0.0,3,3 distinct categories,,,,PC | N & S | P & A
+dim_product,raw_master,0.02,298,6,segment,str,0,0.0,6,6 distinct categories,,,,Notebook | Networking | Storage | Desktop | Peripherals
+dim_product,raw_master,0.02,298,6,category,str,0,0.0,13,13 distinct text/id values,,,,e.g. Gaming Laptop
+dim_product,raw_master,0.02,298,6,product,str,0,0.0,67,67 distinct text/id values,,,,e.g. AQ Smash 2
+dim_product,raw_master,0.02,298,6,variant,str,0,0.0,22,22 distinct text/id values,,,,e.g. Premium Misty Green
+dim_customer,raw_master,0.01,189,5,customer_code,int64,0,0.0,189,70002017,90023030,85727138.1376,8065774.5871,
+dim_customer,raw_master,0.01,189,5,customer,str,0,0.0,68,68 distinct text/id values,,,,e.g. Neptune
+dim_customer,raw_master,0.01,189,5,market,str,0,0.0,23,23 distinct text/id values,,,,e.g. China
+dim_customer,raw_master,0.01,189,5,platform,str,0,0.0,2,2 distinct categories,,,,Brick & Mortar | E-Commerce
+dim_customer,raw_master,0.01,189,5,channel,str,0,0.0,3,3 distinct categories,,,,Distributor | Direct | Retailer
+dim_market,raw_master,0.0,23,3,market,str,0,0.0,23,23 distinct text/id values,,,,e.g. Canada
+dim_market,raw_master,0.0,23,3,sub_zone,str,2,8.7,6,6 distinct categories,,,,NE | SE | ROA | ANZ | India
+dim_market,raw_master,0.0,23,3,region,str,2,8.7,3,3 distinct categories,,,,EU | APAC
+fact_sales_monthly,raw_master,37.43,799962,5,date,str,0,0.0,36,2018-09-01,2021-08-01,,,36 distinct months (2018-09 to 2021-08)
+fact_sales_monthly,raw_master,37.43,799962,5,product_code,str,0,0.0,260,260 distinct text/id values,,,,e.g. A0418150108
+fact_sales_monthly,raw_master,37.43,799962,5,customer_code,int64,0,0.0,189,70002017,90023030,85638033.2767,8079950.8410,
+fact_sales_monthly,raw_master,37.43,799962,5,Qty,int64,0,0.0,4025,-5788,5832,50.6324,201.8214,
+fact_sales_monthly,raw_master,37.43,799962,5,net_sales_amount,float64,0,0.0,263324,1.06,54453.02,1103.8603,1989.1527,
+fact_inventory_monthly,synthetic_prototype,10.65,246744,8,date,str,0,0.0,36,2018-09-01,2021-08-01,,,36 distinct months (2018-09 to 2021-08)
+fact_inventory_monthly,synthetic_prototype,10.65,246744,8,product_code,str,0,0.0,298,298 distinct text/id values,,,,e.g. A5721110508
+fact_inventory_monthly,synthetic_prototype,10.65,246744,8,market,str,0,0.0,23,23 distinct text/id values,,,,e.g. China
+fact_inventory_monthly,synthetic_prototype,10.65,246744,8,opening_stock_units,int64,0,0.0,5285,8,32494,215.5383,751.2618,
+fact_inventory_monthly,synthetic_prototype,10.65,246744,8,received_units,int64,0,0.0,4251,2,20322,152.3744,533.7662,
+fact_inventory_monthly,synthetic_prototype,10.65,246744,8,closing_stock_units,int64,0,0.0,4806,8,25804,198.3964,652.7752,
+fact_inventory_monthly,synthetic_prototype,10.65,246744,8,stockout_flag,int64,0,0.0,1,0,0,0.0000,0.0000,0
+fact_inventory_monthly,synthetic_prototype,10.65,246744,8,stockout_hours,int64,0,0.0,1,0,0,0.0000,0.0000,0
+fact_marketing_monthly,synthetic_prototype,22.35,246744,11,campaign_id,str,0,0.0,246744,246744 distinct text/id values,,,,e.g. CMP201809000001
+fact_marketing_monthly,synthetic_prototype,22.35,246744,11,date,str,0,0.0,36,2018-09-01,2021-08-01,,,36 distinct months (2018-09 to 2021-08)
+fact_marketing_monthly,synthetic_prototype,22.35,246744,11,product_code,str,0,0.0,298,298 distinct text/id values,,,,e.g. A5721110508
+fact_marketing_monthly,synthetic_prototype,22.35,246744,11,market,str,0,0.0,23,23 distinct text/id values,,,,e.g. China
+fact_marketing_monthly,synthetic_prototype,22.35,246744,11,campaign_type,str,0,0.0,5,5 distinct categories,,,,Seasonal Promotion | Retargeting | Price Promotion | Brand Awareness | Product Launch
+fact_marketing_monthly,synthetic_prototype,22.35,246744,11,channel,str,0,0.0,5,5 distinct categories,,,,Email | Social | Search | Digital | Retail
+fact_marketing_monthly,synthetic_prototype,22.35,246744,11,spend,float64,0,0.0,62490,500.0,8832.68,718.7043,510.4434,
+fact_marketing_monthly,synthetic_prototype,22.35,246744,11,impressions,int64,0,0.0,66937,17500,702018,43064.6295,33027.1384,
+fact_marketing_monthly,synthetic_prototype,22.35,246744,11,clicks,int64,0,0.0,7104,141,27560,1139.5401,1047.8131,
+fact_marketing_monthly,synthetic_prototype,22.35,246744,11,conversions,int64,0,0.0,810,2,1733,59.7435,64.0102,
+fact_marketing_monthly,synthetic_prototype,22.35,246744,11,discount_percent,float64,0,0.0,202,0.0,25.0,7.2082,8.4976,
+fact_competitor_pricing_monthly,synthetic_prototype,15.66,246744,10,date,str,0,0.0,36,2018-09-01,2021-08-01,,,36 distinct months (2018-09 to 2021-08)
+fact_competitor_pricing_monthly,synthetic_prototype,15.66,246744,10,product_code,str,0,0.0,298,298 distinct text/id values,,,,e.g. A5721110508
+fact_competitor_pricing_monthly,synthetic_prototype,15.66,246744,10,market,str,0,0.0,23,23 distinct text/id values,,,,e.g. China
+fact_competitor_pricing_monthly,synthetic_prototype,15.66,246744,10,our_price,float64,0,0.0,28465,5.0,461.3,77.6727,110.2473,
+fact_competitor_pricing_monthly,synthetic_prototype,15.66,246744,10,competitor_a_price,float64,0,0.0,29644,4.8,472.46,78.0557,110.8425,
+fact_competitor_pricing_monthly,synthetic_prototype,15.66,246744,10,competitor_b_price,float64,0,0.0,29940,4.75,488.36,78.0614,110.8732,
+fact_competitor_pricing_monthly,synthetic_prototype,15.66,246744,10,average_competitor_price,float64,0,0.0,28142,4.78,474.88,78.0585,110.8231,
+fact_competitor_pricing_monthly,synthetic_prototype,15.66,246744,10,price_gap_percent,float64,0,0.0,1086,-5.3,10.33,-0.4597,2.0399,
+fact_competitor_pricing_monthly,synthetic_prototype,15.66,246744,10,promotion_flag,int64,0,0.0,2,0,1,0.1196,0.3245,"0, 1"
+fact_competitor_pricing_monthly,synthetic_prototype,15.66,246744,10,discount_percent,float64,0,0.0,152,0.0,20.0,1.4974,4.3300,
+fact_support_tickets,synthetic_prototype,0.73,5000,10,ticket_id,str,0,0.0,5000,5000 distinct text/id values,,,,e.g. TKT000001
+fact_support_tickets,synthetic_prototype,0.73,5000,10,date,str,0,0.0,36,2018-09-01,2021-08-01,,,36 distinct months (2018-09 to 2021-08)
+fact_support_tickets,synthetic_prototype,0.73,5000,10,customer_code,int64,0,0.0,189,70002017,90023030,85116210.1864,8348544.7904,
+fact_support_tickets,synthetic_prototype,0.73,5000,10,product_code,str,0,0.0,298,298 distinct text/id values,,,,e.g. A4620110601
+fact_support_tickets,synthetic_prototype,0.73,5000,10,market,str,0,0.0,23,23 distinct text/id values,,,,e.g. Philiphines
+fact_support_tickets,synthetic_prototype,0.73,5000,10,issue_category,str,0,0.0,5,5 distinct categories,,,,Quality | Delivery | Product information | Positive | Pricing
+fact_support_tickets,synthetic_prototype,0.73,5000,10,sentiment,str,0,0.0,3,3 distinct categories,,,,neutral | negative | positive
+fact_support_tickets,synthetic_prototype,0.73,5000,10,priority,str,0,0.0,3,3 distinct categories,,,,Low | Medium | High
+fact_support_tickets,synthetic_prototype,0.73,5000,10,ticket_text,str,0,0.0,5,5 distinct categories,,,,We need clarification about the product quality and warranty. | Delivery is taking longer than expected and this is affecting our purchase decision. | Please provide more information about the product and available variants. | The product is performing well and we are considering another order. | The current price is higher than what we are seeing from another supplier.
+fact_support_tickets,synthetic_prototype,0.73,5000,10,resolution_time_hours,float64,0,0.0,239,0.1,34.6,6.5297,4.3701,
+fact_crm_notes,synthetic_prototype,0.46,3500,9,note_id,str,0,0.0,3500,3500 distinct text/id values,,,,e.g. CRM000001
+fact_crm_notes,synthetic_prototype,0.46,3500,9,date,str,0,0.0,36,2018-09-01,2021-08-01,,,36 distinct months (2018-09 to 2021-08)
+fact_crm_notes,synthetic_prototype,0.46,3500,9,customer_code,int64,0,0.0,189,70002017,90023030,85123471.0297,8314886.5515,
+fact_crm_notes,synthetic_prototype,0.46,3500,9,product_code,str,0,0.0,298,298 distinct text/id values,,,,e.g. A3521150706
+fact_crm_notes,synthetic_prototype,0.46,3500,9,market,str,0,0.0,23,23 distinct text/id values,,,,e.g. Newzealand
+fact_crm_notes,synthetic_prototype,0.46,3500,9,sales_rep,str,0,0.0,30,30 distinct text/id values,,,,e.g. Rep-10
+fact_crm_notes,synthetic_prototype,0.46,3500,9,note_text,str,0,0.0,6,6 distinct categories,,,,Customer is satisfied with the product and is considering expanding the order. | Customer requested a better commercial offer before renewing the purchase. | Customer mentioned a competitor's promotional pricing. | Customer raised concerns about product availability and delayed delivery. | Customer asked for more information about the premium variant.
+fact_crm_notes,synthetic_prototype,0.46,3500,9,deal_stage,str,0,0.0,5,5 distinct categories,,,,Renewal | Qualified | Prospecting | Proposal | Negotiation
+fact_crm_notes,synthetic_prototype,0.46,3500,9,competitor_mentioned,int64,0,0.0,2,0,1,0.3226,0.4675,"0, 1"
+fact_sales_calls,synthetic_prototype,0.79,3000,9,call_id,str,0,0.0,3000,3000 distinct text/id values,,,,e.g. CALL000001
+fact_sales_calls,synthetic_prototype,0.79,3000,9,date,str,0,0.0,36,2018-09-01,2021-08-01,,,36 distinct months (2018-09 to 2021-08)
+fact_sales_calls,synthetic_prototype,0.79,3000,9,customer_code,int64,0,0.0,189,70002017,90023030,85215608.9890,8286329.7996,
+fact_sales_calls,synthetic_prototype,0.79,3000,9,product_code,str,0,0.0,298,298 distinct text/id values,,,,e.g. A2118150102
+fact_sales_calls,synthetic_prototype,0.79,3000,9,market,str,0,0.0,23,23 distinct text/id values,,,,e.g. Pakistan
+fact_sales_calls,synthetic_prototype,0.79,3000,9,sales_rep,str,0,0.0,30,30 distinct text/id values,,,,e.g. Rep-25
+fact_sales_calls,synthetic_prototype,0.79,3000,9,duration_minutes,int64,0,0.0,27,4,30,17.2047,7.8327,
+fact_sales_calls,synthetic_prototype,0.79,3000,9,transcript,str,0,0.0,2,2 distinct categories,,,,"Sales Rep: Are you satisfied with the product? Customer: Yes, the product is performing well. Sales Rep: Would you consider increasing the order? Customer: We are evaluating the next purchase. | Sales Rep: What is holding back the next purchase? Customer: Your competitor is offering a lower price. Sales Rep: Would a revised commercial offer help? Customer: Yes, price is the main issue."
+fact_sales_calls,synthetic_prototype,0.79,3000,9,outcome,str,0,0.0,2,2 distinct categories,,,,Follow-up required | Price negotiation

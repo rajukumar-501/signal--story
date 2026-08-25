@@ -1,0 +1,2 @@
+scenario_id,scenario_type,date_start,date_end,information_cutoff_date,market,entity_type,entity,primary_kpi,kpi_before,kpi_after,kpi_change_percent,true_root_cause,root_cause_status,confidence,secondary_factors,alternative_explanations,supporting_evidence_sources,contradictory_evidence_sources,known_limitations
+S008,market,2020-03-01,2020-03-28,2020-03-28,Germany,market,Market,gross_sales_amount,313953.80000000005,38357.61,-87.78240301598515,,NOT_ESTABLISHED,LOW,,Insufficient structured driver,"Sales, Marketing, Pricing, Support",,

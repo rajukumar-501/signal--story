@@ -1,0 +1,9 @@
+scenario_id,record_count,source_dataset_count,unstructured_record_count,calculated_metric_count,post_cutoff_records,ground_truth_fields_found,evaluator_terms_found,untraceable_records,leakage_status,audit_status
+S001,2,1,0,2,0,0,0,0,PASS,PASS
+S002,16,4,14,2,0,0,0,0,PASS,PASS
+S003,3,2,0,3,0,0,0,0,PASS,PASS
+S004,2,2,0,2,0,0,0,0,PASS,PASS
+S005,32,4,21,1,0,0,0,0,PASS,PASS
+S006,21,4,20,1,0,0,0,0,PASS,PASS
+S007,18,4,17,1,0,0,0,0,PASS,PASS
+S008,15,4,14,1,0,0,0,0,PASS,PASS

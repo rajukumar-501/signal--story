@@ -1,0 +1,9 @@
+scenario_id,driver,metric,value,source_dataset
+S001,DRIVER_06_CUSTOMER,channel_shift,0.1278031476626862,fact_sales_monthly
+S002,DRIVER_06_CUSTOMER,channel_shift,0.1278031476626862,fact_sales_monthly
+S003,DRIVER_05_SUPPORT,ticket_volume_growth,0.3333333333333333,fact_support_tickets
+S004,DRIVER_05_SUPPORT,ticket_volume_growth,0.3333333333333333,fact_support_tickets
+S005,DRIVER_02_PRICING,price_gap_percent,-0.4742281879194631,fact_competitor_pricing_monthly
+S006,DRIVER_05_SUPPORT,ticket_volume_growth,0.6,fact_support_tickets
+S007,DRIVER_05_SUPPORT,ticket_volume_growth,4.0,fact_support_tickets
+S008,DRIVER_02_PRICING,price_gap_percent,-0.31137583892617454,fact_competitor_pricing_monthly

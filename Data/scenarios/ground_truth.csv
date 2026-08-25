@@ -1,0 +1,9 @@
+scenario_id,market,entity_type,entity,date,true_root_cause
+S001,South Korea,product,A6519160401,2021-05,Returns spike
+S002,South Korea,platform,Brick & Mortar,2021-01,Channel shift
+S003,China,product,A2520150501,2021-04,Marketing inefficiency
+S004,China,product,A0621150308,2021-01,Competitive pricing pressure
+S005,Indonesia,market,Market,2020-03,Customer service / delivery deterioration
+S006,India,category,Processors,2020-03,Category demand collapse
+S007,Portugal,category,Wi fi extender,2019-09,Product-mix shift
+S008,Germany,market,Market,2020-03,Market-wide unexplained shock

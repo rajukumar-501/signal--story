@@ -1,0 +1,4 @@
+scenario_id,evidence_id,evidence_role,source_dataset,record_id,date,market,product_code,customer_code,metric_name,metric_value,baseline_value,change_value,change_percent,evidence_text,evidence_strength,direction,is_contradictory,calculation_formula
+S003,EVID-8fcef96b,OUTCOME,fact_sales_monthly.csv,,2021-04,China,A2520150501,,gross_sales,994.25,7009.6,-6015.35,-85.8158810773796,Gross sales changed by -85.82% from 7009.6 to 994.25.,STRONG,decrease,False,(current - previous)/previous * 100
+S003,EVID-d7a6f6f6,DRIVER,fact_marketing_monthly.csv,,2021-04,China,A2520150501,,marketing_spend,1641.07,705.85,935.2199999999999,132.49557271374937,Spend increased by 132.50% to 1641.07.,STRONG,increase,False,(spend - prev_spend)/prev_spend*100
+S003,EVID-f1161520,DRIVER,fact_marketing_monthly.csv,,2021-04,China,A2520150501,,conversion_rate,3.6342321219226257,7.8796561604584525,-4.245424038535827,,CVR fell to 3.63%.,STRONG,decrease,False,conversions/clicks*100
