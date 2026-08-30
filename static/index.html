@@ -257,11 +257,14 @@
               </div>
             </div>
 
-            <!-- CARD 4: DECISION -->
+            <!-- CARD 4: DECISION ACTIONABILITY & SAFETY (Phase 5.2D) -->
             <div class="clean-card card-action">
               <div class="card-header-clean">
-                <span class="card-caption">DECISION</span>
-                <span class="action-priority-tag">Action Plan</span>
+                <div>
+                  <span class="card-caption">DECISION SUPPORT</span>
+                  <span class="action-priority-tag" id="card4-safety-badge">Requires Validation</span>
+                </div>
+                <span class="risk-badge risk-badge-medium" id="card4-risk-badge">Risk: Medium</span>
               </div>
               <div class="card-body-clean">
                 <div class="decision-structured-block" id="card4-decision-structured">
@@ -274,10 +277,47 @@
                     <span class="dec-v" id="dec-matters">Higher marketing spend did not translate into proportional conversion.</span>
                   </div>
                   <div class="dec-row">
-                    <span class="dec-k">Next step:</span>
-                    <span class="dec-v" id="dec-action">Review underperforming campaigns and inspect the conversion funnel before reallocating spend.</span>
+                    <span class="dec-k">Recommendation:</span>
+                    <span class="dec-v dec-highlight" id="dec-action">Audit underperforming digital ad campaigns, pause non-converting creative variants, and reallocate budget toward validated conversion channels.</span>
                   </div>
                 </div>
+
+                <!-- Decision Preconditions (Before Acting) -->
+                <div class="dec-preconditions-wrap mt-3">
+                  <span class="dec-subhead">Before Acting (Verification Checklist):</span>
+                  <div class="preconditions-list" id="dec-preconditions-list">
+                    <div class="pre-item"><span class="pre-check">✓</span> <span>Confirm ad spend increase against conversion decline in marketing telemetry</span></div>
+                    <div class="pre-item"><span class="pre-check">✓</span> <span>Inspect channel-level click-through and landing page bounce rates</span></div>
+                    <div class="pre-item"><span class="pre-check">✓</span> <span>Verify no contractual upfront spending commitments with media agencies</span></div>
+                  </div>
+                </div>
+
+                <!-- Operational Governance Metadata -->
+                <div class="dec-meta-row mt-3">
+                  <div class="dec-meta-col">
+                    <span class="dec-meta-k">Affected Area:</span>
+                    <span class="dec-meta-v" id="dec-area">Performance Marketing & Growth</span>
+                  </div>
+                  <div class="dec-meta-col">
+                    <span class="dec-meta-k">Required Owner:</span>
+                    <span class="dec-meta-v" id="dec-owner">Marketing Operations Lead</span>
+                  </div>
+                </div>
+
+                <!-- Human-in-the-Loop Analyst Review Bar -->
+                <div class="analyst-review-bar mt-4">
+                  <div class="review-status-col">
+                    <span class="review-lbl">Human Oversight:</span>
+                    <span class="status-badge badge-neutral" id="analyst-review-status">Awaiting Review</span>
+                  </div>
+                  <div class="review-actions-col">
+                    <button id="btn-review-approve" class="btn-review-act btn-approve" onclick="handleAnalystReview('APPROVED')">Approve</button>
+                    <button id="btn-review-mark" class="btn-review-act btn-mark-reviewed" onclick="handleAnalystReview('REVIEWED')">Mark Reviewed</button>
+                    <button id="btn-review-evidence" class="btn-review-act btn-need-evidence" onclick="handleAnalystReview('NEEDS_MORE_EVIDENCE')">Request Evidence</button>
+                    <button id="btn-review-reject" class="btn-review-act btn-reject" onclick="handleAnalystReview('REJECTED')">Reject</button>
+                  </div>
+                </div>
+
               </div>
             </div>
 

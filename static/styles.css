@@ -1480,6 +1480,189 @@ body {
   color: var(--text-primary);
 }
 
+/* Decision Actionability & Safety (Phase 5.2D) */
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.risk-badge-low {
+  background-color: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+
+.risk-badge-medium {
+  background-color: #FFFBEB;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.risk-badge-high {
+  background-color: #FEF2F2;
+  color: #991B1B;
+  border: 1px solid #FECACA;
+}
+
+.risk-badge-critical {
+  background-color: #7F1D1D;
+  color: #FFFFFF;
+}
+
+.dec-highlight {
+  color: var(--primary-accent);
+  font-weight: 600;
+}
+
+.dec-preconditions-wrap {
+  background-color: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+
+.dec-subhead {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.preconditions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.pre-item {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.35;
+}
+
+.pre-check {
+  color: var(--color-success);
+  font-weight: bold;
+}
+
+.dec-meta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dec-meta-col {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  font-size: 12px;
+}
+
+.dec-meta-k {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.dec-meta-v {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Human-in-the-Loop Analyst Review Bar */
+.analyst-review-bar {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.review-status-col {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.review-lbl {
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.review-actions-col {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.btn-review-act {
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.btn-approve {
+  background-color: #0284C7;
+  color: #FFFFFF;
+}
+
+.btn-approve:hover {
+  background-color: #0369A1;
+}
+
+.btn-mark-reviewed {
+  background-color: #F1F5F9;
+  color: #334155;
+  border-color: #CBD5E1;
+}
+
+.btn-mark-reviewed:hover {
+  background-color: #E2E8F0;
+}
+
+.btn-need-evidence {
+  background-color: #FFFBEB;
+  color: #B45309;
+  border-color: #FDE68A;
+}
+
+.btn-need-evidence:hover {
+  background-color: #FEF3C7;
+}
+
+.btn-reject {
+  background-color: #FEF2F2;
+  color: #B91C1C;
+  border-color: #FECACA;
+}
+
+.btn-reject:hover {
+  background-color: #FEE2E2;
+}
+
 /* Responsive */
 @media (max-width: 1400px) {
   .executive-cards-grid {
@@ -1516,5 +1699,10 @@ body {
   .data-quality-metrics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .analyst-review-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
+
 

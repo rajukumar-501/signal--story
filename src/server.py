@@ -25,6 +25,7 @@ from src.phase3b.engine import Phase3BReasoningEngine
 from src.phase3b.mock_reasoning_provider import MockReasoningProvider
 from src.phase3b.llm_provider import LLMReasoningProvider, LLMConfig
 from src.governance.data_quality import evaluate_data_trust
+from src.governance.decision_governance import evaluate_decision_governance, record_analyst_review, get_decision_governance_engine
 
 DOTENV_PATH = PROJECT_ROOT / ".env"
 
@@ -40,7 +41,7 @@ OFFICIAL_SCENARIOS = [
         "kpi_name": "Gross Sales",
         "period": "April 2021",
         "badge": "PRIMARY SHOWCASE",
-        "description": "Gross sales collapse of -72.1% caused by marketing ad spend surge and conversion drop."
+        "description": "Gross sales anomaly of -72.1% with supporting evidence of marketing ad spend surge and conversion efficiency drop."
     },
     {
         "scenario_id": "S001",
@@ -53,7 +54,7 @@ OFFICIAL_SCENARIOS = [
         "kpi_name": "Gross Sales",
         "period": "May 2021",
         "badge": "OFFICIAL BENCHMARK",
-        "description": "Gross sales drop with customer return rate anomalies and product defect CRM notes."
+        "description": "Gross sales drop corroborated by customer return rate anomalies and product defect CRM notes."
     },
     {
         "scenario_id": "S002",
@@ -238,12 +239,14 @@ def execute_decision_analysis(req_data: Dict[str, Any]) -> Dict[str, Any]:
     # 5. Build Safe UI Response Payload
     kpi_contract_snippet = load_kpi_contract(req.get("kpi")).get("kpi")
     data_trust_report = evaluate_data_trust(target_date=req.get("date"), target_market=req.get("market"))
+    decision_gov = evaluate_decision_governance(p3a_payload, p3b_payload, scenario_id=req_data.get("scenario_id"))
 
     ui_response = {
         "scenario_id": req_data.get("scenario_id", "CUSTOM"),
         "request": req,
         "kpi_contract": kpi_contract_snippet,
         "data_trust": data_trust_report,
+        "decision_governance": decision_gov,
         "phase3a": p3a_payload,
         "phase3b": p3b_payload,
         "metadata": {
@@ -314,6 +317,15 @@ class DecisionIntelligenceRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(trust_report, indent=2).encode("utf-8"))
             return
 
+        if path == "/api/decision-governance":
+            qs = parse_qs(parsed_path.query)
+            driver_id = qs.get("driver_id", [None])[0]
+            engine = get_decision_governance_engine()
+            gov_resp = engine.get_driver_governance(driver_id)
+            self._set_headers(200, "application/json")
+            self.wfile.write(json.dumps(gov_resp, indent=2).encode("utf-8"))
+            return
+
         # Serve static assets
         if path == "/" or path == "":
             file_path = STATIC_DIR / "index.html"
@@ -334,6 +346,23 @@ class DecisionIntelligenceRequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         parsed_path = urlparse(self.path)
         path = parsed_path.path
+
+        if path == "/api/analyst-review":
+            content_length = int(self.headers.get("Content-Length", 0))
+            body_bytes = self.rfile.read(content_length)
+            try:
+                req_data = json.loads(body_bytes.decode("utf-8"))
+                scenario_id = req_data.get("scenario_id", "S003")
+                status = req_data.get("status", "REVIEWED")
+                reviewer = req_data.get("reviewer", "Lead Commercial Analyst")
+                notes = req_data.get("notes")
+                record = record_analyst_review(scenario_id, status, reviewer=reviewer, notes=notes)
+                self._set_headers(200, "application/json")
+                self.wfile.write(json.dumps(record, indent=2).encode("utf-8"))
+            except Exception as e:
+                self._set_headers(400, "application/json")
+                self.wfile.write(json.dumps({"error": f"Failed to record review: {str(e)}"}).encode("utf-8"))
+            return
 
         if path == "/api/analyze":
             content_length = int(self.headers.get("Content-Length", 0))

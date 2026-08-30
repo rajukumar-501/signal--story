@@ -432,19 +432,81 @@ function renderExecutiveView(data) {
     }
   }
 
-  // CARD 4: DECISION (Finding / Why it matters / Next step)
+  // CARD 4: DECISION ACTIONABILITY & SAFETY (Phase 5.2D)
+  const gov = data.decision_governance || {};
   const decFinding = document.getElementById('dec-finding');
   const decMatters = document.getElementById('dec-matters');
   const decAction = document.getElementById('dec-action');
+  const safetyBadge = document.getElementById('card4-safety-badge');
+  const riskBadge = document.getElementById('card4-risk-badge');
+  const preList = document.getElementById('dec-preconditions-list');
+  const decArea = document.getElementById('dec-area');
+  const decOwner = document.getElementById('dec-owner');
+  const reviewStatus = document.getElementById('analyst-review-status');
 
-  if (isUncertain) {
-    if (decFinding) decFinding.textContent = 'Diagnostic evaluation concludes no single internal operational driver accounts for the anomaly.';
-    if (decMatters) decMatters.textContent = 'Variance reflects broad external macroeconomic movements rather than localized failure.';
-    if (decAction) decAction.textContent = 'Monitor peer market movements and conduct cross-functional macro review.';
-  } else {
-    if (decFinding) decFinding.textContent = 'Marketing performance is the strongest supported explanation for sales decline.';
-    if (decMatters) decMatters.textContent = 'Higher marketing spend did not translate into proportional conversion.';
-    if (decAction) decAction.textContent = 'Review underperforming campaigns and inspect the conversion funnel before reallocating spend.';
+  const riskLevel = (gov.risk_level || 'MEDIUM').toUpperCase();
+  const safetyClass = (gov.safety_classification || 'REQUIRES_HUMAN_APPROVAL').replace(/_/g, ' ');
+
+  if (safetyBadge) {
+    safetyBadge.textContent = safetyClass;
+  }
+
+  if (riskBadge) {
+    riskBadge.textContent = `Risk: ${riskLevel}`;
+    riskBadge.className = `risk-badge risk-badge-${riskLevel.toLowerCase()}`;
+  }
+
+  if (decFinding) {
+    decFinding.textContent = gov.finding_statement ||
+      (isUncertain
+        ? 'Diagnostic evaluation concludes no single internal operational driver accounts for the anomaly.'
+        : 'Marketing performance is the strongest supported explanation for sales decline.');
+  }
+
+  if (decMatters) {
+    decMatters.textContent = gov.why_it_matters ||
+      (isUncertain
+        ? 'Variance reflects broad external macroeconomic movements rather than localized failure.'
+        : 'Higher marketing spend did not translate into proportional conversion.');
+  }
+
+  if (decAction) {
+    decAction.textContent = gov.recommended_action ||
+      (isUncertain
+        ? 'Monitor peer market movements and conduct cross-functional macro review.'
+        : 'Audit underperforming campaigns and inspect the conversion funnel before reallocating spend.');
+  }
+
+  if (decArea) decArea.textContent = gov.affected_business_area || 'Commercial Operations';
+  if (decOwner) decOwner.textContent = gov.required_owner || 'Commercial Operations Lead';
+
+  if (preList) {
+    preList.innerHTML = '';
+    const prereqs = gov.prerequisites || [
+      'Confirm underlying anomaly metrics in source ERP financial ledger',
+      'Validate supporting evidence across peer warehouse tables',
+      'Obtain domain owner approval before execution'
+    ];
+    prereqs.forEach((item) => {
+      const pDiv = document.createElement('div');
+      pDiv.className = 'pre-item';
+      pDiv.innerHTML = `<span class="pre-check">✓</span> <span>${item}</span>`;
+      preList.appendChild(pDiv);
+    });
+  }
+
+  if (reviewStatus) {
+    const hr = gov.human_review || {};
+    const st = hr.status || 'NOT_REVIEWED';
+    let label = 'Awaiting Review';
+    let badgeClass = 'badge-neutral';
+    if (st === 'APPROVED') { label = 'Approved by Analyst'; badgeClass = 'badge-success'; }
+    else if (st === 'REVIEWED') { label = 'Reviewed'; badgeClass = 'badge-neutral'; }
+    else if (st === 'NEEDS_MORE_EVIDENCE') { label = 'Needs Evidence'; badgeClass = 'badge-warning'; }
+    else if (st === 'REJECTED') { label = 'Rejected'; badgeClass = 'badge-danger'; }
+
+    reviewStatus.textContent = label;
+    reviewStatus.className = `status-badge ${badgeClass}`;
   }
 
   // DRIVER COMPARISON TABLE
@@ -742,7 +804,7 @@ window.openKpiContractModal = async function (kpiId) {
       </div>
 
       <div class="kpi-modal-section">
-        <span class="kpi-section-title">4. Candidate Causal Drivers (${(kpiData.candidate_drivers || []).length} Hypotheses)</span>
+        <span class="kpi-section-title">4. Candidate Business Drivers (${(kpiData.candidate_drivers || []).length} Hypotheses)</span>
         <div class="kpi-drivers-grid">${driversHtml || '<p class="ev-desc-clean">No candidate drivers mapped.</p>'}</div>
       </div>
 
@@ -882,5 +944,48 @@ function formatClaimType(type) {
   }
 }
 
+/**
+ * Record Analyst Review Decision (Phase 5.2D Human-in-the-Loop)
+ */
+window.handleAnalystReview = async function (status) {
+  const scenarioId = appState.currentScenario || 'S003';
+  const reviewBadge = document.getElementById('analyst-review-status');
+
+  let label = 'Reviewed';
+  let badgeClass = 'badge-neutral';
+  if (status === 'APPROVED') { label = 'Approved by Analyst'; badgeClass = 'badge-success'; }
+  else if (status === 'REVIEWED') { label = 'Reviewed'; badgeClass = 'badge-neutral'; }
+  else if (status === 'NEEDS_MORE_EVIDENCE') { label = 'Needs Evidence'; badgeClass = 'badge-warning'; }
+  else if (status === 'REJECTED') { label = 'Rejected'; badgeClass = 'badge-danger'; }
+
+  if (reviewBadge) {
+    reviewBadge.textContent = label;
+    reviewBadge.className = `status-badge ${badgeClass}`;
+  }
+
+  try {
+    const res = await fetch('/api/analyst-review', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        scenario_id: scenarioId,
+        status: status,
+        reviewer: 'Lead Commercial Analyst'
+      })
+    });
+    if (res.ok && appState.currentData) {
+      if (!appState.currentData.decision_governance) appState.currentData.decision_governance = {};
+      appState.currentData.decision_governance.human_review = {
+        status: status,
+        reviewer: 'Lead Commercial Analyst',
+        decision: status
+      };
+    }
+  } catch (e) {
+    console.warn('Review recording error:', e);
+  }
+};
+
 // Start application when DOM is ready
 document.addEventListener('DOMContentLoaded', initApp);
+

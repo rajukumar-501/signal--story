@@ -1,0 +1,216 @@
+{
+  "version": "1.0.0",
+  "schema": "Accenture Enterprise Decision Actionability & Safety Contract Specification",
+  "organization": "Accenture Decision Intelligence Platform / Signal Story",
+  "governance_purpose": "Enforce deterministic action safety guardrails, operational risk levels, decision preconditions, and human-in-the-loop oversight.",
+  "execution_boundary": "Advisory decision support only. Automatic or autonomous execution is strictly prohibited.",
+  "driver_governance": {
+    "DRIVER_01_RETURN": {
+      "driver_id": "DRIVER_01_RETURN",
+      "driver_name": "Return Surge & Defect Telemetry",
+      "recommended_action": "Quarantine active inventory batches, initiate RMA root-cause inspection with QA, and audit return reasons.",
+      "expected_business_effect": "Arrest customer churn, reduce warranty loss, and identify factory batch defect patterns.",
+      "safety_classification": "REQUIRES_HUMAN_APPROVAL",
+      "risk_level": "HIGH",
+      "risk_rationale": "Quarantining active inventory restricts fulfillment capacity and may cause temporary out-of-stock conditions if returns are non-defective remorse.",
+      "prerequisites": [
+        "Confirm underlying return sales spike (+420% vs baseline) in ERP financial ledger",
+        "Verify RMA return reason codes in warehouse receiving logs",
+        "Check batch manufacturing serial numbers against factory QA logs",
+        "Confirm replacement inventory availability before issuing quarantine"
+      ],
+      "operational_risks": [
+        "Unnecessary fulfillment disruption if return spike was customer remorse rather than product defect",
+        "Short-term working capital lockup during batch inspection",
+        "Carrier return freight processing cost accumulation"
+      ],
+      "affected_business_area": "Quality Assurance & Warranty Operations",
+      "reversibility": "MEDIUM",
+      "required_owner": "QA Director & Commercial Operations Lead",
+      "approval_required": true,
+      "execution_status": "Advisory Decision Support — Human Approval Required",
+      "causal_language_class": "SUPPORTED_INFERENCE"
+    },
+    "DRIVER_02_CHANNEL": {
+      "driver_id": "DRIVER_02_CHANNEL",
+      "driver_name": "Channel Migration & Trade Friction",
+      "recommended_action": "Rebalance commercial trade terms, adjust retail distributor incentives, and shift promotional allocation toward high-velocity digital channels.",
+      "expected_business_effect": "Recapture lost distribution volume, protect channel margins, and optimize partner inventory stocking.",
+      "safety_classification": "REQUIRES_HUMAN_APPROVAL",
+      "risk_level": "MEDIUM",
+      "risk_rationale": "Modifying trade terms and co-op marketing may affect tier-1 retail distributor relationships if not negotiated collaboratively.",
+      "prerequisites": [
+        "Validate cross-channel sales migration in sales ledger",
+        "Review existing master distributor agreement terms and minimum purchase commitments",
+        "Confirm digital direct-to-consumer inventory fulfillment readiness",
+        "Obtain commercial finance margin impact assessment"
+      ],
+      "operational_risks": [
+        "Distributor partner pushback on incentive restructuring",
+        "Channel conflict between brick-and-mortar retailers and direct e-commerce",
+        "Lagged sell-through reporting obscuring inventory buildup in retail channel"
+      ],
+      "affected_business_area": "Commercial Channel Operations & Trade Marketing",
+      "reversibility": "MEDIUM",
+      "required_owner": "VP of Commercial Sales & Channel Strategy Lead",
+      "approval_required": true,
+      "execution_status": "Advisory Decision Support — Human Approval Required",
+      "causal_language_class": "SUPPORTED_INFERENCE"
+    },
+    "DRIVER_03_MARKETING": {
+      "driver_id": "DRIVER_03_MARKETING",
+      "driver_name": "Marketing Inefficiency & Ad Spend Deterioration",
+      "recommended_action": "Audit underperforming digital ad campaigns, pause non-converting creative variants, and reallocate budget toward validated conversion channels.",
+      "expected_business_effect": "Eliminate wasted marketing spend, recover blended return on ad spend (ROAS), and improve CAC efficiency.",
+      "safety_classification": "REQUIRES_VALIDATION",
+      "risk_level": "MEDIUM",
+      "risk_rationale": "Prematurely pausing top-of-funnel brand campaigns could reduce long-term organic discovery and downstream assisted conversions.",
+      "prerequisites": [
+        "Confirm ad spend increase (+40%) against conversion decline (-42%) in marketing telemetry",
+        "Inspect channel-level click-through and landing page bounce rates",
+        "Verify no contractual upfront spending commitments with media agencies",
+        "Confirm alternative campaign creative assets are ready for deployment"
+      ],
+      "operational_risks": [
+        "Loss of top-of-funnel reach and brand awareness momentum",
+        "Campaign re-learning algorithm latency upon budget reactivation",
+        "Disruption of multi-touch conversion attribution models"
+      ],
+      "affected_business_area": "Performance Marketing & Growth Operations",
+      "reversibility": "HIGH",
+      "required_owner": "Marketing Operations Lead & Growth Director",
+      "approval_required": true,
+      "execution_status": "Advisory Decision Support — Human Approval Required",
+      "causal_language_class": "SUPPORTED_INFERENCE"
+    },
+    "DRIVER_04_PRICE": {
+      "driver_id": "DRIVER_04_PRICE",
+      "driver_name": "Competitive Pricing Pressure & Margin Gap",
+      "recommended_action": "Deploy targeted promotional discounts, evaluate tactical price-matching bundles, or introduce value-tier product configurations.",
+      "expected_business_effect": "Neutralize competitor price advantage, defend product market share, and restore sales velocity.",
+      "safety_classification": "REQUIRES_HUMAN_APPROVAL",
+      "risk_level": "HIGH",
+      "risk_rationale": "Aggressive price matching risks initiating an unrecoverable price war that erodes gross margins across the entire product category.",
+      "prerequisites": [
+        "Verify competitor price drop (-32%) and price gap (+45%) in competitive pricing feeds",
+        "Calculate gross margin floor and unit contribution breakeven under discounted pricing",
+        "Confirm channel partner MAP (Minimum Advertised Price) compliance guidelines",
+        "Review competitor inventory availability to evaluate whether price drop is temporary clearance"
+      ],
+      "operational_risks": [
+        "Gross margin compression across existing customer base",
+        "Brand equity erosion from prolonged discounting",
+        "Retaliatory pricing escalation by primary competitor"
+      ],
+      "affected_business_area": "Pricing & Revenue Management",
+      "reversibility": "MEDIUM",
+      "required_owner": "Pricing Committee & Revenue Operations Lead",
+      "approval_required": true,
+      "execution_status": "Advisory Decision Support — Human Approval Required",
+      "causal_language_class": "PLAUSIBLE_CAUSE"
+    },
+    "DRIVER_05_SUPPORT": {
+      "driver_id": "DRIVER_05_SUPPORT",
+      "driver_name": "Customer Support & Logistics Escalation",
+      "recommended_action": "Audit 3PL carrier delivery SLAs, surge tier-2 technical support staffing, and issue proactive order status notifications.",
+      "expected_business_effect": "Reduce ticket resolution time, improve customer CSAT sentiment, and prevent order cancellation churn.",
+      "safety_classification": "REQUIRES_VALIDATION",
+      "risk_level": "MEDIUM",
+      "risk_rationale": "Over-indexing on vocal complaint volumes without cross-referencing systemic order fulfillment data may misallocate operational resources.",
+      "prerequisites": [
+        "Validate support ticket surge (+310%) and negative sentiment severity in helpdesk logs",
+        "Cross-reference carrier delivery tracking timestamps against customer geographic clusters",
+        "Confirm technical support queue backlog and escalation routing rules",
+        "Verify customer communication templates before broad notification release"
+      ],
+      "operational_risks": [
+        "Increased support payroll costs from temporary contractor staffing",
+        "Carrier relationship friction during SLA breach investigations",
+        "Customer anxiety from non-targeted proactive service bulletins"
+      ],
+      "affected_business_area": "Customer Experience & Logistics Operations",
+      "reversibility": "HIGH",
+      "required_owner": "Head of Customer Support & Logistics Operations Lead",
+      "approval_required": true,
+      "execution_status": "Advisory Decision Support — Human Approval Required",
+      "causal_language_class": "PLAUSIBLE_CAUSE"
+    },
+    "DRIVER_06_DEMAND": {
+      "driver_id": "DRIVER_06_DEMAND",
+      "driver_name": "Category Demand Contraction",
+      "recommended_action": "Adjust forward production replenishment schedules, scale back category inventory build, and shift commercial focus to resilient product categories.",
+      "expected_business_effect": "Prevent excess inventory buildup, protect operating cash flow, and optimize warehouse utilization.",
+      "safety_classification": "REQUIRES_HUMAN_APPROVAL",
+      "risk_level": "HIGH",
+      "risk_rationale": "Over-correcting procurement orders during temporary industry slowdowns could create severe stockouts when market demand rebounds.",
+      "prerequisites": [
+        "Confirm parallel sales decline across all category SKU variants in sales ledger",
+        "Review industry-wide market demand indices and macroeconomic indicators",
+        "Audit supplier purchase order cancellation penalties and contractual lead times",
+        "Verify existing warehouse inventory holding cost projections"
+      ],
+      "operational_risks": [
+        "Supply chain de-commitment penalties with tier-1 component suppliers",
+        "Inability to fulfill unexpected demand recovery due to lean inventory",
+        "Loss of category shelf space to competitors who maintain inventory"
+      ],
+      "affected_business_area": "Product Management & Supply Chain Planning",
+      "reversibility": "LOW",
+      "required_owner": "Supply Chain VP & Category General Manager",
+      "approval_required": true,
+      "execution_status": "Advisory Decision Support — Human Approval Required",
+      "causal_language_class": "PLAUSIBLE_CAUSE"
+    },
+    "DRIVER_07_MIX": {
+      "driver_id": "DRIVER_07_MIX",
+      "driver_name": "Product Mix & Assortment Cannibalization",
+      "recommended_action": "Realign product SKU assortment, rationalize low-margin variants, and update visual merchandising to highlight high-velocity models.",
+      "expected_business_effect": "Recover category share, improve blended basket margin, and streamline catalog complexity.",
+      "safety_classification": "REQUIRES_VALIDATION",
+      "risk_level": "MEDIUM",
+      "risk_rationale": "Rationalizing entry-level base SKUs without checking attachment rates may reduce overall category customer traffic.",
+      "prerequisites": [
+        "Verify variant-level share shift in product dimension and sales ledger",
+        "Analyze SKU basket attachment and accessory cross-sell dependencies",
+        "Audit retailer shelf-space planograms and digital catalog positioning",
+        "Obtain product marketing sign-off on SKU lifecycle phase-out timelines"
+      ],
+      "operational_risks": [
+        "Unsold legacy variant inventory requiring deep clearance write-downs",
+        "Customer confusion from sudden product SKU renaming or phase-outs",
+        "Temporary drop in entry-level search engine ranking"
+      ],
+      "affected_business_area": "Product Merchandising & Portfolio Strategy",
+      "reversibility": "MEDIUM",
+      "required_owner": "Product Portfolio Manager & Merchandising Lead",
+      "approval_required": true,
+      "execution_status": "Advisory Decision Support — Human Approval Required",
+      "causal_language_class": "SUPPORTED_INFERENCE"
+    },
+    "DRIVER_08_INCONCLUSIVE": {
+      "driver_id": "DRIVER_08_INCONCLUSIVE",
+      "driver_name": "Inconclusive / Macroeconomic Shock (Uncertainty Preserved)",
+      "recommended_action": "Do NOT execute localized operational changes. Maintain baseline inventory, monitor macroeconomic indicators, and schedule cross-functional review.",
+      "expected_business_effect": "Prevent false causal attribution, avoid destabilizing operational interventions, and maintain business stability.",
+      "safety_classification": "DO_NOT_EXECUTE_AUTOMATICALLY",
+      "risk_level": "LOW",
+      "risk_rationale": "Taking localized price cuts, marketing halts, or inventory reductions during broad macroeconomic shocks damages profitability without addressing external root causes.",
+      "prerequisites": [
+        "Verify that no single internal operational driver (Marketing, Price, Support, Returns) exceeds materiality thresholds",
+        "Confirm market-wide broad-based sales decline across all product lines",
+        "Cross-reference external macroeconomic news and regional regulatory conditions",
+        "Ensure cross-functional review is scheduled before any tactical policy change"
+      ],
+      "operational_risks": [
+        "Risk of inaction if subtle internal factors are masked by broad decline",
+        "Executive impatience for immediate tactical intervention"
+      ],
+      "affected_business_area": "Executive Strategy & Enterprise Risk Management",
+      "reversibility": "HIGH",
+      "required_owner": "Chief Commercial Officer & Enterprise Risk Committee",
+      "approval_required": true,
+      "execution_status": "Advisory Decision Support — Inconclusive Telemetry — No Action Recommended",
+      "causal_language_class": "INCONCLUSIVE_OBSERVATION"
+    }
+  }
+}
