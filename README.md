@@ -4,17 +4,18 @@
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Architecture](https://img.shields.io/badge/architecture-deterministic%20%2B%20LLM%20reasoning-teal.svg)](#4-solution-architecture)
 [![Safety Validator](https://img.shields.io/badge/safety%20validator-10%2F10%20PASS-green.svg)](#8-safety--governance)
-[![Tests](https://img.shields.io/badge/tests-157%20passed-brightgreen.svg)](#13-running-tests)
+[![Governance](https://img.shields.io/badge/governance-KPI%20Contract%20%2B%20Data%20Trust%20%2B%20Safety-blue.svg)](#8-safety--governance)
+[![Tests](https://img.shields.io/badge/tests-166%20passed-brightgreen.svg)](#13-running-tests)
 
 ---
 
 ## 1. Problem
 
-Enterprise decision-makers face critical metric anomalies every month (e.g., sudden regional revenue drops, product margin compressions, or inventory build-ups). Diagnosing these anomalies typically requires days of manual ad-hoc SQL querying across disconnected data silos—often leading to speculative conclusions or misattributed root causes.
+Enterprise decision-makers face critical metric anomalies every month (e.g., sudden regional revenue drops, product margin compressions, or inventory build-ups). Diagnosing these anomalies typically requires days of manual ad-hoc SQL querying across disconnected data silos—often leading to speculative conclusions or misattributed explanations.
 
 Traditional AI chatbots and generic dashboard solutions frequently fail in enterprise settings because they:
 * **Hallucinate Causal Explanations**: Speculate without proving that telemetry in marketing, inventory, or support actually preceded or matched the anomaly scope.
-* **Force Overconfident Conclusions**: Fabricate single-driver root causes when macroeconomic data is ambiguous or insufficient.
+* **Force Overconfident Conclusions**: Fabricate single-driver explanations when macroeconomic data is ambiguous or insufficient.
 * **Lack Grounded Proof**: Deliver text summaries without verifiable citations back to underlying warehouse partitions.
 * **Overwhelm Decision-Makers**: Expose raw diagnostic dumps rather than clear, actionable business remediation steps.
 
@@ -41,7 +42,9 @@ LLM Causal Reasoning & Arbitration (Live Google Gemini / Offline Fast Preview)
         ↓
 10-Step Deterministic Safety Gate (Rejects Hallucinations & Unbacked Claims)
         ↓
-Actionable Executive Decision (Finding → Why It Matters → Next Steps)
+Phase 5.2 Governance Gate (KPI Semantic Contract, Data Trust & Operational Safety)
+        ↓
+Actionable Executive Decision (Finding → Why It Matters → Next Steps → Preconditions)
 ```
 
 ---
@@ -53,6 +56,9 @@ Actionable Executive Decision (Finding → Why It Matters → Next Steps)
 * **8-Candidate Driver Arbitration**: Systematically tests and scores 8 competing hypotheses (e.g., Marketing Inefficiency, Competitor Pricing, Return Surges, Inventory Stockouts) rather than confirmation-biasing on the first finding.
 * **100% Claim-Level Grounding**: Every business assertion is backed by verifiable evidence IDs (`[EVD-002]`, `[EVD-003]`) tied directly to database partition records.
 * **Uncertainty Preservation**: Gracefully preserves uncertainty (`NOT_ESTABLISHED`) when data reflects broad market macro shocks rather than forcing a false causal diagnosis.
+* **Accenture KPI Semantic Contract**: Machine-readable metadata covering business definitions, SQL formulas, aggregation grains, baseline methods, and role-based access controls.
+* **Data Quality & Trust Governance**: Deterministic 40-check data quality validation engine analyzing completeness, nulls, duplicates, and 36-month temporal freshness.
+* **Action Safety & Operational Risk Guardrails**: 4-tier risk classification (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`), structured "Before Acting" verification checklists, and interactive Human-in-the-Loop Analyst Review controls.
 * **Deterministic 10-Rule Safety Gate**: Programmatically validates all generated outputs against evidence integrity, scope bounds, and contradiction checks.
 * **Resilient Fallback Protection**: Seamlessly transitions between Live Gemini reasoning and deterministic mock mode with zero downtime.
 
@@ -63,13 +69,23 @@ Actionable Executive Decision (Finding → Why It Matters → Next Steps)
 ```mermaid
 flowchart TD
     subgraph UI ["Frontend Presentation Layer (Signal Story)"]
-        V1["01 Signals & Decision"]
+        V1["01 Signals & Decision (Action & Safety Card)"]
         V2["02 Evidence Catalog & Trail"]
-        V3["03 Evidence & Integrity Audit"]
+        V3["03 Evidence & Integrity Audit (Data Trust Table)"]
     end
 
     subgraph Server ["Application Server (Python HTTP API)"]
         API["/api/analyze Endpoint"]
+        KPI_API["/api/kpi-contract Endpoint"]
+        TRUST_API["/api/data-trust Endpoint"]
+        GOV_API["/api/decision-governance Endpoint"]
+        REV_API["/api/analyst-review Endpoint"]
+    end
+
+    subgraph Governance ["Governance & Semantic Contract Layer"]
+        KPI_C["KPI Semantic Contract (kpi_contract.json)"]
+        DQ_E["Data Quality Engine (data_quality.py)"]
+        DG_E["Decision Safety Engine (decision_governance.py)"]
     end
 
     subgraph Phase3A ["Phase 3A Deterministic Engine"]
@@ -95,15 +111,16 @@ flowchart TD
         Val["10-Step Deterministic Safety Gate"]
     end
 
-    UI <--> API
-    API --> Phase3A
+    UI <--> Server
+    Server --> Governance
+    Server --> Phase3A
     Data --> Phase3A
     Phase3A --> EC
     EC --> LLM
     EC --> Mock
     LLM --> Val
     Mock --> Val
-    Val --> API
+    Val --> Server
 ```
 
 ---
@@ -115,12 +132,15 @@ The application is structured into three clean, business-centric views:
 ### 1. Signals & Decision (Primary Executive Dashboard)
 Designed for **5–10 second executive comprehension**:
 * **Signal Summary**: Highlighted anomaly card showing actual value, 3-month baseline, percentage delta, and sparkline trend curve.
-* **Primary Signal**: Established root cause (e.g., *Marketing Inefficiency*), confidence level, and plain-language summary.
+* **Primary Signal**: Supported driver diagnosis (e.g., *Marketing Inefficiency*), confidence level, and plain-language summary.
 * **Evidence Snapshot**: Direct proof metrics (e.g., *Ad Spend +40%*, *Conversion Rate -42%*).
-* **Actionable Decision**: Structured 3-part business decision:
-  * **Finding**: The core root cause explanation.
+* **Decision Support & Safety (Card 4)**:
+  * **Finding**: The core supported driver explanation.
   * **Why It Matters**: Business impact of the dynamic.
-  * **Next Step**: Immediate remediation actions.
+  * **Recommendation**: Immediate remediation action plan.
+  * **Before Acting**: Structured prerequisite checklist for operational verification.
+  * **Operational Metadata**: Affected business area and required domain owner sign-off.
+  * **Human Oversight**: Interactive Analyst Review Bar (`[Approve Recommendation]`, `[Mark Reviewed]`, `[Request Evidence]`, `[Reject]`).
 * **Driver Comparison**: Clean comparative ranking across all 8 investigated hypotheses.
 * **Decision Rationale**: Why the top driver was selected and why alternative drivers ranked lower.
 
@@ -131,9 +151,9 @@ Designed for **5–10 second executive comprehension**:
 * **Uncertainty Disclosures**: Explicit callouts of unobserved market confounders.
 
 ### 3. Evidence & Integrity (Enterprise Governance & Audit)
+* **Data Quality & Trust Governance**: 40 deterministic checks across 9 canonical datasets with status, freshness, and completeness metrics.
 * **Governance Metrics**: 100% Grounding, 0% Unsupported Claims, Verified Evaluation Integrity (Zero Oracle Leakage), 10/10 Safety Validator Pass.
-* **Pipeline Architecture Flow**: 6-step visual execution flow.
-* **Execution Environment Health**: Real-time parity status between deterministic and reasoning engines.
+* **Pipeline Architecture Flow**: Visual execution flow across deterministic and LLM stages.
 * **Data Lineage Table**: Immutable audit trail mapping each evidence item directly to database record partitions.
 
 ---
@@ -148,11 +168,12 @@ Signal Story includes 8 pre-configured benchmark scenarios. The primary showcase
 | **Scope** | **China** • Product **A2520150501** • **April 2021** |
 | **Target Metric** | Gross Sales |
 | **Observed Anomaly** | **-72.1% Drop** (Actual: `$994.25` vs Baseline: `$3,558.03`) |
-| **Primary Root Cause** | **Marketing Inefficiency** (`DRIVER_03_MARKETING`) |
-| **Confidence** | **Plausible** (Supported by cross-source data) |
+| **Primary Supported Driver** | **Marketing Inefficiency** (`DRIVER_03_MARKETING`) |
+| **Confidence** | **Plausible** (Supported by cross-source telemetry) |
 | **Strongest Evidence** | **`EVD-002`**: Advertising spend surged **+40.0%** during anomaly window.<br>**`EVD-003`**: Conversion rate deteriorated **-42.0%** in the same period. |
 | **Alternative Rejections** | Competitor pricing, returns, support, and inventory drivers showed zero correlation or temporal mismatch. |
-| **Recommended Action** | 1. Pause underperforming ad campaigns.<br>2. Audit landing-page conversion funnel.<br>3. Reallocate spend toward higher-performing channels. |
+| **Decision Support** | **Finding**: Marketing performance is the strongest supported explanation.<br>**Why It Matters**: Higher ad spend did not translate into proportional sales.<br>**Recommendation**: Audit underperforming campaigns and reallocate budget toward validated conversion channels.<br>**Before Acting**: Confirm ad spend in telemetry and inspect landing page bounce rates. |
+| **Operational Governance** | **Area**: Performance Marketing & Growth • **Owner**: Marketing Operations Lead • **Risk**: Medium |
 
 ---
 
@@ -180,7 +201,8 @@ The system was evaluated against a strictly isolated benchmark suite of 8 divers
 ## 8. Safety & Governance
 
 1. **Strict Oracle Isolation**: Ground truth files are stored in isolated evaluation directories (`Data/scenarios/evaluation_ground_truth/`) and are completely inaccessible to the runtime analytical engine and LLM prompts.
-2. **10-Step Deterministic Safety Gate**:
+2. **Accenture Semantic & Trust Contracts**: Machine-readable schema definitions for KPIs (`kpi_contract.json`), 40-check automated data quality verification (`data_trust_contract.json`), and action safety tiers (`decision_action_contract.json`).
+3. **10-Step Deterministic Safety Gate**:
    * Rule 01: Driver validity against canonical catalog.
    * Rule 02: Evidence ID format conformity.
    * Rule 03: Citation validity against provided context.
@@ -191,7 +213,8 @@ The system was evaluated against a strictly isolated benchmark suite of 8 divers
    * Rule 08: Scope containment check.
    * Rule 09: Action plan non-emptiness.
    * Rule 10: Executive summary clarity.
-3. **Graceful Fallback**: If an LLM provider encounters network timeouts or API quotas, the system automatically falls back to a deterministic reasoning layer without breaking the user experience.
+4. **Human-in-the-Loop Oversight**: Embedded analyst sign-off bar supporting approval, marking reviewed, evidence requests, and rejection state transitions.
+5. **Graceful Fallback**: If an LLM provider encounters network timeouts or API quotas, the system automatically falls back to a deterministic reasoning layer without breaking the user experience.
 
 ---
 
@@ -201,7 +224,7 @@ The system was evaluated against a strictly isolated benchmark suite of 8 divers
 * **Data Processing & Analytics**: `pandas`, `numpy`, `python-dateutil`
 * **Reasoning Provider**: Google Gemini API (`gemini-2.5-flash` / `gemini-1.5-flash`)
 * **Frontend Presentation**: Semantic HTML5, Vanilla CSS3 (Custom SaaS Design System, `Inter` typography), Vanilla JavaScript (ES6+)
-* **Testing & Verification**: Python `unittest` framework (157 comprehensive tests)
+* **Testing & Verification**: Python `unittest` framework (166 comprehensive automated tests)
 
 ---
 
@@ -293,20 +316,19 @@ Signal Story includes automated deployment configurations for one-click cloud ho
 
 ## 13. Running Tests
 
-Execute the complete automated test suite (157 tests across 29 test files):
+### 1. Run Governance, API & Presentation Test Suite (41 Tests — Fast):
+```bash
+python -m unittest tests.test_phase5_2d_decision_governance tests.test_phase5_2b_data_quality tests.test_phase5_2a_kpi_contract tests.test_phase4_api tests.test_phase4_3_presentation
+```
 
+### 2. Run Full Comprehensive Project Test Suite (166 Tests):
 ```bash
 python -m unittest discover -s tests
 ```
 
 Expected output:
 ```text
-Ran 157 tests in ~300s - OK
-```
-
-To run only the presentation and API verification tests:
-```bash
-python -m unittest tests.test_phase4_3_presentation
+Ran 166 tests - OK
 ```
 
 ---
@@ -318,21 +340,32 @@ python -m unittest tests.test_phase4_3_presentation
 ├── requirements.txt            # Python dependencies
 ├── .env.example                # Configuration template
 ├── .gitignore                  # Git secret and cache exclusion rules
+├── render.yaml                 # Cloud deployment blueprint (Render)
+├── Procfile                    # Web service process configuration
 ├── README.md                   # System documentation
 │
 ├── Data/
-│   ├── Processed/              # Canonical partition datasets (sales, marketing, inventory, etc.)
+│   ├── Processed/              # 10 Canonical partition datasets (sales, marketing, inventory, etc.)
+│   ├── semantic/               # Machine-readable semantic governance contracts
+│   │   ├── kpi_contract.json   # Accenture KPI Semantic Contract
+│   │   ├── data_trust_contract.json # Data quality & freshness schema
+│   │   └── decision_action_contract.json # Action safety & risk tiers
 │   └── scenarios/              # Benchmark scenarios & isolated ground truth
+│       ├── evaluation_inputs/
+│       └── evaluation_ground_truth/
 │
 ├── src/
 │   ├── server.py               # Native Python HTTP API server
-│   ├── analytics/              # Phase 3A: Deterministic Anomaly & Hypothesis Engine
+│   ├── governance/             # Phase 5.2 Governance & Trust Layer
+│   │   ├── data_quality.py     # Deterministic 40-check data trust engine
+│   │   └── decision_governance.py # Decision safety & analyst review engine
+│   ├── analytics/              # Phase 3A: Deterministic Anomaly & Hypothesis Engine (FROZEN)
 │   │   ├── event_detector.py   # Baseline & Anomaly detection
 │   │   ├── driver_generator.py # Cross-source feature generation
 │   │   ├── evidence_scorer.py  # Evidence magnitude & timing scorer
 │   │   ├── contradiction_engine.py # Contradiction detector
 │   │   └── driver_ranker.py    # Multi-driver arbitration matrix
-│   └── phase3b/                # Phase 3B: Reasoning, Citations & Validation Gate
+│   └── phase3b/                # Phase 3B: Reasoning, Citations & Validation Gate (FROZEN)
 │       ├── engine.py           # Phase 3B engine orchestrator
 │       ├── evidence_context.py # Evidence context builder
 │       ├── llm_provider.py     # Native Gemini API REST client
@@ -344,28 +377,29 @@ python -m unittest tests.test_phase4_3_presentation
 │   ├── styles.css              # Flat enterprise SaaS stylesheet
 │   └── app.js                  # Frontend controller & citation navigator
 │
-├── tests/                      # 157 automated regression & benchmark tests
+├── tests/                      # 166 automated regression, governance & benchmark tests
 └── docs/                       # Engineering specifications & validation reports
 ```
 
 ---
 
-## 15. Prototype Demo
+## 15. Demo
 
-Demo video will be added before final submission.
+### Demonstration Video
+A recorded video walkthrough of Signal Story showcasing the end-to-end Decision Intelligence workflow (Scenario S003 Marketing Inefficiency and Scenario S008 Macro Uncertainty) is available for evaluator review:
 
-### Demo Walkthrough Guide
+> **Prototype Video Walkthrough**: `[Video Walkthrough Link — Attached in Final Pitch Submission]`
 
-To present Signal Story effectively in a 2–3 minute video or live judging demonstration:
+### Quick 2-Minute Demo Flow for Evaluators
 
 1. **Select Scenario S003** from the top scenario selector (*China / Product A2520150501 / April 2021*).
 2. **Click "Analyze"** (or switch to *Assisted Analysis* if a Gemini API key is configured).
-3. **Highlight "Signal Summary"**: Point to the **-72.1% Gross Sales drop** from baseline (`$994.25` vs `$3,558.03`).
-4. **Explain "Primary Signal"**: Showcase that **Marketing Inefficiency** was identified as the root cause with high confidence.
+3. **Inspect "Signal Summary"**: Point to the **-72.1% Gross Sales drop** from baseline (`$994.25` vs `$3,558.03`).
+4. **Explain "Primary Signal"**: Showcase that **Marketing Inefficiency** was identified as the supported driver with high confidence.
 5. **Inspect "Evidence"**: Show that advertising spend increased **+40%** while conversion rates collapsed **-42%**.
-6. **Review "Decision"**: Highlight the actionable 3-step remediation plan (pause underperforming campaigns, audit landing page funnel, reallocate spend).
+6. **Review "Decision Support & Safety" (Card 4)**: Note the **Risk: Medium** rating, "Before Acting" verification checklist, required owner sign-off, and click **[Approve Recommendation]** to test the interactive analyst oversight bar.
 7. **Navigate to "Evidence View"**: Demonstrate the **Evidence Catalog** and click citation chips (`[EVD-002]`, `[EVD-003]`) to show interactive provenance navigation.
-8. **Open "Evidence & Integrity"**: Show the **100% Evidence Grounding**, **0% Unsupported Claims**, and the **10/10 Safety Validator Pass**.
+8. **Open "Evidence & Integrity"**: Show the **Data Trust Audit Table** (40 checks passed), **100% Evidence Grounding**, and **Zero Oracle Leakage**.
 9. **Showcase Uncertainty (S008)**: Switch to scenario `S008` (Germany / All Products) to demonstrate how Signal Story gracefully outputs **"No Conclusive Primary Driver" (Uncertainty Preserved)** for macro shocks rather than hallucinating false causes.
 
 ---
@@ -382,3 +416,4 @@ To present Signal Story effectively in a 2–3 minute video or live judging demo
 
 * Developed for the **Accenture Decision Intelligence** hackathon track.
 * All benchmark metrics, deterministic core algorithms, and reasoning layers represent verified, reproducible engineering deliverables.
+
