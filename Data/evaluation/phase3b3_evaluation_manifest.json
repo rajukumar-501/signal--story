@@ -1,0 +1,55 @@
+{
+  "evaluation_protocol_version": "Phase 3B.3 - v1.0.0",
+  "timestamp_utc": "2026-08-30T18:22:36.043906+00:00",
+  "scenarios": [
+    "S001",
+    "S002",
+    "S003",
+    "S004",
+    "S005",
+    "S006",
+    "S007",
+    "S008"
+  ],
+  "generation_parameters": {
+    "provider": "mock",
+    "model": "mock-reasoner-v1",
+    "temperature": 0.0,
+    "timeout_seconds": 30.0,
+    "response_format": "json_object"
+  },
+  "canonical_dataset_hashes": {
+    "dim_customer.csv": "e45b8934e531bc52a5cac20e6986ee31e4dd16b4d2943465e0bf1d54a4237503",
+    "dim_market.csv": "1ed56cefbdfe89f05f59de2b5e14118167c300edf19392b8811d28d64d900052",
+    "dim_product.csv": "071e415ba26570d5cbbfc078893cc4ecfe2aa3b1e4a5e98bb0499a14dd37fd37",
+    "fact_competitor_pricing_monthly.csv": "a8f1d2fa7cda93dd34263581568370d527bee9e5725892466aac7560c52da113",
+    "fact_crm_notes.csv": "31b619811f324f9638c86f56cb8a5c26ae034b51f54303fa5e5fc29078860efe",
+    "fact_inventory_monthly.csv": "ca41c19914cab5f50f8a3d7ab9ab2414a7a33f919b962abb72204b61098bb973",
+    "fact_marketing_monthly.csv": "824eb472fcbadaf708785837e3daf7daf5f766eca96ab0bd90652363f5cd95f4",
+    "fact_sales_calls.csv": "b45d825b49ce7a648dcf34fcda24e1955c90f3b343b0534b9f02547035f3e619",
+    "fact_sales_monthly.csv": "d47f0b628729b91ed4d7100f2350e4060e0d17f1bc51a41137cdea5c0aa3b447",
+    "fact_support_tickets.csv": "241edf8686685d99ddb4e9300221016e33b33e28d3cb4d803b8148b889741845"
+  },
+  "evaluation_input_hashes": {
+    "S001_input.csv": "78d4e669717ef8c3dde82516ed098eabb93ce442dde019ea17a18bbd8e3191cc",
+    "S002_input.csv": "ad5a556e83983b41c243806e5383706b7102c2940efc071d902f8473e9eaa764",
+    "S003_input.csv": "60e35f321db1eeb9941e40ca666df1d7be03e9e7793af3436f58f4fc6c5ee389",
+    "S004_input.csv": "2807efa3bd1fa254be05bb3e5cc82295938c8fc59a0758a8bb7c3ab4f1d02100",
+    "S005_input.csv": "b8a96e3373b33aabed5e4fe699625f8f9601e25e2eb3beb7cacf9a42a3f9c5a2",
+    "S006_input.csv": "de1e87356dc2aa8b072098d95d8125fe7573863cc3ffa5239615743717057e8f",
+    "S007_input.csv": "a786de29f1749b7fb4ef5e6604d1aacae4e5344023d833d102724ed9ba109bab",
+    "S008_input.csv": "22c9807fff79be41aa2e202febc881ad98d6fe63e54a5a437549408da92bd0ae"
+  },
+  "phase3a_baseline_results_hash": "21236d7cddd9737d30a8bc21c1fc846874a88c63d326678af817412d091d6adc",
+  "phase3b_source_code_hashes": {
+    "__init__.py": "c3aee9125a8ca1851483679bf5be3548f4100919b402f177de4ebcd9a12a7dc3",
+    "engine.py": "9ea42d0b50e7a674afbe0ae8bef74a2c592e9d034d26c7614b79f6157c8ae928",
+    "evidence_context.py": "816b85d121be0b8e480632655fa597ba98c5e2dfe3a713486d2234b0487bd9ab",
+    "input_adapter.py": "2c545f6559509644ae7bdfeaf89fd517f2b87a8d80f66be00aeed3fec86a5ff3",
+    "llm_provider.py": "30ec80074a57fd03f07d122273ed4a8c171fca85d6981507bb9a73cd44786e27",
+    "mock_reasoning_provider.py": "90c5aac7deed3857a33f590a2199727559de5884fcf78d0cbd1e5b9c0ef3b4fc",
+    "prompts.py": "b084e00a83472307ad0e5b3b1447e1a8c0e7c36c6e58ce9432ada1a169843e40",
+    "reasoning_provider.py": "ea844f21213ca41de18b08b357360d326a18f8a65a77157dcc13ba466475f4e7",
+    "validator.py": "d6fcd14c606e2ebdbf6924c46b3ad5263d5a97e9f2fedd33598abc0163a2c73e"
+  }
+}

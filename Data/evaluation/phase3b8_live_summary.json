@@ -1,0 +1,34 @@
+{
+  "evaluation_mode": "LIVE",
+  "provider": "GEMINI",
+  "model": "gemini-3.6-flash",
+  "api_key_configured": true,
+  "scenarios_evaluated": 8,
+  "provenance_breakdown": {
+    "LIVE_GEMINI": 6,
+    "DETERMINISTIC_FALLBACK": 2,
+    "MOCK_PROVIDER": 0
+  },
+  "mrr": 0.7857,
+  "mrr_denominator": 7,
+  "mrr_numerator": 5.5,
+  "mrr_scenario_map": {
+    "S001": 1.0,
+    "S002": 0.5,
+    "S003": 1.0,
+    "S004": 1.0,
+    "S005": 1.0,
+    "S006": 0.5,
+    "S007": 0.5
+  },
+  "top1_accuracy": 0.625,
+  "top3_recall": 1.0,
+  "established_driver_accuracy": 0.625,
+  "status_accuracy": 0.5,
+  "s008_uncertainty_accuracy": 1.0,
+  "mean_grounding_rate": 1.0,
+  "mean_unsupported_claim_rate": 0.0,
+  "latency_p50_ms": 30013.36,
+  "latency_p95_ms": 45194.46,
+  "token_telemetry_status": "ESTIMATED_ONLY"
+}

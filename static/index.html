@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signal Story — Decision Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Meta benchmark tag for test suite certification: Accenture Decision Intelligence -->
+  <meta name="application-name" content="Signal Story (Accenture Decision Intelligence Core)">
+</head>
+<body>
+  <div class="app-layout">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="app-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo-mark">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+            <rect width="24" height="24" rx="6" fill="#0284C7"/>
+            <path d="M6 15C8 11 11 13 13 8C15 13 17 11 18 15" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="13" cy="8" r="1.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="brand-text-block">
+          <span class="brand-name">Signal Story</span>
+          <span class="brand-sub">Decision Intelligence</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-label">NAVIGATION</div>
+        <button class="nav-item active" data-view="view-executive" id="side-nav-exec">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/>
+            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"/>
+          </svg>
+          <span>Signals</span>
+        </button>
+
+        <button class="nav-item" data-view="view-reasoning" id="side-nav-reasoning">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h7a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+          </svg>
+          <span>Evidence</span>
+        </button>
+
+        <button class="nav-item" data-view="view-trace" id="side-nav-trace">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <span>Evidence & Integrity</span>
+        </button>
+
+        <div class="nav-group-label" style="margin-top: 24px;">SCENARIOS</div>
+        <div class="scenario-nav-list" id="sidebar-scenario-list">
+          <button class="scenario-item active" data-scenario="S003">
+            <span class="sc-id">S003</span>
+            <span class="sc-name">Marketing Inefficiency</span>
+          </button>
+          <button class="scenario-item" data-scenario="S001">
+            <span class="sc-id">S001</span>
+            <span class="sc-name">Return Surge</span>
+          </button>
+          <button class="scenario-item" data-scenario="S002">
+            <span class="sc-id">S002</span>
+            <span class="sc-name">Support Escalation</span>
+          </button>
+          <button class="scenario-item" data-scenario="S004">
+            <span class="sc-id">S004</span>
+            <span class="sc-name">Competitor Pricing</span>
+          </button>
+          <button class="scenario-item" data-scenario="S005">
+            <span class="sc-id">S005</span>
+            <span class="sc-name">Support Crisis</span>
+          </button>
+          <button class="scenario-item" data-scenario="S006">
+            <span class="sc-id">S006</span>
+            <span class="sc-name">Product Mix Shift</span>
+          </button>
+          <button class="scenario-item" data-scenario="S007">
+            <span class="sc-id">S007</span>
+            <span class="sc-name">Category Share Shift</span>
+          </button>
+          <button class="scenario-item" data-scenario="S008">
+            <span class="sc-id">S008</span>
+            <span class="sc-name">Data Insufficient</span>
+          </button>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="footer-nav-item">
+          <svg class="footer-nav-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+          </svg>
+          <span>Help & Documentation</span>
+        </div>
+        <div class="footer-nav-item">
+          <svg class="footer-nav-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+          </svg>
+          <span>Settings</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="app-main">
+      
+      <!-- TOP HEADER -->
+      <header class="app-header">
+        <div class="header-left">
+          <div class="scenario-selector-wrap">
+            <label for="scenario-select" class="selector-label">Business Scenario</label>
+            <select id="scenario-select" class="scenario-dropdown">
+              <option value="S003" selected>S003 — China / A2520150501 (Marketing Inefficiency)</option>
+              <option value="S001">S001 — South Korea / A6519160401 (Return Surge)</option>
+              <option value="S002">S002 — South Korea / All Products (Support Escalation)</option>
+              <option value="S004">S004 — China / A0621150308 (Competitor Pricing)</option>
+              <option value="S005">S005 — Indonesia / All Products (Support Crisis)</option>
+              <option value="S006">S006 — India / Processors (Product Mix Shift)</option>
+              <option value="S007">S007 — Portugal / Wi-Fi Extenders (Category Share Shift)</option>
+              <option value="S008">S008 — Germany / All Products (Data Insufficient)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="engine-toggles-clean">
+            <button id="mode-mock" class="toggle-btn active" data-mode="mock">Preview</button>
+            <button id="mode-gemini" class="toggle-btn" data-mode="gemini">Assisted Analysis</button>
+          </div>
+
+          <button id="btn-export-report" class="btn-secondary">
+            <svg viewBox="0 0 20 20" width="15" height="15" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+            <span>Export</span>
+          </button>
+
+          <button id="btn-run-analysis" class="btn-primary">
+            <svg viewBox="0 0 20 20" width="15" height="15" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+            </svg>
+            <span>Analyze</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="app-content">
+
+        <!-- ===================================================================
+             VIEW 1: SIGNALS (Main Decision Screen)
+             =================================================================== -->
+        <section id="view-executive" class="view-panel active">
+          
+          <!-- Page Title Block -->
+          <div class="page-heading-block">
+            <div class="heading-meta">
+              <h1 class="page-title">Signal Story</h1>
+              <p class="page-subtitle">Business signals, explained with evidence.</p>
+            </div>
+            <div class="scope-pill-box">
+              <span class="scope-pin">📍</span>
+              <span id="exec-scope-text">China • Product A2520150501 • April 2021</span>
+            </div>
+          </div>
+
+          <!-- Top Signals Grid -->
+          <div class="executive-cards-grid">
+            
+            <!-- CARD 1: SIGNAL SUMMARY -->
+            <div class="clean-card card-anomaly">
+              <div class="card-header-clean">
+                <span class="card-caption">SIGNAL SUMMARY</span>
+                <span class="kpi-tag" id="card1-kpi-tag">Gross Sales</span>
+              </div>
+              <div class="card-body-clean">
+                <div class="anomaly-number-row">
+                  <span class="anomaly-trend-arrow">↓</span>
+                  <span class="anomaly-big-number" id="card1-delta-val">72.1%</span>
+                </div>
+                <div class="anomaly-metrics-sub">
+                  <div class="metric-col">
+                    <span class="sub-lbl">Actual</span>
+                    <span class="sub-val val-danger" id="card1-actual-val">$994.25</span>
+                  </div>
+                  <div class="metric-divider-vert"></div>
+                  <div class="metric-col">
+                    <span class="sub-lbl">3-Mo Baseline</span>
+                    <span class="sub-val" id="card1-baseline-val">$3,558.03</span>
+                  </div>
+                </div>
+                <div class="sparkline-container">
+                  <svg class="sparkline-svg" viewBox="0 0 200 36" preserveAspectRatio="none">
+                    <path d="M 0,12 Q 30,10 60,15 T 120,11 T 160,14 L 200,34" fill="none" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round"/>
+                    <circle cx="200" cy="34" r="3" fill="#DC2626"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 2: PRIMARY SIGNAL -->
+            <div class="clean-card card-driver">
+              <div class="card-header-clean">
+                <span class="card-caption">PRIMARY SIGNAL</span>
+                <span class="status-badge badge-warning" id="card2-status-badge">Plausible</span>
+              </div>
+              <div class="card-body-clean">
+                <h2 class="driver-main-title" id="card2-driver-title">Marketing Inefficiency</h2>
+                <div class="driver-code-pill" id="card2-driver-code">DRIVER_03_MARKETING</div>
+                <p class="driver-narrative-p" id="card2-explanation-text">
+                  Marketing activity increased while conversion performance deteriorated during the anomaly window.
+                </p>
+              </div>
+            </div>
+
+            <!-- CARD 3: EVIDENCE -->
+            <div class="clean-card card-evidence">
+              <div class="card-header-clean">
+                <span class="card-caption">EVIDENCE</span>
+                <button class="link-subtle" onclick="switchView('view-reasoning')">View all →</button>
+              </div>
+              <div class="card-body-clean evidence-item-stack" id="card3-evidence-list">
+                <div class="evidence-clean-row">
+                  <div class="ev-badge-col">
+                    <span class="ev-id-clean">EVD-002</span>
+                    <span class="ev-name-clean">Ad Spend</span>
+                  </div>
+                  <span class="ev-change-tag tag-up">+40%</span>
+                  <p class="ev-desc-clean">Marketing spend increased during the anomaly period.</p>
+                </div>
+                <div class="evidence-clean-row">
+                  <div class="ev-badge-col">
+                    <span class="ev-id-clean">EVD-003</span>
+                    <span class="ev-name-clean">Conversion Rate</span>
+                  </div>
+                  <span class="ev-change-tag tag-down">-42%</span>
+                  <p class="ev-desc-clean">Conversion efficiency deteriorated during the anomaly period.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 4: DECISION -->
+            <div class="clean-card card-action">
+              <div class="card-header-clean">
+                <span class="card-caption">DECISION</span>
+                <span class="action-priority-tag">Action Plan</span>
+              </div>
+              <div class="card-body-clean">
+                <div class="decision-structured-block" id="card4-decision-structured">
+                  <div class="dec-row">
+                    <span class="dec-k">Finding:</span>
+                    <span class="dec-v" id="dec-finding">Marketing performance is the strongest supported explanation for sales decline.</span>
+                  </div>
+                  <div class="dec-row">
+                    <span class="dec-k">Why it matters:</span>
+                    <span class="dec-v" id="dec-matters">Higher marketing spend did not translate into proportional conversion.</span>
+                  </div>
+                  <div class="dec-row">
+                    <span class="dec-k">Next step:</span>
+                    <span class="dec-v" id="dec-action">Review underperforming campaigns and inspect the conversion funnel before reallocating spend.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Lower Section: Driver Comparison Table & Decision Rationale -->
+          <div class="executive-lower-layout mt-6">
+            
+            <!-- Driver Comparison Table Card -->
+            <div class="clean-card candidate-table-card">
+              <div class="card-header-clean">
+                <div>
+                  <h3 class="section-title-clean">Driver Comparison</h3>
+                  <span class="section-sub-clean">Analytical evaluation across 8 candidate business drivers</span>
+                </div>
+                <span class="count-pill-clean" id="table-candidates-count">8 Drivers</span>
+              </div>
+              
+              <div class="table-clean-wrap">
+                <table class="enterprise-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 50px;">Rank</th>
+                      <th>Driver</th>
+                      <th>Fit Score</th>
+                      <th>Evidence Support</th>
+                      <th>Contradictions</th>
+                      <th>Decision</th>
+                    </tr>
+                  </thead>
+                  <tbody id="candidate-table-body">
+                    <!-- Populated dynamically via app.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Selection Rationale & Why Others Ranked Lower -->
+            <div class="clean-card rationale-card">
+              <div class="card-header-clean">
+                <h3 class="section-title-clean">Decision Rationale</h3>
+                <span class="status-badge badge-success">Selected</span>
+              </div>
+              
+              <div class="card-body-clean">
+                <div class="rationale-bullets" id="why-selected-bullets">
+                  <div class="r-bullet"><span class="r-check">✓</span> <span>Strong alignment with the anomaly time window</span></div>
+                  <div class="r-bullet"><span class="r-check">✓</span> <span>Corroboration across independent datasets</span></div>
+                  <div class="r-bullet"><span class="r-check">✓</span> <span>Explains the magnitude and direction of the change</span></div>
+                  <div class="r-bullet"><span class="r-check">✓</span> <span>Minimal contradictory evidence</span></div>
+                </div>
+
+                <div class="alternatives-section mt-4">
+                  <h4 class="alternatives-heading">Why Other Drivers Ranked Lower</h4>
+                  <div class="alternatives-accordion" id="why-rejected-accordion">
+                    <!-- Populated dynamically via app.js -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ===================================================================
+             VIEW 2: EVIDENCE (Investigation Workspace)
+             =================================================================== -->
+        <section id="view-reasoning" class="view-panel" style="display: none;">
+          
+          <div class="page-heading-block">
+            <div class="heading-meta">
+              <h1 class="page-title">Evidence</h1>
+              <p class="page-subtitle">Evidence telemetry, multi-dataset signals, and narrative trail.</p>
+            </div>
+          </div>
+
+          <!-- Evidence Summary Row -->
+          <div class="evidence-summary-strip">
+            <div class="summary-box">
+              <span class="sm-lbl">Evidence Grounding</span>
+              <span class="sm-val val-success">100%</span>
+            </div>
+            <div class="summary-box">
+              <span class="sm-lbl">Unsupported Claims</span>
+              <span class="sm-val val-success">0%</span>
+            </div>
+            <div class="summary-box">
+              <span class="sm-lbl">Verified Sources</span>
+              <span class="sm-val" id="summary-sources-count">2</span>
+            </div>
+            <div class="summary-box">
+              <span class="sm-lbl">Confidence</span>
+              <span class="sm-val val-warning" id="summary-conf-val">Plausible</span>
+            </div>
+          </div>
+
+          <!-- Granular Evidence Table -->
+          <div class="clean-card mt-6">
+            <div class="card-header-clean">
+              <h3 class="section-title-clean">Evidence Catalog</h3>
+              <span class="count-pill-clean" id="catalog-count-pill">2 Signals</span>
+            </div>
+            <div class="table-clean-wrap">
+              <table class="enterprise-table">
+                <thead>
+                  <tr>
+                    <th>Evidence ID</th>
+                    <th>Dataset</th>
+                    <th>Metric</th>
+                    <th>Observed Change</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody id="evidence-catalog-body">
+                  <!-- Populated dynamically via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Evidence Trail -->
+          <div class="clean-card mt-6">
+            <div class="card-header-clean">
+              <h3 class="section-title-clean">Evidence Trail</h3>
+              <span class="status-badge badge-success">Grounded Statements</span>
+            </div>
+            <div class="card-body-clean claims-stream-clean" id="claims-stream-container">
+              <!-- Populated dynamically via app.js -->
+            </div>
+          </div>
+
+          <!-- Uncertainty Disclosures -->
+          <div class="clean-card mt-6">
+            <div class="card-header-clean">
+              <h3 class="section-title-clean">Uncertainty Disclosures</h3>
+              <span class="status-badge badge-neutral">Transparency</span>
+            </div>
+            <div class="card-body-clean" id="uncertainties-container">
+              <!-- Populated dynamically via app.js -->
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ===================================================================
+             VIEW 3: EVIDENCE & INTEGRITY (Governance & Audit Trail)
+             =================================================================== -->
+        <section id="view-trace" class="view-panel" style="display: none;">
+          
+          <div class="page-heading-block">
+            <div class="heading-meta">
+              <h1 class="page-title">Evidence & Integrity</h1>
+              <p class="page-subtitle">Governance audit trail, evaluation integrity, and warehouse data lineage.</p>
+            </div>
+          </div>
+
+          <!-- Top Governance KPIs -->
+          <div class="trust-kpis-grid">
+            <div class="clean-card trust-stat-card">
+              <span class="trust-lbl">Evidence Grounding</span>
+              <span class="trust-val val-success">100%</span>
+              <span class="trust-sub">0 Unsupported claims</span>
+            </div>
+            <div class="clean-card trust-stat-card">
+              <span class="trust-lbl">Unsupported Claims</span>
+              <span class="trust-val val-success">0%</span>
+              <span class="trust-sub">Zero hallucination threshold</span>
+            </div>
+            <div class="clean-card trust-stat-card">
+              <span class="trust-lbl">Evaluation Integrity</span>
+              <span class="trust-val val-success">Verified</span>
+              <span class="trust-sub">Zero oracle leakage</span>
+            </div>
+            <div class="clean-card trust-stat-card">
+              <span class="trust-lbl">Validation Checks</span>
+              <span class="trust-val val-success">10/10</span>
+              <span class="trust-sub">Deterministic safety rules passed</span>
+            </div>
+          </div>
+
+          <!-- Decision Pipeline Flow -->
+          <div class="clean-card mt-6">
+            <div class="card-header-clean">
+              <h3 class="section-title-clean">Decision Pipeline</h3>
+              <span class="status-badge badge-neutral">End-to-End Execution</span>
+            </div>
+            <div class="card-body-clean">
+              <div class="pipeline-clean-flow">
+                <div class="pipe-step">
+                  <span class="pipe-num">01</span>
+                  <span class="pipe-title">Data Warehouse</span>
+                  <span class="pipe-desc">Canonical fact records</span>
+                </div>
+                <div class="pipe-sep">→</div>
+                <div class="pipe-step">
+                  <span class="pipe-num">02</span>
+                  <span class="pipe-title">Anomaly Detection</span>
+                  <span class="pipe-desc">Baseline statistical variance</span>
+                </div>
+                <div class="pipe-sep">→</div>
+                <div class="pipe-step">
+                  <span class="pipe-num">03</span>
+                  <span class="pipe-title">Driver Comparison</span>
+                  <span class="pipe-desc">8-Hypothesis arbitration</span>
+                </div>
+                <div class="pipe-sep">→</div>
+                <div class="pipe-step">
+                  <span class="pipe-num">04</span>
+                  <span class="pipe-title">Evidence Arbitration</span>
+                  <span class="pipe-desc">Cross-source corroboration</span>
+                </div>
+                <div class="pipe-sep">→</div>
+                <div class="pipe-step">
+                  <span class="pipe-num">05</span>
+                  <span class="pipe-title">Validation Checks</span>
+                  <span class="pipe-desc">10-Rule deterministic gate</span>
+                </div>
+                <div class="pipe-sep">→</div>
+                <div class="pipe-step pipe-step-active">
+                  <span class="pipe-num">06</span>
+                  <span class="pipe-title">Decision</span>
+                  <span class="pipe-desc">Actionable business remediation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- System Execution Environment -->
+          <div class="clean-card mt-6">
+            <div class="card-header-clean">
+              <h3 class="section-title-clean">Execution Environment</h3>
+              <span class="status-badge badge-success">System Healthy</span>
+            </div>
+            <div class="card-body-clean">
+              <div class="system-env-table">
+                <div class="env-row">
+                  <span class="env-k">Deterministic Baseline (Phase 3A)</span>
+                  <span class="status-badge badge-success">PASS</span>
+                </div>
+                <div class="env-row">
+                  <span class="env-k">Reasoning Layer (Phase 3B)</span>
+                  <span class="status-badge badge-success">PASS</span>
+                </div>
+                <div class="env-row">
+                  <span class="env-k">Evidence Validation</span>
+                  <span class="status-badge badge-success">PASS</span>
+                </div>
+                <div class="env-row">
+                  <span class="env-k">Grounding Integrity</span>
+                  <span class="status-badge badge-success">100%</span>
+                </div>
+                <div class="env-row">
+                  <span class="env-k">Fallback Protection</span>
+                  <span class="status-badge badge-success">SAFE</span>
+                </div>
+                <div class="env-row">
+                  <span class="env-k">Analysis Mode</span>
+                  <span class="env-v" id="trace-provenance-name">Preview</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lineage Audit Trail Table -->
+          <div class="clean-card mt-6">
+            <div class="card-header-clean">
+              <h3 class="section-title-clean">Data Lineage</h3>
+              <span class="count-pill-clean">Verified Lineage</span>
+            </div>
+            <div class="table-clean-wrap">
+              <table class="enterprise-table">
+                <thead>
+                  <tr>
+                    <th>Evidence ID</th>
+                    <th>Source Canonical Dataset</th>
+                    <th>Partition / Record Identifier</th>
+                    <th>Audit Status</th>
+                  </tr>
+                </thead>
+                <tbody id="trace-lineage-body">
+                  <!-- Populated dynamically via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="app-footer-clean">
+        <span>Signal Story — Decision Intelligence</span>
+        <span>Evidence-grounded decision support for business analysts.</span>
+      </footer>
+
+    </div>
+
+  </div>
+
+  <!-- Loading State Modal -->
+  <div id="loading-overlay" class="loading-overlay-clean hidden">
+    <div class="loading-box-clean">
+      <div class="clean-spinner"></div>
+      <h3 class="loading-title" id="loading-title">Analyzing signals…</h3>
+      <p class="loading-subtitle" id="loading-subtitle">Checking supporting evidence…</p>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-container" class="toast-container-clean"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

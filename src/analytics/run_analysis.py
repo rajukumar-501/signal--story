@@ -6,7 +6,7 @@ from .driver_generator import DriverGenerator
 from .evidence_scorer import EvidenceScorer
 from .contradiction_engine import ContradictionEngine
 from .driver_ranker import DriverRanker
-from .diagnosis import DiagnosisFormatter
+from .diagnosis import DiagnosisFormatter, DiagnosisGate
 
 def run_analysis(request: dict) -> dict:
     dm = AnalyticalDataModel()
@@ -16,7 +16,8 @@ def run_analysis(request: dict) -> dict:
     event = detector.detect_event(request)
     
     if event["baseline_status"] != "VALID":
-        return DiagnosisFormatter.format_diagnosis(event, [], "NOT_ESTABLISHED")
+        unestablished_diagnosis = DiagnosisGate.evaluate(event, [])
+        return DiagnosisFormatter.format_diagnosis(event, [], unestablished_diagnosis)
 
     # 2. Generate Candidate Drivers
     generator = DriverGenerator(dm)
@@ -29,12 +30,14 @@ def run_analysis(request: dict) -> dict:
     contradictor = ContradictionEngine(dm)
     candidates = contradictor.evaluate_contradictions(candidates, event)
     
-    # 5. Rank and Finalize
-    ranked_candidates = DriverRanker.rank_candidates(candidates)
-    overall_status = DriverRanker.determine_overall_status(ranked_candidates)
+    # 5. Rank Hypotheses
+    ranked_hypotheses = DriverRanker.rank_candidates(candidates)
     
-    # 6. Format Output
-    return DiagnosisFormatter.format_diagnosis(event, ranked_candidates, overall_status)
+    # 6. Evaluate Diagnosis Gate
+    diagnosis = DiagnosisGate.evaluate(event, ranked_hypotheses)
+    
+    # 7. Format Output
+    return DiagnosisFormatter.format_diagnosis(event, ranked_hypotheses, diagnosis)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run Deterministic Cross-Source Analytical Engine")

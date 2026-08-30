@@ -1,0 +1,27 @@
+{
+  "evaluation_mode": "MOCK",
+  "trials_run": 1,
+  "mrr": 0.6429,
+  "mrr_denominator": 7,
+  "mrr_scenario_map": {
+    "S001": 0.5,
+    "S002": 0.5,
+    "S003": 1.0,
+    "S004": 1.0,
+    "S005": 1.0,
+    "S006": 0.0,
+    "S007": 0.5
+  },
+  "top1_accuracy": 0.5,
+  "top3_recall": 0.875,
+  "established_driver_accuracy": 0.5,
+  "status_accuracy": 0.375,
+  "s008_uncertainty_accuracy": 1.0,
+  "mean_grounding_rate": 1.0,
+  "mean_unsupported_claim_rate": 0.0,
+  "top_driver_consistency": 1.0,
+  "status_consistency": 1.0,
+  "token_telemetry_status": "ESTIMATED_ONLY",
+  "latency_p50_ms": 0.44,
+  "latency_p95_ms": 0.81
+}
