@@ -24,6 +24,7 @@ from src.analytics.run_analysis import run_analysis
 from src.phase3b.engine import Phase3BReasoningEngine
 from src.phase3b.mock_reasoning_provider import MockReasoningProvider
 from src.phase3b.llm_provider import LLMReasoningProvider, LLMConfig
+from src.governance.data_quality import evaluate_data_trust
 
 DOTENV_PATH = PROJECT_ROOT / ".env"
 
@@ -236,11 +237,13 @@ def execute_decision_analysis(req_data: Dict[str, Any]) -> Dict[str, Any]:
 
     # 5. Build Safe UI Response Payload
     kpi_contract_snippet = load_kpi_contract(req.get("kpi")).get("kpi")
+    data_trust_report = evaluate_data_trust(target_date=req.get("date"), target_market=req.get("market"))
 
     ui_response = {
         "scenario_id": req_data.get("scenario_id", "CUSTOM"),
         "request": req,
         "kpi_contract": kpi_contract_snippet,
+        "data_trust": data_trust_report,
         "phase3a": p3a_payload,
         "phase3b": p3b_payload,
         "metadata": {
@@ -300,6 +303,15 @@ class DecisionIntelligenceRequestHandler(BaseHTTPRequestHandler):
             status_code = contract_resp.get("status", 200) if "error" in contract_resp else 200
             self._set_headers(status_code, "application/json")
             self.wfile.write(json.dumps(contract_resp, indent=2).encode("utf-8"))
+            return
+
+        if path == "/api/data-trust":
+            qs = parse_qs(parsed_path.query)
+            target_date = qs.get("date", [None])[0]
+            target_market = qs.get("market", [None])[0]
+            trust_report = evaluate_data_trust(target_date=target_date, target_market=target_market)
+            self._set_headers(200, "application/json")
+            self.wfile.write(json.dumps(trust_report, indent=2).encode("utf-8"))
             return
 
         # Serve static assets

@@ -1416,6 +1416,70 @@ body {
   font-weight: 500;
 }
 
+/* Data Trust Header Badge (Phase 5.2B) */
+.data-trust-header-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.trust-dot {
+  font-size: 10px;
+  line-height: 1;
+}
+
+.trust-dot-trusted {
+  color: var(--color-success);
+}
+
+.trust-dot-review,
+.trust-dot-acceptable {
+  color: var(--color-warning);
+}
+
+.trust-dot-degraded,
+.trust-dot-blocked {
+  color: var(--color-danger);
+}
+
+/* Data Quality Metrics Grid (View 1) */
+.data-quality-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.dq-metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background-color: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+
+.dq-lbl {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.dq-val {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
 /* Responsive */
 @media (max-width: 1400px) {
   .executive-cards-grid {
@@ -1423,6 +1487,9 @@ body {
   }
   .executive-lower-layout {
     grid-template-columns: 1fr;
+  }
+  .data-quality-metrics-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -1446,4 +1513,8 @@ body {
   .kpi-gov-summary-grid {
     grid-template-columns: 1fr;
   }
+  .data-quality-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
+

@@ -1,0 +1,332 @@
+{
+  "version": "1.0.0",
+  "schema": "Accenture Enterprise Data Trust & Quality Contract Specification",
+  "organization": "Accenture Decision Intelligence Platform / Signal Story",
+  "evaluated_scope": "prototype_metadata",
+  "datasets": {
+    "fact_sales_monthly.csv": {
+      "dataset_name": "fact_sales_monthly.csv",
+      "business_purpose": "Canonical transactional sales records tracking gross volume, net revenue, and return deductions.",
+      "expected_grain": "Monthly by Market, Customer Code, Product Code, Channel",
+      "required_columns": [
+        "date",
+        "product_code",
+        "customer_code",
+        "Qty",
+        "gross_qty",
+        "return_qty",
+        "signed_sales_amount",
+        "gross_sales_amount",
+        "return_sales_amount"
+      ],
+      "date_column": "date",
+      "freshness_policy": "Monthly batch aggregation at T+1 calendar day following accounting period close",
+      "expected_update_cadence": "Monthly batch",
+      "null_tolerance": {
+        "date": 0.0,
+        "product_code": 0.0,
+        "customer_code": 0.0,
+        "gross_sales_amount": 0.0,
+        "signed_sales_amount": 0.0
+      },
+      "duplicate_policy": "Zero duplicate natural keys on (date, product_code, customer_code)",
+      "valid_range_rules": {
+        "gross_sales_amount": ">= 0.0",
+        "gross_qty": ">= 0.0",
+        "return_qty": ">= 0.0"
+      },
+      "source_type": "ERP Financial Ledger Extraction",
+      "lineage_reference": "ERP Sales System -> Data/Processed/fact_sales_monthly.csv",
+      "sensitivity_classification": "Confidential - Commercial Financial Performance",
+      "minimum_quality_score": 95.0,
+      "trust_status_rules": {
+        "TRUSTED": "Score >= 95.0 AND zero missing critical columns AND coverage complete for analysis window",
+        "ACCEPTABLE": "Score >= 85.0 AND coverage complete",
+        "DEGRADED": "Score < 85.0 OR minor temporal gap",
+        "BLOCKED": "Dataset missing OR missing mandatory primary keys OR incomplete requested period"
+      }
+    },
+    "fact_inventory_monthly.csv": {
+      "dataset_name": "fact_inventory_monthly.csv",
+      "business_purpose": "Warehouse stock levels, receipt logs, and stockout incident telemetry.",
+      "expected_grain": "Monthly by Market, Product Code",
+      "required_columns": [
+        "date",
+        "product_code",
+        "market",
+        "opening_stock_units",
+        "received_units",
+        "closing_stock_units",
+        "stockout_flag",
+        "stockout_hours"
+      ],
+      "date_column": "date",
+      "freshness_policy": "Monthly inventory snapshot reconciliation",
+      "expected_update_cadence": "Monthly batch",
+      "null_tolerance": {
+        "date": 0.0,
+        "product_code": 0.0,
+        "market": 0.0,
+        "stockout_flag": 0.0
+      },
+      "duplicate_policy": "Zero duplicate natural keys on (date, product_code, market)",
+      "valid_range_rules": {
+        "closing_stock_units": ">= 0.0",
+        "stockout_hours": ">= 0.0",
+        "stockout_flag": "IN [0, 1]"
+      },
+      "source_type": "WMS Warehouse Inventory Ledger",
+      "lineage_reference": "Warehouse Management System -> Data/Processed/fact_inventory_monthly.csv",
+      "sensitivity_classification": "Internal Operational Data",
+      "minimum_quality_score": 95.0,
+      "trust_status_rules": {
+        "TRUSTED": "Score >= 95.0 AND zero stockout_flag nulls",
+        "ACCEPTABLE": "Score >= 85.0",
+        "DEGRADED": "Score < 85.0",
+        "BLOCKED": "Dataset missing OR missing required columns"
+      }
+    },
+    "fact_marketing_monthly.csv": {
+      "dataset_name": "fact_marketing_monthly.csv",
+      "business_purpose": "Promotional campaign capital allocation, impression reach, click engagement, and conversions.",
+      "expected_grain": "Monthly by Campaign ID, Market, Product Code, Channel",
+      "required_columns": [
+        "campaign_id",
+        "date",
+        "product_code",
+        "market",
+        "spend",
+        "impressions",
+        "clicks",
+        "conversions"
+      ],
+      "date_column": "date",
+      "freshness_policy": "Monthly digital ad network spend ingestion",
+      "expected_update_cadence": "Monthly batch",
+      "null_tolerance": {
+        "campaign_id": 0.0,
+        "date": 0.0,
+        "spend": 0.0,
+        "clicks": 0.0
+      },
+      "duplicate_policy": "Zero duplicate campaign_id rows per period",
+      "valid_range_rules": {
+        "spend": ">= 0.0",
+        "impressions": ">= 0.0",
+        "clicks": ">= 0.0",
+        "conversions": ">= 0.0"
+      },
+      "source_type": "Ad Platforms & Web Analytics ETL",
+      "lineage_reference": "Google Ads / Trade Desk API -> Data/Processed/fact_marketing_monthly.csv",
+      "sensitivity_classification": "Internal Commercial Performance",
+      "minimum_quality_score": 95.0,
+      "trust_status_rules": {
+        "TRUSTED": "Score >= 95.0 AND zero negative spend values",
+        "ACCEPTABLE": "Score >= 85.0",
+        "DEGRADED": "Score < 85.0",
+        "BLOCKED": "Dataset missing OR unparseable spend telemetry"
+      }
+    },
+    "fact_competitor_pricing_monthly.csv": {
+      "dataset_name": "fact_competitor_pricing_monthly.csv",
+      "business_purpose": "Benchmarked competitor price points and percentage price differential indices.",
+      "expected_grain": "Monthly by Market, Product Code",
+      "required_columns": [
+        "date",
+        "product_code",
+        "market",
+        "our_price",
+        "average_competitor_price",
+        "price_gap_percent"
+      ],
+      "date_column": "date",
+      "freshness_policy": "Monthly pricing index web syndicate feed",
+      "expected_update_cadence": "Monthly batch",
+      "null_tolerance": {
+        "date": 0.0,
+        "product_code": 0.0,
+        "market": 0.0,
+        "our_price": 0.0,
+        "average_competitor_price": 0.0
+      },
+      "duplicate_policy": "Zero duplicate natural keys on (date, product_code, market)",
+      "valid_range_rules": {
+        "our_price": "> 0.0",
+        "average_competitor_price": "> 0.0"
+      },
+      "source_type": "Competitive Intelligence Syndicate Feed",
+      "lineage_reference": "Pricing Web Scraping / Retail Audits -> Data/Processed/fact_competitor_pricing_monthly.csv",
+      "sensitivity_classification": "Restricted Competitive Intelligence",
+      "minimum_quality_score": 95.0,
+      "trust_status_rules": {
+        "TRUSTED": "Score >= 95.0",
+        "ACCEPTABLE": "Score >= 85.0",
+        "DEGRADED": "Score < 85.0",
+        "BLOCKED": "Dataset missing"
+      }
+    },
+    "fact_support_tickets.csv": {
+      "dataset_name": "fact_support_tickets.csv",
+      "business_purpose": "Customer service inquiries, ticket categories, sentiment scores, and resolution duration.",
+      "expected_grain": "Individual ticket incident event",
+      "required_columns": [
+        "ticket_id",
+        "date",
+        "customer_code",
+        "product_code",
+        "market",
+        "sentiment",
+        "priority"
+      ],
+      "date_column": "date",
+      "freshness_policy": "Monthly support CRM synchronization",
+      "expected_update_cadence": "Monthly batch",
+      "null_tolerance": {
+        "ticket_id": 0.0,
+        "date": 0.0,
+        "customer_code": 0.0
+      },
+      "duplicate_policy": "Zero duplicate ticket_id values",
+      "valid_range_rules": {
+        "sentiment": "IN ['positive', 'neutral', 'negative']",
+        "priority": "IN ['Low', 'Medium', 'High', 'Critical']"
+      },
+      "source_type": "Customer Service Helpdesk Platform",
+      "lineage_reference": "Zendesk / Salesforce Service Cloud -> Data/Processed/fact_support_tickets.csv",
+      "sensitivity_classification": "Internal Operational Quality",
+      "minimum_quality_score": 90.0,
+      "trust_status_rules": {
+        "TRUSTED": "Score >= 90.0",
+        "ACCEPTABLE": "Score >= 80.0",
+        "DEGRADED": "Score < 80.0",
+        "BLOCKED": "Dataset missing"
+      }
+    },
+    "fact_crm_notes.csv": {
+      "dataset_name": "fact_crm_notes.csv",
+      "business_purpose": "Qualitative sales account notes, customer feedback transcripts, and churn risks.",
+      "expected_grain": "Individual account note event",
+      "required_columns": [
+        "note_id",
+        "date",
+        "customer_code",
+        "product_code",
+        "market",
+        "note_text"
+      ],
+      "date_column": "date",
+      "freshness_policy": "Monthly CRM activity export",
+      "expected_update_cadence": "Monthly batch",
+      "null_tolerance": {
+        "note_id": 0.0,
+        "date": 0.0
+      },
+      "duplicate_policy": "Zero duplicate note_id values",
+      "valid_range_rules": {
+        "note_text": "non_empty"
+      },
+      "source_type": "Enterprise CRM Account Log",
+      "lineage_reference": "HubSpot / Salesforce CRM -> Data/Processed/fact_crm_notes.csv",
+      "sensitivity_classification": "Confidential - Commercial Sales Relations",
+      "minimum_quality_score": 90.0,
+      "trust_status_rules": {
+        "TRUSTED": "Score >= 90.0",
+        "ACCEPTABLE": "Score >= 80.0",
+        "DEGRADED": "Score < 80.0",
+        "BLOCKED": "Dataset missing"
+      }
+    },
+    "dim_product.csv": {
+      "dataset_name": "dim_product.csv",
+      "business_purpose": "Product master taxonomy, division, category, and variant mapping.",
+      "expected_grain": "Individual product SKU code",
+      "required_columns": [
+        "product_code",
+        "division",
+        "segment",
+        "category",
+        "product",
+        "variant"
+      ],
+      "date_column": null,
+      "freshness_policy": "Product Master Catalog sync",
+      "expected_update_cadence": "Quarterly / On product release",
+      "null_tolerance": {
+        "product_code": 0.0,
+        "category": 0.0
+      },
+      "duplicate_policy": "Zero duplicate product_code values",
+      "valid_range_rules": {},
+      "source_type": "MDM Product Master System",
+      "lineage_reference": "Master Data Management (MDM) -> Data/Processed/dim_product.csv",
+      "sensitivity_classification": "Internal Product Catalog",
+      "minimum_quality_score": 98.0,
+      "trust_status_rules": {
+        "TRUSTED": "Score >= 98.0",
+        "ACCEPTABLE": "Score >= 90.0",
+        "DEGRADED": "Score < 90.0",
+        "BLOCKED": "Dataset missing"
+      }
+    },
+    "dim_customer.csv": {
+      "dataset_name": "dim_customer.csv",
+      "business_purpose": "Customer account master, market mapping, platform, and distribution channel.",
+      "expected_grain": "Individual customer account code",
+      "required_columns": [
+        "customer_code",
+        "customer",
+        "market",
+        "platform",
+        "channel"
+      ],
+      "date_column": null,
+      "freshness_policy": "Customer Master Account sync",
+      "expected_update_cadence": "Monthly",
+      "null_tolerance": {
+        "customer_code": 0.0,
+        "market": 0.0
+      },
+      "duplicate_policy": "Zero duplicate customer_code values",
+      "valid_range_rules": {},
+      "source_type": "MDM Customer Account Master",
+      "lineage_reference": "Customer Master -> Data/Processed/dim_customer.csv",
+      "sensitivity_classification": "Internal Customer Directory",
+      "minimum_quality_score": 98.0,
+      "trust_status_rules": {
+        "TRUSTED": "Score >= 98.0",
+        "ACCEPTABLE": "Score >= 90.0",
+        "DEGRADED": "Score < 90.0",
+        "BLOCKED": "Dataset missing"
+      }
+    },
+    "dim_market.csv": {
+      "dataset_name": "dim_market.csv",
+      "business_purpose": "Geographic market master, regional grouping, and commercial sub-zone hierarchy.",
+      "expected_grain": "Individual geographic market code",
+      "required_columns": [
+        "market",
+        "sub_zone",
+        "region"
+      ],
+      "date_column": null,
+      "freshness_policy": "Territory Master Catalog sync",
+      "expected_update_cadence": "Annual / On territorial reorganization",
+      "null_tolerance": {
+        "market": 0.0,
+        "region": 0.1
+      },
+      "duplicate_policy": "Zero duplicate market names",
+      "valid_range_rules": {},
+      "source_type": "Enterprise Geographic Hierarchy Master",
+      "lineage_reference": "Territory Master -> Data/Processed/dim_market.csv",
+      "sensitivity_classification": "Public / Internal Geographic Taxonomy",
+      "minimum_quality_score": 90.0,
+      "trust_status_rules": {
+        "TRUSTED": "Score >= 90.0",
+        "ACCEPTABLE": "Score >= 80.0",
+        "DEGRADED": "Score < 80.0",
+        "BLOCKED": "Dataset missing"
+      }
+    }
+  }
+}

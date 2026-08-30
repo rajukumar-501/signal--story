@@ -129,6 +129,11 @@
         </div>
 
         <div class="header-right">
+          <div class="data-trust-header-badge" id="header-data-trust-badge" title="Accenture Deterministic Data Trust Status">
+            <span class="trust-dot trust-dot-trusted" id="header-trust-dot">●</span>
+            <span id="header-trust-text">Data Trust: Trusted (99.8%)</span>
+          </div>
+
           <div class="engine-toggles-clean">
             <button id="mode-mock" class="toggle-btn active" data-mode="mock">Preview</button>
             <button id="mode-gemini" class="toggle-btn" data-mode="gemini">Assisted Analysis</button>
@@ -334,6 +339,45 @@
               </div>
             </div>
 
+          </div>
+
+          <!-- Data Quality & Coverage Summary Card (Phase 5.2B) -->
+          <div class="clean-card mt-6">
+            <div class="card-header-clean">
+              <div>
+                <h3 class="section-title-clean">Data Quality & Evidence Coverage</h3>
+                <span class="section-sub-clean">Deterministic data trust verification for the active analysis period</span>
+              </div>
+              <span class="status-badge badge-success" id="view1-trust-badge">Trusted (99.8%)</span>
+            </div>
+            <div class="card-body-clean">
+              <div class="data-quality-metrics-grid">
+                <div class="dq-metric-item">
+                  <span class="dq-lbl">Quality Score</span>
+                  <span class="dq-val val-success" id="v1-dq-score">99.8%</span>
+                </div>
+                <div class="dq-metric-item">
+                  <span class="dq-lbl">Temporal Coverage</span>
+                  <span class="dq-val" id="v1-dq-coverage">Complete (36 Mo)</span>
+                </div>
+                <div class="dq-metric-item">
+                  <span class="dq-lbl">Latest Available Data</span>
+                  <span class="dq-val" id="v1-dq-latest">Aug 2021</span>
+                </div>
+                <div class="dq-metric-item">
+                  <span class="dq-lbl">Update Cadence</span>
+                  <span class="dq-val" id="v1-dq-cadence">Monthly Batch</span>
+                </div>
+                <div class="dq-metric-item">
+                  <span class="dq-lbl">Quality Checks</span>
+                  <span class="dq-val val-success" id="v1-dq-checks">40 / 40 Passed</span>
+                </div>
+                <div class="dq-metric-item">
+                  <span class="dq-lbl">Critical Blockers</span>
+                  <span class="dq-val" id="v1-dq-blockers">None (0)</span>
+                </div>
+              </div>
+            </div>
           </div>
 
         </section>
@@ -575,6 +619,35 @@
                   <span class="gov-v" id="gov-kpi-access">Confidential • Executive Leadership, Commercial Finance, RevOps</span>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- Data Trust & Quality Verification Card (Phase 5.2B) -->
+          <div class="clean-card mt-6">
+            <div class="card-header-clean">
+              <div>
+                <h3 class="section-title-clean">Data Trust & Dataset Quality Verification</h3>
+                <span class="section-sub-clean">Deterministic schema validation, null-rate audits, and temporal coverage verification across 9 warehouse tables</span>
+              </div>
+              <span class="count-pill-clean" id="view3-trust-summary-pill">9 Datasets Audited</span>
+            </div>
+            <div class="table-clean-wrap">
+              <table class="enterprise-table">
+                <thead>
+                  <tr>
+                    <th>Canonical Dataset</th>
+                    <th>Business Purpose</th>
+                    <th>Records</th>
+                    <th>Latest Data Date</th>
+                    <th>Coverage</th>
+                    <th>Quality Score</th>
+                    <th>Trust Status</th>
+                  </tr>
+                </thead>
+                <tbody id="trace-datatrust-body">
+                  <!-- Populated dynamically via app.js -->
+                </tbody>
+              </table>
             </div>
           </div>
 
