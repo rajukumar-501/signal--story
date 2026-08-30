@@ -80,6 +80,22 @@ function bindEvents() {
     btnExport.addEventListener('click', () => exportDecisionReport());
   }
 
+  // KPI Semantic Governance Contract Buttons
+  const btnKpiGov = document.getElementById('btn-kpi-governance');
+  if (btnKpiGov) {
+    btnKpiGov.addEventListener('click', () => openKpiContractModal());
+  }
+
+  const kpiTagClickable = document.getElementById('card1-kpi-tag');
+  if (kpiTagClickable) {
+    kpiTagClickable.addEventListener('click', () => openKpiContractModal());
+  }
+
+  const btnExpandKpi = document.getElementById('btn-expand-kpi-card');
+  if (btnExpandKpi) {
+    btnExpandKpi.addEventListener('click', () => openKpiContractModal());
+  }
+
   // Sidebar View Navigation
   navItems.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -542,10 +558,31 @@ function renderTrustView(data) {
   const p3a = data.phase3a || {};
   const p3b = data.phase3b || {};
   const meta = data.metadata || {};
+  const contract = data.kpi_contract || {};
+  const req = data.request || {};
+  const kpiId = req.kpi || 'gross_sales';
 
   const provText = document.getElementById('trace-provenance-name');
   if (provText) {
     provText.textContent = appState.providerMode === 'gemini' ? 'Assisted Analysis' : 'Preview';
+  }
+
+  // KPI Governance Summary Card (View 3)
+  const govName = document.getElementById('gov-kpi-name');
+  const govGrain = document.getElementById('gov-kpi-grain');
+  const govCalc = document.getElementById('gov-kpi-calc');
+  const govBaseline = document.getElementById('gov-kpi-baseline');
+  const govThreshold = document.getElementById('gov-kpi-threshold');
+  const govAccess = document.getElementById('gov-kpi-access');
+
+  if (govName) govName.textContent = `${contract.name || formatMetricName(kpiId)} (${kpiId})`;
+  if (govGrain) govGrain.textContent = `${contract.unit || 'USD ($)'} • ${contract.grain || 'Monthly'}`;
+  if (govCalc) govCalc.textContent = contract.calculation || 'SUM(amount)';
+  if (govBaseline) govBaseline.textContent = contract.baseline_method || '3-Month Rolling Average';
+  if (govThreshold) govThreshold.textContent = contract.materiality_threshold || 'Absolute deviation >= 15.0%';
+  if (govAccess) {
+    const roles = (contract.access_roles || ['Executive Leadership', 'Commercial Finance']).join(', ');
+    govAccess.textContent = `${contract.sensitivity_classification || 'Confidential'} • ${roles}`;
   }
 
   // Lineage Table
@@ -569,6 +606,115 @@ function renderTrustView(data) {
     }
   }
 }
+
+/**
+ * Open KPI Semantic Governance Contract Modal
+ */
+window.openKpiContractModal = async function (kpiId) {
+  const modal = document.getElementById('kpi-modal');
+  const modalTitle = document.getElementById('modal-kpi-title');
+  const modalBody = document.getElementById('modal-kpi-body');
+
+  if (!modal || !modalTitle || !modalBody) return;
+
+  const targetKpi = kpiId || appState.currentData?.request?.kpi || 'gross_sales';
+
+  // Show modal with loading state
+  modal.classList.remove('hidden');
+  modalTitle.textContent = `Loading specification for ${formatMetricName(targetKpi)}…`;
+  modalBody.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--text-muted);">Fetching Accenture KPI Semantic Contract…</div>';
+
+  try {
+    const res = await fetch(`/api/kpi-contract?kpi_id=${encodeURIComponent(targetKpi)}`);
+    if (!res.ok) throw new Error('Contract metadata not available');
+    const json = await res.json();
+    const kpiData = json.kpi || json;
+
+    modalTitle.textContent = `${kpiData.name || formatMetricName(targetKpi)} (${kpiData.kpi_id || targetKpi})`;
+
+    const driversHtml = (kpiData.candidate_drivers || [])
+      .map(
+        (d) => `
+        <div class="kpi-driver-item">
+          <div class="kpi-driver-head">
+            <span class="kpi-driver-pill">${d.driver_id || 'DRIVER'}</span>
+            <span class="kpi-driver-name">${d.name || ''}</span>
+          </div>
+          <p class="kpi-driver-mech">${d.impact_mechanism || ''}</p>
+        </div>`
+      )
+      .join('');
+
+    const sourceDatasets = (kpiData.source_datasets || []).map((s) => `<code>${s}</code>`).join(' • ');
+    const accessRoles = (kpiData.access_roles || []).map((r) => `<span class="count-pill-clean">${r}</span>`).join(' ');
+
+    modalBody.innerHTML = `
+      <div class="kpi-modal-section">
+        <span class="kpi-section-title">1. Business Definition</span>
+        <p class="kpi-section-content">${kpiData.business_definition || 'No definition specified.'}</p>
+      </div>
+
+      <div class="kpi-modal-section">
+        <span class="kpi-section-title">2. Calculation Formula & Aggregation Grain</span>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div><span class="sub-lbl">Mathematical / SQL Formula:</span> <code class="gov-code">${kpiData.calculation || 'N/A'}</code></div>
+          <div><span class="sub-lbl">Unit of Measure:</span> <strong>${kpiData.unit || 'USD ($)'}</strong></div>
+          <div><span class="sub-lbl">Reporting Grain:</span> ${kpiData.grain || 'Monthly'}</div>
+        </div>
+      </div>
+
+      <div class="kpi-modal-section">
+        <span class="kpi-section-title">3. Anomaly Baseline & Materiality Threshold</span>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div><span class="sub-lbl">Baseline Methodology:</span> ${kpiData.baseline_method || '3-Month Rolling Average'}</div>
+          <div><span class="sub-lbl">Materiality Gate:</span> ${kpiData.materiality_threshold || 'Absolute deviation >= 15.0%'}</div>
+          <div><span class="sub-lbl">Analytical Engine:</span> ${kpiData.analytical_method || 'Deterministic SQL/Pandas + Multi-source causal arbitration'}</div>
+        </div>
+      </div>
+
+      <div class="kpi-modal-section">
+        <span class="kpi-section-title">4. Candidate Causal Drivers (${(kpiData.candidate_drivers || []).length} Hypotheses)</span>
+        <div class="kpi-drivers-grid">${driversHtml || '<p class="ev-desc-clean">No candidate drivers mapped.</p>'}</div>
+      </div>
+
+      <div class="kpi-modal-section">
+        <span class="kpi-section-title">5. Source Datasets, Freshness & Lineage Path</span>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div><span class="sub-lbl">Source Canonical Tables:</span> ${sourceDatasets || 'N/A'}</div>
+          <div><span class="sub-lbl">Cadence / Freshness:</span> ${kpiData.source_freshness || 'Monthly batch ETL'}</div>
+          <div><span class="sub-lbl">Lineage Trace:</span> <code class="gov-code">${kpiData.lineage_reference || 'N/A'}</code></div>
+        </div>
+      </div>
+
+      <div class="kpi-modal-section">
+        <span class="kpi-section-title">6. Governance, Access Roles & Security Classification</span>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div><span class="sub-lbl">Sensitivity Classification:</span> <strong>${kpiData.sensitivity_classification || 'Confidential'}</strong></div>
+          <div><span class="sub-lbl">Authorized Roles:</span> <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">${accessRoles}</div></div>
+        </div>
+      </div>
+    `;
+  } catch (err) {
+    modalBody.innerHTML = `<div style="padding: 24px; color: var(--color-danger);">Failed to load KPI contract: ${err.message}</div>`;
+  }
+};
+
+/**
+ * Close KPI Semantic Governance Contract Modal
+ */
+window.closeKpiContractModal = function () {
+  const modal = document.getElementById('kpi-modal');
+  if (modal) modal.classList.add('hidden');
+};
+
+// Close modal on backdrop click or ESC key
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeKpiContractModal();
+});
+document.addEventListener('click', (e) => {
+  const modal = document.getElementById('kpi-modal');
+  if (modal && e.target === modal) closeKpiContractModal();
+});
 
 /**
  * Interactive Evidence Citation Click Navigation

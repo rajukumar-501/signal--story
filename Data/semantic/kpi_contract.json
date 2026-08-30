@@ -1,0 +1,298 @@
+{
+  "version": "1.0.0",
+  "schema": "Accenture KPI & Semantic Governance Contract Specification",
+  "organization": "Accenture Decision Intelligence Platform / Signal Story",
+  "last_updated": "2026-08-31",
+  "kpis": {
+    "gross_sales": {
+      "kpi_id": "gross_sales",
+      "name": "Gross Sales",
+      "business_definition": "Total unadjusted top-line invoiced sales volume generated before returns, allowances, discounts, or post-sale cancellations.",
+      "unit": "USD ($)",
+      "calculation": "SUM(gross_sales_amount)",
+      "grain": "Monthly by Market, Customer, Product Code, Channel",
+      "baseline_method": "3-Month Rolling Unweighted Arithmetic Mean (T-1, T-2, T-3)",
+      "materiality_threshold": "Absolute deviation >= 15.0% versus 3-month rolling baseline or MoM swing >= 20.0%",
+      "candidate_drivers": [
+        {
+          "driver_id": "DRIVER_01_INVENTORY",
+          "name": "Inventory / Availability",
+          "telemetry_dataset": "fact_inventory_monthly.csv",
+          "impact_mechanism": "Stockouts or low stock prevent product fulfillment and suppress top-line volume."
+        },
+        {
+          "driver_id": "DRIVER_02_PRICING",
+          "name": "Competitive Pricing Pressure",
+          "telemetry_dataset": "fact_competitor_pricing_monthly.csv",
+          "impact_mechanism": "Competitor discounts or wider positive price gap drive demand substitution."
+        },
+        {
+          "driver_id": "DRIVER_03_MARKETING",
+          "name": "Marketing Effectiveness",
+          "telemetry_dataset": "fact_marketing_monthly.csv",
+          "impact_mechanism": "Campaign spend changes, conversion drops, or traffic shifts alter customer acquisition funnel."
+        },
+        {
+          "driver_id": "DRIVER_04_RETURNS",
+          "name": "Returns Spike",
+          "telemetry_dataset": "fact_sales_monthly.csv",
+          "impact_mechanism": "Surging return volumes indicate product dissatisfaction or channel distribution issues."
+        },
+        {
+          "driver_id": "DRIVER_05_SUPPORT",
+          "name": "Customer Service / Support Deterioration",
+          "telemetry_dataset": "fact_support_tickets.csv",
+          "impact_mechanism": "Customer service escalation, unresolved complaints, or negative sentiment dampens repeat purchases."
+        },
+        {
+          "driver_id": "DRIVER_06_CUSTOMER",
+          "name": "Customer / Segment Change",
+          "telemetry_dataset": "dim_customer.csv",
+          "impact_mechanism": "Concentration drop or purchasing reduction in specific customer tiers or channels."
+        },
+        {
+          "driver_id": "DRIVER_07_MARKET",
+          "name": "Market / Regional Change",
+          "telemetry_dataset": "dim_market.csv",
+          "impact_mechanism": "Macroeconomic or regional contraction localized to specific geographic jurisdictions."
+        },
+        {
+          "driver_id": "DRIVER_08_PRODUCT_MIX",
+          "name": "Product / Category Mix Shift",
+          "telemetry_dataset": "dim_product.csv",
+          "impact_mechanism": "Internal cannibalization or customer shift toward alternative category segments."
+        },
+        {
+          "driver_id": "DRIVER_09_UNEXPLAINED",
+          "name": "Unexplained / Insufficient Evidence",
+          "telemetry_dataset": "N/A",
+          "impact_mechanism": "No single candidate driver meets evidence threshold; uncertainty preserved."
+        }
+      ],
+      "source_datasets": [
+        "fact_sales_monthly.csv",
+        "dim_market.csv",
+        "dim_product.csv",
+        "dim_customer.csv"
+      ],
+      "source_freshness": "Monthly batch ETL processed at T+1 calendar day following accounting period close",
+      "analytical_method": "Deterministic SQL/Pandas aggregation (Phase 3A) + Multi-source causal arbitration (Phase 3B)",
+      "lineage_reference": "ERP Sales Ledger -> Data/Processed/fact_sales_monthly.csv -> AnalyticalDataModel.get_sales() -> KPIEngine.gross_sales() -> EventDetector.detect_event()",
+      "access_roles": [
+        "Executive Leadership",
+        "Commercial Finance",
+        "Revenue Operations",
+        "Regional Business Unit Lead"
+      ],
+      "sensitivity_classification": "Confidential - Commercial Performance"
+    },
+    "category_share": {
+      "kpi_id": "category_share",
+      "name": "Category Share",
+      "business_definition": "Proportion of total market sales volume accounted for by a specific category segment or product group within a target geographic market.",
+      "unit": "Percentage (%)",
+      "calculation": "SUM(gross_sales_amount[Category, Market]) / SUM(gross_sales_amount[Total Market])",
+      "grain": "Monthly by Market, Category Segment",
+      "baseline_method": "3-Month Rolling Unweighted Arithmetic Mean (T-1, T-2, T-3)",
+      "materiality_threshold": "Absolute market share swing >= 2.5 percentage points or relative change >= 10.0%",
+      "candidate_drivers": [
+        {
+          "driver_id": "DRIVER_08_PRODUCT_MIX",
+          "name": "Product / Category Mix Shift",
+          "telemetry_dataset": "dim_product.csv",
+          "impact_mechanism": "Cross-category portfolio substitution or shifting consumer preference toward adjacent categories."
+        },
+        {
+          "driver_id": "DRIVER_02_PRICING",
+          "name": "Competitive Pricing Pressure",
+          "telemetry_dataset": "fact_competitor_pricing_monthly.csv",
+          "impact_mechanism": "Relative category price premiums causing category-level demand migration."
+        },
+        {
+          "driver_id": "DRIVER_03_MARKETING",
+          "name": "Marketing Effectiveness",
+          "telemetry_dataset": "fact_marketing_monthly.csv",
+          "impact_mechanism": "Reallocation of promotional investments across category portfolios."
+        }
+      ],
+      "source_datasets": [
+        "fact_sales_monthly.csv",
+        "dim_market.csv",
+        "dim_product.csv"
+      ],
+      "source_freshness": "Monthly batch ETL processed at T+1 calendar day following accounting period close",
+      "analytical_method": "Comparative portfolio ratio aggregation (Phase 3A) + Category mix diagnostic (Phase 3B)",
+      "lineage_reference": "ERP Sales Ledger -> Data/Processed/fact_sales_monthly.csv -> AnalyticalDataModel.get_joined_sales() -> KPIEngine.share_percentage() -> EventDetector.detect_event()",
+      "access_roles": [
+        "Executive Leadership",
+        "Product Management",
+        "Category Strategy",
+        "Commercial Finance"
+      ],
+      "sensitivity_classification": "Confidential - Market Portfolio Strategy"
+    },
+    "signed_net_revenue": {
+      "kpi_id": "signed_net_revenue",
+      "name": "Signed Net Revenue",
+      "business_definition": "True net revenue recognized after subtracting validated return amounts from gross sales revenue.",
+      "unit": "USD ($)",
+      "calculation": "SUM(signed_sales_amount) [Strictly SUM(gross_sales_amount - return_sales_amount)]",
+      "grain": "Monthly by Market, Customer, Product Code, Channel",
+      "baseline_method": "3-Month Rolling Unweighted Arithmetic Mean (T-1, T-2, T-3)",
+      "materiality_threshold": "Absolute deviation >= 15.0% versus 3-month rolling baseline",
+      "candidate_drivers": [
+        {
+          "driver_id": "DRIVER_04_RETURNS",
+          "name": "Returns Spike",
+          "telemetry_dataset": "fact_sales_monthly.csv",
+          "impact_mechanism": "Direct reduction in net recognized revenue from product return claims."
+        },
+        {
+          "driver_id": "DRIVER_01_INVENTORY",
+          "name": "Inventory / Availability",
+          "telemetry_dataset": "fact_inventory_monthly.csv",
+          "impact_mechanism": "Gross volume restriction reducing revenue base."
+        }
+      ],
+      "source_datasets": [
+        "fact_sales_monthly.csv"
+      ],
+      "source_freshness": "Monthly batch ETL processed at T+1 calendar day following accounting period close",
+      "analytical_method": "Deterministic net calculation via KPIEngine.signed_net_revenue()",
+      "lineage_reference": "ERP Ledger -> fact_sales_monthly.csv -> KPIEngine.signed_net_revenue()",
+      "access_roles": [
+        "Chief Financial Officer",
+        "Commercial Finance",
+        "Executive Leadership"
+      ],
+      "sensitivity_classification": "Highly Confidential - Financial Reporting"
+    },
+    "return_rate": {
+      "kpi_id": "return_rate",
+      "name": "Return Rate",
+      "business_definition": "Ratio of returned merchandise quantity or monetary value relative to gross volume shipped.",
+      "unit": "Ratio / Percentage (%)",
+      "calculation": "SUM(return_qty) / SUM(gross_qty) [Unit Rate] or SUM(return_sales_amount) / SUM(gross_sales_amount) [Value Rate]",
+      "grain": "Monthly by Market, Product Code",
+      "baseline_method": "3-Month Rolling Average",
+      "materiality_threshold": "Return rate elevation >= 5.0 percentage points above baseline",
+      "candidate_drivers": [
+        {
+          "driver_id": "DRIVER_04_RETURNS",
+          "name": "Returns Spike",
+          "telemetry_dataset": "fact_sales_monthly.csv",
+          "impact_mechanism": "Defect clusters, shipment damage, or customer mismatch."
+        },
+        {
+          "driver_id": "DRIVER_05_SUPPORT",
+          "name": "Customer Service / Support Deterioration",
+          "telemetry_dataset": "fact_support_tickets.csv",
+          "impact_mechanism": "Support escalations resulting in return authorizations."
+        }
+      ],
+      "source_datasets": [
+        "fact_sales_monthly.csv",
+        "fact_crm_notes.csv"
+      ],
+      "source_freshness": "Monthly batch ETL processed at T+1 calendar day",
+      "analytical_method": "Deterministic ratio via KPIEngine.return_rate()",
+      "lineage_reference": "ERP Return Log -> fact_sales_monthly.csv -> KPIEngine.return_rate()",
+      "access_roles": [
+        "Quality Assurance",
+        "Supply Chain Operations",
+        "Customer Experience"
+      ],
+      "sensitivity_classification": "Internal Operational Quality Data"
+    },
+    "marketing_spend": {
+      "kpi_id": "marketing_spend",
+      "name": "Marketing Investment (Ad Spend)",
+      "business_definition": "Total direct marketing capital allocated across digital advertising channels, paid search, and promotional campaigns.",
+      "unit": "USD ($)",
+      "calculation": "SUM(spend)",
+      "grain": "Monthly by Market, Product Category, Channel",
+      "baseline_method": "3-Month Rolling Average or Budget Baseline",
+      "materiality_threshold": "Spend variance >= 20.0% versus planned allocation or prior rolling average",
+      "candidate_drivers": [
+        {
+          "driver_id": "DRIVER_03_MARKETING",
+          "name": "Marketing Effectiveness",
+          "telemetry_dataset": "fact_marketing_monthly.csv",
+          "impact_mechanism": "Investment scale changes altering acquisition efficiency."
+        }
+      ],
+      "source_datasets": [
+        "fact_marketing_monthly.csv"
+      ],
+      "source_freshness": "Monthly digital ad platform ingestion",
+      "analytical_method": "Deterministic spend aggregation via KPIEngine.marketing_spend()",
+      "lineage_reference": "Digital Ad Platforms -> fact_marketing_monthly.csv -> KPIEngine.marketing_spend()",
+      "access_roles": [
+        "Marketing Operations",
+        "Growth Strategy",
+        "Commercial Finance"
+      ],
+      "sensitivity_classification": "Internal Commercial Performance Data"
+    },
+    "conversion_rate": {
+      "kpi_id": "conversion_rate",
+      "name": "Marketing Conversion Rate",
+      "business_definition": "Percentage of marketing ad click interactions that result in completed commercial conversions or purchase transactions.",
+      "unit": "Percentage (%)",
+      "calculation": "SUM(conversions) / SUM(clicks)",
+      "grain": "Monthly by Market, Product Category, Campaign Channel",
+      "baseline_method": "3-Month Rolling Average",
+      "materiality_threshold": "Conversion rate decline >= 20.0% relative to rolling baseline",
+      "candidate_drivers": [
+        {
+          "driver_id": "DRIVER_03_MARKETING",
+          "name": "Marketing Effectiveness",
+          "telemetry_dataset": "fact_marketing_monthly.csv",
+          "impact_mechanism": "Landing page funnel friction, audience targeting mismatch, or creative fatigue."
+        }
+      ],
+      "source_datasets": [
+        "fact_marketing_monthly.csv"
+      ],
+      "source_freshness": "Monthly digital ad telemetry ETL",
+      "analytical_method": "Deterministic ratio via KPIEngine.conversion_rate()",
+      "lineage_reference": "Web Analytics / Ad Platforms -> fact_marketing_monthly.csv -> KPIEngine.conversion_rate()",
+      "access_roles": [
+        "Marketing Operations",
+        "Digital Product Team",
+        "Commercial Leadership"
+      ],
+      "sensitivity_classification": "Internal Commercial Performance Data"
+    },
+    "price_gap": {
+      "kpi_id": "price_gap",
+      "name": "Competitive Price Gap",
+      "business_definition": "Average percentage premium or discount of our product pricing relative to benchmarked competitor market pricing.",
+      "unit": "Percentage (%)",
+      "calculation": "AVG((our_price - average_competitor_price) / average_competitor_price)",
+      "grain": "Monthly by Market, Product Code",
+      "baseline_method": "Historical Competitive Pricing Index",
+      "materiality_threshold": "Price gap expansion >= 5.0 percentage points premium relative to baseline",
+      "candidate_drivers": [
+        {
+          "driver_id": "DRIVER_02_PRICING",
+          "name": "Competitive Pricing Pressure",
+          "telemetry_dataset": "fact_competitor_pricing_monthly.csv",
+          "impact_mechanism": "Competitor promotional discounting creating unfavorable price differential."
+        }
+      ],
+      "source_datasets": [
+        "fact_competitor_pricing_monthly.csv"
+      ],
+      "source_freshness": "Monthly competitor web scraping and syndicate pricing feed",
+      "analytical_method": "Mean price differential computation via KPIEngine.price_gap()",
+      "lineage_reference": "Competitor Intelligence Feed -> fact_competitor_pricing_monthly.csv -> KPIEngine.price_gap()",
+      "access_roles": [
+        "Pricing Strategy",
+        "Commercial Strategy Lead",
+        "Executive Leadership"
+      ],
+      "sensitivity_classification": "Restricted Competitive Intelligence Data"
+    }
+  }
+}

@@ -153,6 +153,33 @@ def load_api_key_securely() -> Optional[str]:
     return None
 
 
+SEMANTIC_CONTRACT_PATH = PROJECT_ROOT / "Data" / "semantic" / "kpi_contract.json"
+
+
+def load_kpi_contract(kpi_id: Optional[str] = None) -> Dict[str, Any]:
+    """Loads KPI semantic contract safely with zero secrets."""
+    if not SEMANTIC_CONTRACT_PATH.exists():
+        return {"error": "KPI semantic contract file not found", "status": 404}
+    try:
+        data = json.loads(SEMANTIC_CONTRACT_PATH.read_text(encoding="utf-8"))
+        if kpi_id:
+            kpis = data.get("kpis", {})
+            if kpi_id in kpis:
+                return {
+                    "version": data.get("version", "1.0.0"),
+                    "schema": data.get("schema"),
+                    "kpi": kpis[kpi_id]
+                }
+            return {
+                "error": f"KPI '{kpi_id}' not found in semantic contract",
+                "status": 404,
+                "available_kpis": list(kpis.keys())
+            }
+        return data
+    except Exception as e:
+        return {"error": f"Failed to parse semantic contract: {str(e)}", "status": 500}
+
+
 def execute_decision_analysis(req_data: Dict[str, Any]) -> Dict[str, Any]:
     """
     Executes the frozen Phase 3A and Phase 3B analytical pipelines.
@@ -208,9 +235,12 @@ def execute_decision_analysis(req_data: Dict[str, Any]) -> Dict[str, Any]:
         provenance = "MOCK_PROVIDER"
 
     # 5. Build Safe UI Response Payload
+    kpi_contract_snippet = load_kpi_contract(req.get("kpi")).get("kpi")
+
     ui_response = {
         "scenario_id": req_data.get("scenario_id", "CUSTOM"),
         "request": req,
+        "kpi_contract": kpi_contract_snippet,
         "phase3a": p3a_payload,
         "phase3b": p3b_payload,
         "metadata": {
@@ -261,6 +291,15 @@ class DecisionIntelligenceRequestHandler(BaseHTTPRequestHandler):
         if path == "/api/scenarios":
             self._set_headers(200, "application/json")
             self.wfile.write(json.dumps(OFFICIAL_SCENARIOS, indent=2).encode("utf-8"))
+            return
+
+        if path == "/api/kpi-contract":
+            qs = parse_qs(parsed_path.query)
+            kpi_id = qs.get("kpi_id", [None])[0]
+            contract_resp = load_kpi_contract(kpi_id)
+            status_code = contract_resp.get("status", 200) if "error" in contract_resp else 200
+            self._set_headers(status_code, "application/json")
+            self.wfile.write(json.dumps(contract_resp, indent=2).encode("utf-8"))
             return
 
         # Serve static assets
