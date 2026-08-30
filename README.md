@@ -271,6 +271,7 @@ The system was evaluated against a strictly isolated benchmark suite of 8 divers
 
 ## 12. Running the Application
 
+### Local Execution
 Start the local server:
 ```bash
 python app.py
@@ -280,6 +281,13 @@ Open your browser and navigate to:
 ```text
 http://127.0.0.1:8000
 ```
+
+### Cloud Deployment (Render / Railway / PaaS)
+Signal Story includes automated deployment configurations for one-click cloud hosting:
+* **Render**: Configured via `render.yaml` (Build Command: `pip install -r requirements.txt`, Start Command: `python app.py`).
+* **Platform-Agnostic**: Configured via `Procfile` (`web: python app.py`).
+* **Health Check Endpoint**: `/api/health`
+* **Environment Variables**: Set `GEMINI_API_KEY` in your cloud service settings (optional; falls back safely to deterministic Preview mode if omitted).
 
 ---
 

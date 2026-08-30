@@ -311,7 +311,7 @@ class DecisionIntelligenceRequestHandler(BaseHTTPRequestHandler):
         sys.stderr.write(f"[{self.log_date_time_string()}] {format % args}\n")
 
 
-def run_server(port: int = 8000, host: str = "127.0.0.1"):
+def run_server(port: int = 8000, host: str = "0.0.0.0"):
     """Starts the Decision Intelligence HTTP server."""
     server_address = (host, port)
     httpd = HTTPServer(server_address, DecisionIntelligenceRequestHandler)
@@ -326,4 +326,5 @@ def run_server(port: int = 8000, host: str = "127.0.0.1"):
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", "8000"))
-    run_server(port=port)
+    host = os.getenv("HOST", "0.0.0.0")
+    run_server(port=port, host=host)
