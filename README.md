@@ -3,12 +3,14 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://signal-story.streamlit.app)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/rajukumar-501/signal--story)
 [![Architecture](https://img.shields.io/badge/architecture-deterministic%20%2B%20LLM%20reasoning-teal.svg)](#4-solution-architecture)
 [![Safety Validator](https://img.shields.io/badge/safety%20validator-10%2F10%20PASS-green.svg)](#8-safety--governance)
 [![Governance](https://img.shields.io/badge/governance-Accenture%20Round%202%20Certified-blue.svg)](#8-safety--governance)
 [![Tests](https://img.shields.io/badge/tests-233%20passed-brightgreen.svg)](#13-running-tests)
 
 > 🚀 **Live Streamlit App**: [signal-story.streamlit.app](https://signal-story.streamlit.app)  
+> 🌐 **Render Web Service**: [Deploy to Render](https://render.com/deploy?repo=https://github.com/rajukumar-501/signal--story)  
 > 📦 **GitHub Repository**: [https://github.com/rajukumar-501/signal--story](https://github.com/rajukumar-501/signal--story)
 
 ---
@@ -313,8 +315,13 @@ Open your browser and navigate to:
 http://127.0.0.1:8000
 ```
 
-### Cloud Deployment (Streamlit Community Cloud / Hosted)
-Signal Story includes turnkey deployment configurations for **Streamlit Community Cloud** and containerized environments:
+### Cloud Deployment (Render / Streamlit Community Cloud / Hosted)
+Signal Story includes turnkey deployment configurations for **Render**, **Streamlit Community Cloud**, and containerized environments:
+* **Render (1-Click Blueprint)**:
+  * Click the **[Deploy to Render](https://render.com/deploy?repo=https://github.com/rajukumar-501/signal--story)** button or connect the repository on Render.
+  * Build Command: `pip install -r requirements.txt`
+  * Start Command: `python app.py` (or Streamlit: `streamlit run streamlit_app.py --server.port $PORT --server.address 0.0.0.0`)
+  * Auto-configured via `render.yaml` and `Procfile`.
 * **Streamlit Community Cloud**:
   * Main file path: `streamlit_app.py`
   * Python version: `3.10+`
