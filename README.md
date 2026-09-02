@@ -10,7 +10,7 @@
 [![Tests](https://img.shields.io/badge/tests-233%20passed-brightgreen.svg)](#13-running-tests)
 
 > 🚀 **Live Streamlit App**: [signal-story.streamlit.app](https://signal-story.streamlit.app)  
-> 🌐 **Render Web Service**: [Deploy to Render](https://render.com/deploy?repo=https://github.com/rajukumar-501/signal--story)  
+> 🌐 **Live Web Portal (Render)**: [https-signal-story-onrender-com.onrender.com](https://https-signal-story-onrender-com.onrender.com)  
 > 📦 **GitHub Repository**: [https://github.com/rajukumar-501/signal--story](https://github.com/rajukumar-501/signal--story)
 
 ---
