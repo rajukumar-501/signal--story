@@ -2,10 +2,14 @@
 ### Decision Intelligence — Evidence-Grounded Decision Support for Business Analysts
 
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://signal-story.streamlit.app)
 [![Architecture](https://img.shields.io/badge/architecture-deterministic%20%2B%20LLM%20reasoning-teal.svg)](#4-solution-architecture)
 [![Safety Validator](https://img.shields.io/badge/safety%20validator-10%2F10%20PASS-green.svg)](#8-safety--governance)
 [![Governance](https://img.shields.io/badge/governance-Accenture%20Round%202%20Certified-blue.svg)](#8-safety--governance)
 [![Tests](https://img.shields.io/badge/tests-233%20passed-brightgreen.svg)](#13-running-tests)
+
+> 🚀 **Live Streamlit App**: [signal-story.streamlit.app](https://signal-story.streamlit.app)  
+> 📦 **GitHub Repository**: [https://github.com/rajukumar-501/signal--story](https://github.com/rajukumar-501/signal--story)
 
 ---
 
@@ -242,8 +246,8 @@ The system was evaluated against a strictly isolated benchmark suite of 8 divers
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/rajukumar-501/signal-story.git
-   cd signal-story
+   git clone https://github.com/rajukumar-501/signal--story.git
+   cd signal--story
    ```
 
 2. **Create and Activate a Virtual Environment**:
