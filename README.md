@@ -13,7 +13,7 @@
 
 ## 1. Problem
 
-Enterprise decision-makers face critical metric anomalies every month (e.g., sudden regional revenue drops, product margin compressions, or inventory build-ups). Diagnosing these anomalies typically requires cross-functional investigation across finance, marketing, and operations teams over weeks—if conclusive evidence even emerges.
+Enterprise decision-makers face critical metric anomalies every month (e.g., sudden regional revenue drops, product margin compressions, or inventory build-ups). Diagnosing these anomalies typical[...]
 
 Traditional AI chatbots and generic dashboard solutions frequently fail in enterprise settings because they:
 * **Hallucinate Causal Explanations**: Speculate without proving that telemetry in marketing, inventory, or support actually preceded or matched the anomaly scope.
@@ -23,7 +23,7 @@ Traditional AI chatbots and generic dashboard solutions frequently fail in enter
 * **Lack Prioritization Feedback Loops**: Human reviews are static checkboxes that never inform future driver ranking.
 * **Lack Persona Adaptation & Entitlement Security**: Deliver one-size-fits-all output regardless of executive vs technical persona or sensitive data clearance.
 
-**Signal Story** solves this by bridging statistical anomaly detection with multi-source causal arbitration, connected multi-source KPI evidence layers, bounded context-aware analyst feedback learning, and governance-grade safety gates—ensuring that every diagnosis is evidence-grounded, confident, and actionable.
+**Signal Story** solves this by bridging statistical anomaly detection with multi-source causal arbitration, connected multi-source KPI evidence layers, bounded context-aware analyst feedback lear[...]
 
 ---
 
@@ -66,7 +66,7 @@ Actionable Decision Delivery (Executive Briefing vs Deep Analytical Trace)
 * **Role-Based Entitlement & Redaction**: Enforces access control for **Executive** (full), **Domain Analyst** (telemetry), and **Restricted User** (masks sensitive financial numbers).
 * **LLM vs Non-LLM Processing Classification**: Formal contract and UI panel guaranteeing that all mathematical truth, 40 DQ checks, and 10 safety gates are 100% deterministic (Non-LLM).
 * **Runtime Telemetry & Cost Engine**: Real runtime instrumentation measuring execution latencies (ms), model calls, token usage, and unit cost per insight.
-* **Context-Aware Feedback Learning Loop**: Deterministic, bounded ($[-0.15, +0.15]$), context-isolated feedback loop that dynamically adjusts future candidate driver prioritization without modifying the underlying analytical engine.
+* **Context-Aware Feedback Learning Loop**: Deterministic, bounded ($[-0.15, +0.15]$), context-isolated feedback loop that dynamically adjusts future candidate driver prioritization without modifying [...]
 
 ---
 
@@ -153,7 +153,7 @@ Designed for **5–10 second executive comprehension**:
 ### 2. Evidence (Investigation Workspace)
 * **Evidence Summary Strip**: Evidence grounding percentage (100%), unsupported claim count (0%), and verified source counts.
 * **Structured Evidence Catalog**: Multi-column catalog detailing source datasets, observed changes, and evidentiary roles.
-* **Evidence Trail**: Claim-by-claim breakdown (`Observed`, `Evidence`, `Interpretation`, `Conclusion`) with interactive clickable citation badges (`[EVD-002]`, `[EVD-003]`) that jump directly to source partitions.
+* **Evidence Trail**: Claim-by-claim breakdown (`Observed`, `Evidence`, `Interpretation`, `Conclusion`) with interactive clickable citation badges (`[EVD-002]`, `[EVD-003]`) that jump directly to sour[...]
 * **Uncertainty Disclosures**: Explicit callouts of unobserved market confounders.
 
 ### 3. Evidence & Integrity (Enterprise Governance & Audit)
@@ -178,7 +178,7 @@ Signal Story includes 8 pre-configured benchmark scenarios. The primary showcase
 | **Confidence** | **Plausible** (Supported by cross-source telemetry) |
 | **Strongest Evidence** | **`EVD-002`**: Advertising spend surged **+40.0%** during anomaly window.<br>**`EVD-003`**: Conversion rate deteriorated **-42.0%** in the same period. |
 | **Alternative Rejections** | Competitor pricing, returns, support, and inventory drivers showed zero correlation or temporal mismatch. |
-| **Decision Support** | **Finding**: Marketing performance is the strongest supported explanation.<br>**Why It Matters**: Higher ad spend did not translate into proportional sales.<br>**Recommendation**: Reallocate ad budget to top-converting channels; audit creative performance and audience targeting. |
+| **Decision Support** | **Finding**: Marketing performance is the strongest supported explanation.<br>**Why It Matters**: Higher ad spend did not translate into proportional sales.<br>**Recommendatio[...]
 | **Operational Governance** | **Area**: Performance Marketing & Growth • **Owner**: Marketing Operations Lead • **Risk**: Medium |
 
 ---
@@ -200,14 +200,14 @@ The system was evaluated against a strictly isolated benchmark suite of 8 divers
 | **Oracle Ground Truth Leakage** | $0$ | **0 Leakage** (Strictly segregated) | **PASSED** |
 | **Safety Validation Gate** | $100\%$ | **10 / 10 Rules Passed** | **PASSED** |
 
-*Note on Live LLM Evaluation: Across the 8 benchmark scenarios, 7 were evaluated via live Google Gemini API calls and 1 (S008) utilized deterministic safe fallback after API rate-limiting, successfully maintaining all safety and grounding guarantees.*
+*Note on Live LLM Evaluation: Across the 8 benchmark scenarios, 7 were evaluated via live Google Gemini API calls and 1 (S008) utilized deterministic safe fallback after API rate-limiting, successfull[...]
 
 ---
 
 ## 8. Safety & Governance
 
-1. **Strict Oracle Isolation**: Ground truth files are stored in isolated evaluation directories (`Data/scenarios/evaluation_ground_truth/`) and are completely inaccessible to the runtime analytical engine.
-2. **Accenture Semantic & Trust Contracts**: Machine-readable schema definitions for KPIs (`kpi_contract.json`), 40-check automated data quality verification (`data_trust_contract.json`), and action safety guardrails.
+1. **Strict Oracle Isolation**: Ground truth files are stored in isolated evaluation directories (`Data/scenarios/evaluation_ground_truth/`) and are completely inaccessible to the runtime analytical e[...]
+2. **Accenture Semantic & Trust Contracts**: Machine-readable schema definitions for KPIs (`kpi_contract.json`), 40-check automated data quality verification (`data_trust_contract.json`), and action s[...]
 3. **10-Step Deterministic Safety Gate**:
    * Rule 01: Driver validity against canonical catalog.
    * Rule 02: Evidence ID format conformity.
@@ -376,17 +376,17 @@ Ran 233 tests - OK
 │   │   ├── data_quality.py     # Deterministic 40-check data trust engine
 │   │   ├── decision_governance.py # Decision safety & analyst review engine
 │   │   ├── connected_kpis.py   # Multi-source connected KPI correlation engine
-│   │   ├── entitlement_engine.py # Role-based redaction engine
-│   │   ├── persona_engine.py   # Narrative depth & persona adapter
-│   │   ├── feedback_learning.py # Bounded context-aware feedback calibration
-│   │   ├── telemetry_engine.py # Latency, model call & cost instrumentation
-│   │   └── sparse_history_engine.py # Launch product cold-start baseline engine
+│   │   │   ├── entitlement_engine.py # Role-based redaction engine
+│   │   │   ├── persona_engine.py   # Narrative depth & persona adapter
+│   │   │   ├── feedback_learning.py # Bounded context-aware feedback calibration
+│   │   │   ├── telemetry_engine.py # Latency, model call & cost instrumentation
+│   │   │   └── sparse_history_engine.py # Launch product cold-start baseline engine
 │   ├── analytics/              # Phase 3A: Deterministic Anomaly & Hypothesis Engine (FROZEN)
 │   │   ├── event_detector.py   # Baseline & Anomaly detection
 │   │   ├── driver_generator.py # Cross-source feature generation
-│   │   ├── evidence_scorer.py  # Evidence magnitude & timing scorer
-│   │   ├── contradiction_engine.py # Contradiction detector
-│   │   └── driver_ranker.py    # Multi-driver arbitration matrix
+│   │   │   ├── evidence_scorer.py  # Evidence magnitude & timing scorer
+│   │   │   ├── contradiction_engine.py # Contradiction detector
+│   │   │   └── driver_ranker.py    # Multi-driver arbitration matrix
 │   └── phase3b/                # Phase 3B: Reasoning, Citations & Validation Gate (FROZEN)
 │       ├── engine.py           # Phase 3B engine orchestrator
 │       ├── evidence_context.py # Evidence context builder
@@ -408,9 +408,11 @@ Ran 233 tests - OK
 ## 15. Demo
 
 ### Demonstration Video
-A recorded video walkthrough of Signal Story showcasing the end-to-end Decision Intelligence workflow (Scenario S003 Marketing Inefficiency and Scenario S008 Macro Uncertainty) is available for evaluation.
+A recorded video walkthrough of Signal Story showcasing the end-to-end Decision Intelligence workflow (Scenario S003 Marketing Inefficiency and Scenario S008 Macro Uncertainty) is available for e[...]
 
 > **Prototype Video Walkthrough**: `[Video Walkthrough Link — Attached in Final Pitch Submission]`
+
+Live Streamlit App: [https://signal--story-ggh5x3yx7onabjqbtbe678.streamlit.app/](https://signal--story-ggh5x3yx7onabjqbtbe678.streamlit.app/)
 
 ### Quick 2-Minute Demo Flow for Evaluators
 
@@ -419,10 +421,10 @@ A recorded video walkthrough of Signal Story showcasing the end-to-end Decision 
 3. **Inspect "Signal Summary"**: Point to the **-72.1% Gross Sales drop** from baseline (`$994.25` vs `$3,558.03`).
 4. **Explain "Primary Signal"**: Showcase that **Marketing Inefficiency** was identified as the supported driver with high confidence.
 5. **Inspect "Evidence"**: Show that advertising spend increased **+40%** while conversion rates collapsed **-42%**.
-6. **Review "Decision Support & Safety" (Card 4)**: Note the **Risk: Medium** rating, "Before Acting" verification checklist, required owner sign-off, and click **[Approve Recommendation]** to test the analyst review workflow.
+6. **Review "Decision Support & Safety" (Card 4)**: Note the **Risk: Medium** rating, "Before Acting" verification checklist, required owner sign-off, and click **[Approve Recommendation]** to test th[...]
 7. **Navigate to "Evidence View"**: Demonstrate the **Evidence Catalog** and click citation chips (`[EVD-002]`, `[EVD-003]`) to show interactive provenance navigation.
 8. **Open "Evidence & Integrity"**: Show the **Data Trust Audit Table** (40 checks passed), **100% Evidence Grounding**, and **Zero Oracle Leakage**.
-9. **Showcase Uncertainty (S008)**: Switch to scenario `S008` (Germany / All Products) to demonstrate how Signal Story gracefully outputs **"No Conclusive Primary Driver" (Uncertainty Preserved)** for ambiguous macroeconomic scenarios.
+9. **Showcase Uncertainty (S008)**: Switch to scenario `S008` (Germany / All Products) to demonstrate how Signal Story gracefully outputs **"No Conclusive Primary Driver" (Uncertainty Preserved)** for[...]
 
 ---
 
