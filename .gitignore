@@ -46,3 +46,6 @@ Thumbs.db
 # Scratch and local runtime logs
 scratch/
 *.log
+
+# Runtime feedback state (generated at runtime, not repository artifacts)
+Data/feedback/

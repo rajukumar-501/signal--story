@@ -1,0 +1,69 @@
+{
+  "version": "1.0.0",
+  "schema": "Accenture Context-Aware Analyst Feedback Learning Contract Specification",
+  "organization": "Accenture Decision Intelligence Platform / Signal Story",
+  "last_updated": "2026-08-31",
+  "description": "Defines deterministic, bounded, context-aware analyst feedback learning for driver prioritization, preserving underlying evidence scores and safety governance.",
+  "parameters": {
+    "max_adjustment": 0.15,
+    "min_adjustment": -0.15,
+    "approval_boost": 0.08,
+    "rejection_penalty": -0.10,
+    "alternative_driver_boost": 0.08,
+    "needs_more_evidence_adjustment": 0.0,
+    "decay_factor": 1.0,
+    "similarity_weights": {
+      "exact_market_and_product": 1.0,
+      "exact_market_and_category": 0.6,
+      "exact_market_only": 0.3,
+      "unrelated_context": 0.0
+    }
+  },
+  "supported_decisions": [
+    "APPROVED",
+    "REJECTED",
+    "NEEDS_MORE_EVIDENCE"
+  ],
+  "governance_rules": {
+    "evidence_immutability": "Feedback adjustment NEVER modifies the frozen analytical core, raw evidence scores, or ground truth files.",
+    "prioritization_only": "Feedback only influences the final composite driver prioritization ranking: feedback_adjusted_score = clamp(base_score + feedback_adjustment, 0.0, 1.0).",
+    "bounded_adjustment": "The net cumulative feedback adjustment for any driver in a given context is strictly clamped between min_adjustment and max_adjustment (±0.15).",
+    "context_isolation": "Feedback applied in one market/product context decays to 0.0 for unrelated contexts, preventing cross-scenario contamination.",
+    "safety_authority": "Safety governance (guardrails, contradictions, anomaly validity) remains strictly authoritative over feedback-adjusted rankings."
+  },
+  "feedback_schema": {
+    "type": "object",
+    "required": [
+      "feedback_id",
+      "scenario_id",
+      "predicted_driver",
+      "analyst_decision",
+      "reviewer",
+      "timestamp",
+      "context"
+    ],
+    "properties": {
+      "feedback_id": {"type": "string"},
+      "scenario_id": {"type": "string"},
+      "predicted_driver": {"type": "string"},
+      "analyst_decision": {"type": "string", "enum": ["APPROVED", "REJECTED", "NEEDS_MORE_EVIDENCE"]},
+      "alternative_driver": {"type": ["string", "null"]},
+      "reason": {"type": "string"},
+      "reviewer": {"type": "string"},
+      "timestamp": {"type": "string"},
+      "context": {
+        "type": "object",
+        "required": ["market", "entity_type", "entity", "date"],
+        "properties": {
+          "market": {"type": "string"},
+          "entity_type": {"type": "string"},
+          "entity": {"type": "string"},
+          "product_code": {"type": ["string", "null"]},
+          "category": {"type": ["string", "null"]},
+          "date": {"type": "string"},
+          "kpi_context": {"type": "string"}
+        }
+      }
+    }
+  }
+}

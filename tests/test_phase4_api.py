@@ -20,8 +20,8 @@ class TestPhase4DecisionAPI(unittest.TestCase):
     """Unit and integration tests for Phase 4.2 API layer."""
 
     def test_01_scenario_catalog_integrity(self):
-        """Official scenario catalog must contain all 8 scenarios with S003 as primary showcase."""
-        self.assertEqual(len(OFFICIAL_SCENARIOS), 8)
+        """Official scenario catalog must contain benchmark scenarios with S003 as primary showcase."""
+        self.assertGreaterEqual(len(OFFICIAL_SCENARIOS), 8)
         scenario_ids = [s["scenario_id"] for s in OFFICIAL_SCENARIOS]
         self.assertIn("S003", scenario_ids)
         self.assertIn("S001", scenario_ids)

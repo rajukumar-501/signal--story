@@ -4,8 +4,8 @@
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Architecture](https://img.shields.io/badge/architecture-deterministic%20%2B%20LLM%20reasoning-teal.svg)](#4-solution-architecture)
 [![Safety Validator](https://img.shields.io/badge/safety%20validator-10%2F10%20PASS-green.svg)](#8-safety--governance)
-[![Governance](https://img.shields.io/badge/governance-KPI%20Contract%20%2B%20Data%20Trust%20%2B%20Safety-blue.svg)](#8-safety--governance)
-[![Tests](https://img.shields.io/badge/tests-166%20passed-brightgreen.svg)](#13-running-tests)
+[![Governance](https://img.shields.io/badge/governance-Accenture%20Round%202%20Certified-blue.svg)](#8-safety--governance)
+[![Tests](https://img.shields.io/badge/tests-233%20passed-brightgreen.svg)](#13-running-tests)
 
 ---
 
@@ -17,9 +17,11 @@ Traditional AI chatbots and generic dashboard solutions frequently fail in enter
 * **Hallucinate Causal Explanations**: Speculate without proving that telemetry in marketing, inventory, or support actually preceded or matched the anomaly scope.
 * **Force Overconfident Conclusions**: Fabricate single-driver explanations when macroeconomic data is ambiguous or insufficient.
 * **Lack Grounded Proof**: Deliver text summaries without verifiable citations back to underlying warehouse partitions.
-* **Overwhelm Decision-Makers**: Expose raw diagnostic dumps rather than clear, actionable business remediation steps.
+* **Lack Multi-Source Connected KPIs**: Present isolated metrics without corroborating business volume and operational driver telemetry.
+* **Lack Prioritization Feedback Loops**: Human reviews are static checkboxes that never inform future driver ranking.
+* **Lack Persona Adaptation & Entitlement Security**: Deliver one-size-fits-all output regardless of executive vs technical persona or sensitive data clearance.
 
-**Signal Story** solves this by bridging statistical anomaly detection with multi-source causal arbitration, rigorous deterministic safety validation, and an executive-ready decision interface.
+**Signal Story** solves this by bridging statistical anomaly detection with multi-source causal arbitration, connected multi-source KPI evidence layers, bounded context-aware analyst feedback learning, role-based access control, persona adaptation, runtime telemetry, rigorous deterministic safety validation, and an executive-ready decision interface.
 
 ---
 
@@ -34,7 +36,7 @@ Phase 3A: Deterministic Anomaly Detection (Statistical Z-score & Scope Isolation
         ↓
 Candidate Driver Generation (Evaluates 8 Canonical Hypotheses)
         ↓
-Multi-Source Evidence Aggregation (Marketing, Pricing, Support, Inventory, Returns)
+Phase 6A: Multi-Source Connected KPI Evidence Layer (ERP Sales + Marketing Telemetry)
         ↓
 Phase 3B: Evidence Context Compilation (Strict Data Lineage & Scope Alignment)
         ↓
@@ -42,9 +44,11 @@ LLM Causal Reasoning & Arbitration (Live Google Gemini / Offline Fast Preview)
         ↓
 10-Step Deterministic Safety Gate (Rejects Hallucinations & Unbacked Claims)
         ↓
-Phase 5.2 Governance Gate (KPI Semantic Contract, Data Trust & Operational Safety)
+Phase 6I: Context-Aware Feedback Learning & Operational Prioritization Calibration
         ↓
-Actionable Executive Decision (Finding → Why It Matters → Next Steps → Preconditions)
+Phase 6B/6F: Persona Adaptation & Role-Based Entitlement Redaction
+        ↓
+Actionable Decision Delivery (Executive Briefing vs Deep Analytical Trace)
 ```
 
 ---
@@ -52,15 +56,15 @@ Actionable Executive Decision (Finding → Why It Matters → Next Steps → Pre
 ## 3. Key Differentiators
 
 * **Deterministic Foundation**: Grounded in empirical mathematical baselines before any language model is invoked.
-* **Multi-Source Evidence Synthesis**: Corroborates cross-functional operational telemetry across 5 distinct business domains.
-* **8-Candidate Driver Arbitration**: Systematically tests and scores 8 competing hypotheses (e.g., Marketing Inefficiency, Competitor Pricing, Return Surges, Inventory Stockouts) rather than confirmation-biasing on the first finding.
-* **100% Claim-Level Grounding**: Every business assertion is backed by verifiable evidence IDs (`[EVD-002]`, `[EVD-003]`) tied directly to database partition records.
-* **Uncertainty Preservation**: Gracefully preserves uncertainty (`NOT_ESTABLISHED`) when data reflects broad market macro shocks rather than forcing a false causal diagnosis.
-* **Accenture KPI Semantic Contract**: Machine-readable metadata covering business definitions, SQL formulas, aggregation grains, baseline methods, and role-based access controls.
-* **Data Quality & Trust Governance**: Deterministic 40-check data quality validation engine analyzing completeness, nulls, duplicates, and 36-month temporal freshness.
-* **Action Safety & Operational Risk Guardrails**: 4-tier risk classification (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`), structured "Before Acting" verification checklists, and interactive Human-in-the-Loop Analyst Review controls.
-* **Deterministic 10-Rule Safety Gate**: Programmatically validates all generated outputs against evidence integrity, scope bounds, and contradiction checks.
-* **Resilient Fallback Protection**: Seamlessly transitions between Live Gemini reasoning and deterministic mock mode with zero downtime.
+* **Connected KPI Story**: Deterministically aligns 5 connected metrics (Gross Sales, Order Volume, Marketing Spend, Conversion Rate, CTR) across distinct warehouse tables, grains, and cadences.
+* **Multi-Source Integration Spec**: Machine-readable specification (`source_integration_spec.json`) mapping 10 canonical datasets across 5 business domains.
+* **Persona Intelligence**: Tailors narrative depth and decision rights for **Executive / Business Leader** vs **Domain / RevOps Analyst** while referencing identical governed ground truth.
+* **Low-Confidence & Abstention State**: Gracefully detects insufficient or contradictory telemetry (Scenario S008) and displays `NO ACTION RECOMMENDED UNTIL VALIDATED` with required next evidence.
+* **Sparse History & New Launch Benchmark**: Detects products with `< 3 months` history (Scenario S009) and applies explicit peer category baseline fallbacks with full limitation disclosure.
+* **Role-Based Entitlement & Redaction**: Enforces access control for **Executive** (full), **Domain Analyst** (telemetry), and **Restricted User** (masks sensitive financial numbers).
+* **LLM vs Non-LLM Processing Classification**: Formal contract and UI panel guaranteeing that all mathematical truth, 40 DQ checks, and 10 safety gates are 100% deterministic (Non-LLM).
+* **Runtime Telemetry & Cost Engine**: Real runtime instrumentation measuring execution latencies (ms), model calls, token usage, and unit cost per insight.
+* **Context-Aware Feedback Learning Loop**: Deterministic, bounded ($[-0.15, +0.15]$), context-isolated feedback loop that dynamically adjusts future candidate driver prioritization without modifying underlying evidence scores.
 
 ---
 
@@ -305,12 +309,17 @@ Open your browser and navigate to:
 http://127.0.0.1:8000
 ```
 
-### Cloud Deployment (Render / Railway / PaaS)
-Signal Story includes automated deployment configurations for one-click cloud hosting:
-* **Render**: Configured via `render.yaml` (Build Command: `pip install -r requirements.txt`, Start Command: `python app.py`).
-* **Platform-Agnostic**: Configured via `Procfile` (`web: python app.py`).
+### Cloud Deployment (Streamlit Community Cloud / Hosted)
+Signal Story includes turnkey deployment configurations for **Streamlit Community Cloud** and containerized environments:
+* **Streamlit Community Cloud**:
+  * Main file path: `streamlit_app.py`
+  * Python version: `3.10+`
+  * Secrets (Optional): Configure `GEMINI_API_KEY` under Streamlit App Settings -> Secrets for live Assisted Analysis (defaults automatically to offline deterministic Preview mode if omitted).
+* **Native Production Server**:
+  ```bash
+  python app.py
+  ```
 * **Health Check Endpoint**: `/api/health`
-* **Environment Variables**: Set `GEMINI_API_KEY` in your cloud service settings (optional; falls back safely to deterministic Preview mode if omitted).
 
 ---
 
@@ -321,14 +330,14 @@ Signal Story includes automated deployment configurations for one-click cloud ho
 python -m unittest tests.test_phase5_2d_decision_governance tests.test_phase5_2b_data_quality tests.test_phase5_2a_kpi_contract tests.test_phase4_api tests.test_phase4_3_presentation
 ```
 
-### 2. Run Full Comprehensive Project Test Suite (166 Tests):
+### 2. Run Full Comprehensive Project Test Suite (233 Tests):
 ```bash
 python -m unittest discover -s tests
 ```
 
 Expected output:
 ```text
-Ran 166 tests - OK
+Ran 233 tests - OK
 ```
 
 ---
@@ -336,29 +345,41 @@ Ran 166 tests - OK
 ## 14. Project Structure
 
 ```text
-├── app.py                      # Application launcher entry point
-├── requirements.txt            # Python dependencies
-├── .env.example                # Configuration template
-├── .gitignore                  # Git secret and cache exclusion rules
-├── render.yaml                 # Cloud deployment blueprint (Render)
-├── Procfile                    # Web service process configuration
+├── app.py                      # Native HTTP server launcher (127.0.0.1:8000)
+├── streamlit_app.py            # Streamlit Community Cloud web application
+├── requirements.txt            # Python dependencies (pandas, numpy, streamlit)
+├── .env.example                # Sanitized configuration template
+├── .gitignore                  # Git secrets, feedback, and cache exclusion rules
 ├── README.md                   # System documentation
 │
 ├── Data/
 │   ├── Processed/              # 10 Canonical partition datasets (sales, marketing, inventory, etc.)
+│   ├── raw/                    # Original reference source tables
+│   ├── Synthetic/              # Synthetic domain telemetry partitions
 │   ├── semantic/               # Machine-readable semantic governance contracts
 │   │   ├── kpi_contract.json   # Accenture KPI Semantic Contract
-│   │   ├── data_trust_contract.json # Data quality & freshness schema
-│   │   └── decision_action_contract.json # Action safety & risk tiers
+│   │   ├── data_trust_contract.json # Data quality & freshness schema (40 checks)
+│   │   ├── decision_action_contract.json # Action safety & risk tiers
+│   │   ├── connected_kpi_contract.json # Multi-source connected KPI specification
+│   │   ├── entitlement_contract.json # Role-based access control & redaction policy
+│   │   ├── persona_contract.json # Executive vs Analyst persona contracts
+│   │   ├── processing_classification_contract.json # LLM vs Non-LLM boundary contract
+│   │   └── source_integration_spec.json # Multi-source system lineage specification
 │   └── scenarios/              # Benchmark scenarios & isolated ground truth
 │       ├── evaluation_inputs/
 │       └── evaluation_ground_truth/
 │
 ├── src/
-│   ├── server.py               # Native Python HTTP API server
-│   ├── governance/             # Phase 5.2 Governance & Trust Layer
+│   ├── server.py               # Native Python multi-threaded HTTP API server
+│   ├── governance/             # Enterprise Trust, Governance & Storytelling Layer
 │   │   ├── data_quality.py     # Deterministic 40-check data trust engine
-│   │   └── decision_governance.py # Decision safety & analyst review engine
+│   │   ├── decision_governance.py # Decision safety & analyst review engine
+│   │   ├── connected_kpis.py   # Multi-source connected KPI correlation engine
+│   │   ├── entitlement_engine.py # Role-based redaction engine
+│   │   ├── persona_engine.py   # Narrative depth & persona adapter
+│   │   ├── feedback_learning.py # Bounded context-aware feedback calibration
+│   │   ├── telemetry_engine.py # Latency, model call & cost instrumentation
+│   │   └── sparse_history_engine.py # Launch product cold-start baseline engine
 │   ├── analytics/              # Phase 3A: Deterministic Anomaly & Hypothesis Engine (FROZEN)
 │   │   ├── event_detector.py   # Baseline & Anomaly detection
 │   │   ├── driver_generator.py # Cross-source feature generation
@@ -377,7 +398,7 @@ Ran 166 tests - OK
 │   ├── styles.css              # Flat enterprise SaaS stylesheet
 │   └── app.js                  # Frontend controller & citation navigator
 │
-├── tests/                      # 166 automated regression, governance & benchmark tests
+├── tests/                      # 233 automated regression, governance & benchmark tests (40 suites)
 └── docs/                       # Engineering specifications & validation reports
 ```
 

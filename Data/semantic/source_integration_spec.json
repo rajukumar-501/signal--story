@@ -1,0 +1,285 @@
+{
+  "spec_version": "1.0.0",
+  "governance_standard": "Accenture Enterprise Semantic & Data Integration Standard",
+  "last_updated": "2026-08-31",
+  "total_canonical_datasets": 10,
+  "total_business_domains": 5,
+  "default_refresh_cadence": "Monthly batch ETL (T+1 calendar close)",
+  "primary_reconciliation_keys": [
+    "date",
+    "market",
+    "product_code"
+  ],
+  "domains": [
+    {
+      "domain_id": "COMMERCIAL_SALES",
+      "domain_name": "Commercial Sales & Revenue Ledger",
+      "source_system": "Global SAP ERP & Financial Ledger",
+      "datasets": [
+        {
+          "dataset_id": "fact_sales_monthly",
+          "canonical_file": "fact_sales_monthly.csv",
+          "row_count": 6799,
+          "grain": "Monthly by Market, Customer, Product Code",
+          "refresh_cadence": "Monthly batch ETL",
+          "date_coverage": {
+            "start": "2018-09-01",
+            "end": "2021-08-01",
+            "months_span": 36
+          },
+          "join_keys": {
+            "customer_code": "dim_customer.customer_code",
+            "product_code": "dim_product.product_code"
+          },
+          "kpis_derived": [
+            "gross_sales",
+            "order_volume",
+            "gross_margin",
+            "average_selling_price"
+          ],
+          "lineage_reference": "SAP_ERP.SALES_FACT_MONTHLY -> DataWarehouse.fact_sales_monthly.csv",
+          "semantic_role": "OUTCOME_KPI"
+        },
+        {
+          "dataset_id": "fact_gross_price",
+          "canonical_file": "fact_gross_price.csv",
+          "row_count": 1184,
+          "grain": "Fiscal Year by Product Code",
+          "refresh_cadence": "Annual Master Price Schedule",
+          "date_coverage": {
+            "start": "2018-01-01",
+            "end": "2021-12-31",
+            "months_span": 48
+          },
+          "join_keys": {
+            "product_code": "dim_product.product_code"
+          },
+          "kpis_derived": [
+            "catalog_list_price",
+            "base_gross_price"
+          ],
+          "lineage_reference": "PricingMaster.FY_PRICE_SCHEDULE -> fact_gross_price.csv",
+          "semantic_role": "PRICING_BENCHMARK"
+        },
+        {
+          "dataset_id": "fact_post_invoice_deductions",
+          "canonical_file": "fact_post_invoice_deductions.csv",
+          "row_count": 200,
+          "grain": "Monthly by Market, Customer, Product Code",
+          "refresh_cadence": "Monthly batch ETL",
+          "date_coverage": {
+            "start": "2018-09-01",
+            "end": "2021-08-01",
+            "months_span": 36
+          },
+          "join_keys": {
+            "customer_code": "dim_customer.customer_code",
+            "product_code": "dim_product.product_code"
+          },
+          "kpis_derived": [
+            "post_invoice_discount_amount",
+            "net_invoice_realization"
+          ],
+          "lineage_reference": "SAP_ERP.POST_INVOICE_LEDGER -> fact_post_invoice_deductions.csv",
+          "semantic_role": "MARGIN_DEDUCTION"
+        },
+        {
+          "dataset_id": "fact_pre_invoice_deductions",
+          "canonical_file": "fact_pre_invoice_deductions.csv",
+          "row_count": 209,
+          "grain": "Fiscal Year by Customer Code",
+          "refresh_cadence": "Annual Contract Agreement",
+          "date_coverage": {
+            "start": "2018-01-01",
+            "end": "2021-12-31",
+            "months_span": 48
+          },
+          "join_keys": {
+            "customer_code": "dim_customer.customer_code"
+          },
+          "kpis_derived": [
+            "pre_invoice_discount_pct"
+          ],
+          "lineage_reference": "ContractManager.CUSTOMER_TERMS -> fact_pre_invoice_deductions.csv",
+          "semantic_role": "CONTRACT_TERMS"
+        }
+      ]
+    },
+    {
+      "domain_id": "DIGITAL_MARKETING",
+      "domain_name": "Performance Marketing & Digital Acquisition",
+      "source_system": "Digital Advertising Aggregator (Google Ads, Meta, TikTok)",
+      "datasets": [
+        {
+          "dataset_id": "fact_marketing_monthly",
+          "canonical_file": "fact_marketing_monthly.csv",
+          "row_count": 1800,
+          "grain": "Monthly by Market, Product Code, Campaign Type, Channel",
+          "refresh_cadence": "Monthly batch ETL (Ad Telemetry Ingestion)",
+          "date_coverage": {
+            "start": "2018-09-01",
+            "end": "2021-08-01",
+            "months_span": 36
+          },
+          "join_keys": {
+            "date": "fact_sales_monthly.date",
+            "market": "dim_customer.market",
+            "product_code": "dim_product.product_code"
+          },
+          "kpis_derived": [
+            "marketing_spend",
+            "impressions",
+            "clicks",
+            "conversions",
+            "click_through_rate",
+            "conversion_rate",
+            "cost_per_acquisition"
+          ],
+          "lineage_reference": "AdPlatformAggregator.MONTHLY_CAMPAIGN_SUMMARY -> fact_marketing_monthly.csv",
+          "semantic_role": "DRIVER_SIGNAL"
+        }
+      ]
+    },
+    {
+      "domain_id": "MARKET_INTELLIGENCE",
+      "domain_name": "Competitive Pricing & Market Intelligence",
+      "source_system": "Competitor Price Scraping & Retail Audit Telemetry",
+      "datasets": [
+        {
+          "dataset_id": "fact_competitor_pricing_monthly",
+          "canonical_file": "fact_competitor_pricing_monthly.csv",
+          "row_count": 1800,
+          "grain": "Monthly by Market, Product Code, Competitor Tier",
+          "refresh_cadence": "Monthly batch ETL",
+          "date_coverage": {
+            "start": "2018-09-01",
+            "end": "2021-08-01",
+            "months_span": 36
+          },
+          "join_keys": {
+            "date": "fact_sales_monthly.date",
+            "market": "dim_customer.market",
+            "product_code": "dim_product.product_code"
+          },
+          "kpis_derived": [
+            "competitor_price",
+            "competitor_price_gap_pct",
+            "relative_price_index"
+          ],
+          "lineage_reference": "CompetitiveIntelligenceEngine.MONTHLY_BENCHMARK -> fact_competitor_pricing_monthly.csv",
+          "semantic_role": "COMPETITIVE_DRIVER_SIGNAL"
+        }
+      ]
+    },
+    {
+      "domain_id": "SUPPLY_CHAIN",
+      "domain_name": "Inventory & Logistics Operations",
+      "source_system": "Warehouse Management System (WMS) & Supply Chain Hub",
+      "datasets": [
+        {
+          "dataset_id": "fact_inventory_monthly",
+          "canonical_file": "fact_inventory_monthly.csv",
+          "row_count": 1800,
+          "grain": "Monthly by Market, Product Code, Regional Warehouse",
+          "refresh_cadence": "Monthly batch ETL",
+          "date_coverage": {
+            "start": "2018-09-01",
+            "end": "2021-08-01",
+            "months_span": 36
+          },
+          "join_keys": {
+            "date": "fact_sales_monthly.date",
+            "market": "dim_customer.market",
+            "product_code": "dim_product.product_code"
+          },
+          "kpis_derived": [
+            "stockout_hours",
+            "ending_inventory_units",
+            "fulfillment_rate",
+            "safety_stock_deficit"
+          ],
+          "lineage_reference": "WMS_WarehouseHub.INVENTORY_MONTHLY_SNAPSHOT -> fact_inventory_monthly.csv",
+          "semantic_role": "SUPPLY_DRIVER_SIGNAL"
+        },
+        {
+          "dataset_id": "fact_manufacturing_cost",
+          "canonical_file": "fact_manufacturing_cost.csv",
+          "row_count": 1184,
+          "grain": "Fiscal Year by Product Code",
+          "refresh_cadence": "Annual Cost Accounting Ledger",
+          "date_coverage": {
+            "start": "2018-01-01",
+            "end": "2021-12-31",
+            "months_span": 48
+          },
+          "join_keys": {
+            "product_code": "dim_product.product_code"
+          },
+          "kpis_derived": [
+            "unit_manufacturing_cost",
+            "standard_cost_of_goods_sold"
+          ],
+          "lineage_reference": "CostAccounting.STD_COST_LEDGER -> fact_manufacturing_cost.csv",
+          "semantic_role": "UNIT_COST_BENCHMARK"
+        }
+      ]
+    },
+    {
+      "domain_id": "CUSTOMER_MASTER",
+      "domain_name": "Enterprise Master Data Dimensions",
+      "source_system": "Enterprise Master Data Management (MDM)",
+      "datasets": [
+        {
+          "dataset_id": "dim_customer",
+          "canonical_file": "dim_customer.csv",
+          "row_count": 209,
+          "grain": "Customer Account Dimension",
+          "refresh_cadence": "Master Dimension (Slowly Changing Dimension Type 1)",
+          "date_coverage": {
+            "start": "Static Master",
+            "end": "Static Master",
+            "months_span": 36
+          },
+          "join_keys": {
+            "customer_code": "fact_sales_monthly.customer_code"
+          },
+          "attributes": [
+            "customer_code",
+            "customer_name",
+            "market",
+            "region",
+            "channel",
+            "platform"
+          ],
+          "lineage_reference": "EnterpriseMDM.DIM_CUSTOMER -> dim_customer.csv",
+          "semantic_role": "DIMENSION_HIERARCHY"
+        },
+        {
+          "dataset_id": "dim_product",
+          "canonical_file": "dim_product.csv",
+          "row_count": 397,
+          "grain": "Product SKU Dimension",
+          "refresh_cadence": "Master Dimension (SCD Type 1)",
+          "date_coverage": {
+            "start": "Static Master",
+            "end": "Static Master",
+            "months_span": 36
+          },
+          "join_keys": {
+            "product_code": "fact_sales_monthly.product_code"
+          },
+          "attributes": [
+            "product_code",
+            "division",
+            "segment",
+            "category",
+            "product",
+            "variant"
+          ],
+          "lineage_reference": "EnterpriseMDM.DIM_PRODUCT -> dim_product.csv",
+          "semantic_role": "DIMENSION_HIERARCHY"
+        }
+      ]
+    }
+  ]
+}

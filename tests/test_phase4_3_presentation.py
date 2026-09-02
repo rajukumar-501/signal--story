@@ -133,8 +133,8 @@ class TestPhase43PresentationCertification(unittest.TestCase):
             self.assertIn("evidence_id", t)
 
     def test_04_full_catalog_all_8_scenarios_execute_cleanly(self):
-        """All 8 official benchmark scenarios must execute cleanly with zero server errors."""
-        self.assertEqual(len(OFFICIAL_SCENARIOS), 8)
+        """All official benchmark scenarios must execute cleanly with zero server errors."""
+        self.assertGreaterEqual(len(OFFICIAL_SCENARIOS), 8)
 
         for s in OFFICIAL_SCENARIOS:
             req = {

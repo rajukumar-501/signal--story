@@ -1,0 +1,46 @@
+{
+  "contract_name": "Accenture Prototype Role-Based Access Control & Entitlement Contract",
+  "version": "1.0.0",
+  "governance_rule": "Prototype role-based entitlement governing data redaction and feature access.",
+  "roles": {
+    "EXECUTIVE": {
+      "display_name": "Executive / Leadership",
+      "allowed_views": ["view-executive", "view-reasoning", "view-trace"],
+      "data_access": {
+        "gross_financials": "FULL_ACCESS",
+        "operational_telemetry": "AGGREGATED",
+        "customer_item_pii": "MASKED",
+        "action_approval_rights": "AUTHORIZED"
+      },
+      "redaction_rules": {
+        "sensitive_customer_notes": "MASKED"
+      }
+    },
+    "DOMAIN_ANALYST": {
+      "display_name": "Domain Analyst / RevOps",
+      "allowed_views": ["view-executive", "view-reasoning", "view-trace"],
+      "data_access": {
+        "gross_financials": "FULL_ACCESS",
+        "operational_telemetry": "FULL_GRANULAR",
+        "customer_item_pii": "FULL_ACCESS",
+        "action_approval_rights": "REVIEW_ONLY"
+      },
+      "redaction_rules": {}
+    },
+    "RESTRICTED_USER": {
+      "display_name": "Restricted User / External Auditor",
+      "allowed_views": ["view-executive", "view-trace"],
+      "data_access": {
+        "gross_financials": "REDACTED",
+        "operational_telemetry": "AGGREGATED",
+        "customer_item_pii": "REDACTED",
+        "action_approval_rights": "RESTRICTED"
+      },
+      "redaction_rules": {
+        "gross_sales_amount": "[RESTRICTED - FINANCIAL CONFIDENTIAL]",
+        "spend_amount": "[RESTRICTED - COMMERCIAL SENSITIVE]",
+        "executive_remediation": "[RESTRICTED - LEADERSHIP ACCESS REQUIRED]"
+      }
+    }
+  }
+}

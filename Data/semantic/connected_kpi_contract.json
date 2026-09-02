@@ -1,0 +1,172 @@
+{
+  "version": "1.0.0",
+  "schema": "Accenture Connected KPI Evidence Governance Contract Specification",
+  "organization": "Accenture Decision Intelligence Platform / Signal Story",
+  "last_updated": "2026-08-31",
+  "description": "Defines multi-source connected KPI stories, evidence roles, dimensional alignment keys, and epistemic guardrails across ERP, Marketing Telemetry, Pricing, Inventory, and CRM/Support sources.",
+  "evidence_roles": {
+    "OUTCOME_KPI": {
+      "role_id": "OUTCOME_KPI",
+      "name": "Primary Business Outcome",
+      "description": "The primary business performance metric experiencing an anomaly or strategic deviation (e.g., Gross Invoiced Sales, Category Share).",
+      "epistemic_status": "Observed business impact requiring explanation."
+    },
+    "CORROBORATING_KPI": {
+      "role_id": "CORROBORATING_KPI",
+      "name": "Corroborating Business Metric",
+      "description": "Secondary transactional metric from the primary domain that co-moves with the outcome (e.g., Order Volume / Shipped Units, Return Volume).",
+      "epistemic_status": "Validates that the outcome anomaly reflects genuine transactional activity rather than accounting or reporting artifact."
+    },
+    "DRIVER_SIGNAL": {
+      "role_id": "DRIVER_SIGNAL",
+      "name": "Operational Driver Telemetry",
+      "description": "Cross-domain operational metric indicating potential operational mechanisms (e.g., Marketing Spend escalation, Conversion Rate collapse, Competitor Price Gap expansion).",
+      "epistemic_status": "Aligned operational signal whose timing and dimensional scope coincide with the outcome anomaly."
+    },
+    "CONTEXTUAL_SIGNAL": {
+      "role_id": "CONTEXTUAL_SIGNAL",
+      "name": "Qualitative / Market Context",
+      "description": "Unstructured or semi-structured signals (e.g., CRM notes, customer support logs, sales calls) that provide situational context.",
+      "epistemic_status": "Contextual corroboration supporting driver plausibility or eliminating competing hypotheses."
+    }
+  },
+  "connected_kpi_definitions": {
+    "gross_sales": {
+      "kpi_id": "gross_sales",
+      "name": "Gross Sales",
+      "unit": "USD ($)",
+      "evidence_role": "OUTCOME_KPI",
+      "source_dataset": "fact_sales_monthly.csv",
+      "source_system": "ERP Sales Invoicing Ledger",
+      "grain": "Monthly by Market, Customer, Product Code",
+      "cadence": "Monthly Batch ETL (T+1 calendar day)",
+      "alignment_dimensions": ["date", "market", "product_code"],
+      "calculation": "SUM(gross_sales_amount)",
+      "baseline_method": "3-Month Rolling Unweighted Arithmetic Mean"
+    },
+    "order_volume": {
+      "kpi_id": "order_volume",
+      "name": "Gross Order Volume",
+      "unit": "Units",
+      "evidence_role": "CORROBORATING_KPI",
+      "source_dataset": "fact_sales_monthly.csv",
+      "source_system": "ERP Sales Invoicing Ledger",
+      "grain": "Monthly by Market, Customer, Product Code",
+      "cadence": "Monthly Batch ETL (T+1 calendar day)",
+      "alignment_dimensions": ["date", "market", "product_code"],
+      "calculation": "SUM(gross_qty)",
+      "baseline_method": "3-Month Rolling Unweighted Arithmetic Mean"
+    },
+    "marketing_spend": {
+      "kpi_id": "marketing_spend",
+      "name": "Marketing Investment",
+      "unit": "USD ($)",
+      "evidence_role": "DRIVER_SIGNAL",
+      "source_dataset": "fact_marketing_monthly.csv",
+      "source_system": "Digital Ad & Marketing Platforms",
+      "grain": "Monthly by Market, Product Code, Campaign, Channel",
+      "cadence": "Monthly Ad Telemetry Ingestion",
+      "alignment_dimensions": ["date", "market", "product_code"],
+      "calculation": "SUM(spend)",
+      "baseline_method": "3-Month Rolling Unweighted Arithmetic Mean"
+    },
+    "conversion_rate": {
+      "kpi_id": "conversion_rate",
+      "name": "Marketing Conversion Rate",
+      "unit": "Percentage (%)",
+      "evidence_role": "DRIVER_SIGNAL",
+      "source_dataset": "fact_marketing_monthly.csv",
+      "source_system": "Digital Ad & Web Telemetry",
+      "grain": "Monthly by Market, Product Code, Campaign, Channel",
+      "cadence": "Monthly Ad Telemetry Ingestion",
+      "alignment_dimensions": ["date", "market", "product_code"],
+      "calculation": "SUM(conversions) / SUM(clicks) * 100",
+      "baseline_method": "3-Month Rolling Weighted Arithmetic Mean"
+    },
+    "click_through_rate": {
+      "kpi_id": "click_through_rate",
+      "name": "Click-Through Rate (CTR)",
+      "unit": "Percentage (%)",
+      "evidence_role": "CORROBORATING_SIGNAL",
+      "source_dataset": "fact_marketing_monthly.csv",
+      "source_system": "Digital Ad Platforms",
+      "grain": "Monthly by Market, Product Code, Campaign, Channel",
+      "cadence": "Monthly Ad Telemetry Ingestion",
+      "alignment_dimensions": ["date", "market", "product_code"],
+      "calculation": "SUM(clicks) / SUM(impressions) * 100",
+      "baseline_method": "3-Month Rolling Weighted Arithmetic Mean"
+    },
+    "cost_per_click": {
+      "kpi_id": "cost_per_click",
+      "name": "Cost Per Click (CPC)",
+      "unit": "USD ($)",
+      "evidence_role": "DRIVER_SIGNAL",
+      "source_dataset": "fact_marketing_monthly.csv",
+      "source_system": "Digital Ad Platforms",
+      "grain": "Monthly by Market, Product Code, Campaign, Channel",
+      "cadence": "Monthly Ad Telemetry Ingestion",
+      "alignment_dimensions": ["date", "market", "product_code"],
+      "calculation": "SUM(spend) / SUM(clicks)",
+      "baseline_method": "3-Month Rolling Mean"
+    },
+    "price_gap": {
+      "kpi_id": "price_gap",
+      "name": "Competitive Price Gap",
+      "unit": "Percentage (%)",
+      "evidence_role": "DRIVER_SIGNAL",
+      "source_dataset": "fact_competitor_pricing_monthly.csv",
+      "source_system": "Competitor Intelligence Feed",
+      "grain": "Monthly by Market, Product Code",
+      "cadence": "Monthly Syndicate Scrape",
+      "alignment_dimensions": ["date", "market", "product_code"],
+      "calculation": "AVG(price_gap_percent)",
+      "baseline_method": "Historical Competitive Pricing Index"
+    },
+    "stockout_hours": {
+      "kpi_id": "stockout_hours",
+      "name": "Warehouse Stockout Hours",
+      "unit": "Hours",
+      "evidence_role": "DRIVER_SIGNAL",
+      "source_dataset": "fact_inventory_monthly.csv",
+      "source_system": "Warehouse Management System (WMS)",
+      "grain": "Monthly by Market, Product Code",
+      "cadence": "Monthly WMS Snapshot",
+      "alignment_dimensions": ["date", "market", "product_code"],
+      "calculation": "SUM(stockout_hours)",
+      "baseline_method": "Zero Baseline"
+    },
+    "customer_sentiment": {
+      "kpi_id": "customer_sentiment",
+      "name": "Qualitative Sentiment & Support Context",
+      "unit": "Qualitative Sentiment / Ticket Count",
+      "evidence_role": "CONTEXTUAL_SIGNAL",
+      "source_dataset": "fact_crm_notes.csv, fact_support_tickets.csv",
+      "source_system": "CRM & Customer Helpdesk",
+      "grain": "Event Grain (Note/Ticket Level)",
+      "cadence": "Transactional Stream",
+      "alignment_dimensions": ["date", "market"],
+      "calculation": "COUNT(tickets) / Sentiment Aggregation",
+      "baseline_method": "Contextual Benchmark"
+    }
+  },
+  "epistemic_guardrails": {
+    "prohibited_phrasing": [
+      "caused by",
+      "root cause proven by",
+      "definitely caused",
+      "deterministic proof of causality"
+    ],
+    "approved_phrasing": [
+      "evidence indicates",
+      "aligned signal",
+      "corroborating signal",
+      "supported explanation",
+      "observed relationship"
+    ],
+    "disallowed_unsupported_linkages": [
+      "Cross-category support tickets linked to unrelated product",
+      "Unverified third-party web metrics not present in canonical tables",
+      "Synthetic sub-daily timestamps when source grain is monthly"
+    ]
+  }
+}

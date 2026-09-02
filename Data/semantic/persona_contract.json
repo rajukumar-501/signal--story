@@ -1,0 +1,35 @@
+{
+  "contract_name": "Accenture Decision Intelligence Persona Adaptation Contract",
+  "version": "1.0.0",
+  "governance_rule": "Identical quantitative ground truth and evidence IDs; persona-adapted narrative depth, framing, and actionable focus.",
+  "personas": {
+    "EXECUTIVE": {
+      "display_name": "Executive / Business Leader",
+      "target_audience": "C-Suite, VP Commercial, Business Unit GM",
+      "narrative_style": "Concise, strategic, high-level impact and decision rights",
+      "emphasis": [
+        "Gross revenue risk ($) and baseline deviation",
+        "Strategic channel spend efficiency",
+        "Executive decision owner and required approval rights",
+        "Strategic remediation impact and next steps"
+      ],
+      "detail_level": "EXECUTIVE_SUMMARY",
+      "telemetry_exposure": "AGGREGATED_TOP_LINE",
+      "action_focus": "Strategic budget reallocation and executive remediation sign-off"
+    },
+    "DOMAIN_ANALYST": {
+      "display_name": "Domain / RevOps Analyst",
+      "target_audience": "Commercial Finance Analyst, Marketing Operations, Supply Chain Specialist",
+      "narrative_style": "Deep statistical, granular telemetry mechanics, candidate arbitration breakdown",
+      "emphasis": [
+        "3-month baseline mean, standard deviation, and statistical z-score",
+        "Conversion and CTR formula components (e.g. conversions/clicks breakdown)",
+        "Candidate driver arbitration scores, contradiction counts, and alternative rejections",
+        "Raw SQL lineage partitions and cross-table join keys"
+      ],
+      "detail_level": "DEEP_ANALYTICAL_TRACE",
+      "telemetry_exposure": "FULL_GRANULAR_METRICS",
+      "action_focus": "Root-cause campaign inspection, landing page bounce audits, and tactical channel telemetry"
+    }
+  }
+}

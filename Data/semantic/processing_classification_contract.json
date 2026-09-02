@@ -1,0 +1,63 @@
+{
+  "contract_name": "Accenture LLM vs Non-LLM Processing Classification Standard",
+  "version": "1.0.0",
+  "core_principle": "The LLM is NEVER the source of quantitative truth. All mathematical, statistical, validation, data quality, and safety gates are 100% deterministic (Non-LLM).",
+  "pipeline_stages": [
+    {
+      "stage_id": "STAGE_01_ANOMALY_DETECTION",
+      "stage_name": "Statistical Anomaly Detection & Baseline",
+      "classification": "NON_LLM",
+      "engine": "SQL / Pandas Analytics (AnalyticalDataModel)",
+      "responsibility": "Computes rolling 3-month baseline mean, variance %, and materiality threshold gate."
+    },
+    {
+      "stage_id": "STAGE_02_CANDIDATE_GENERATION",
+      "stage_name": "8-Hypothesis Candidate Driver Generation",
+      "classification": "NON_LLM",
+      "engine": "Deterministic Candidate Generator",
+      "responsibility": "Extracts operational telemetry across 5 domains and scores initial candidate fit."
+    },
+    {
+      "stage_id": "STAGE_03_MULTI_SOURCE_JOIN",
+      "stage_name": "Cross-Domain Lineage & Dimensional Reconciliation",
+      "classification": "NON_LLM",
+      "engine": "Connected KPI Engine (Canonical ETL Join)",
+      "responsibility": "Reconciles sales, marketing, inventory, and pricing records on (date, market, product_code)."
+    },
+    {
+      "stage_id": "STAGE_04_DATA_QUALITY",
+      "stage_name": "Automated Data Trust & Quality Validation",
+      "classification": "NON_LLM",
+      "engine": "DataQualityEngine (40 Deterministic Checks)",
+      "responsibility": "Validates schema integrity, null rates, duplicates, and 36-month temporal completeness."
+    },
+    {
+      "stage_id": "STAGE_05_EVIDENCE_ARBITRATION",
+      "stage_name": "Hypothesis Arbitration & Reasoning",
+      "classification": "HYBRID",
+      "engine": "Deterministic Scorer + LLM Natural Language Synthesizer",
+      "responsibility": "Scores competing drivers and synthesizes claim-grounded explanatory narrative."
+    },
+    {
+      "stage_id": "STAGE_06_SAFETY_GATE",
+      "stage_name": "Deterministic 10-Step Safety Validation Gate",
+      "classification": "NON_LLM",
+      "engine": "EvidenceValidator (AST / Regex / Scope Checks)",
+      "responsibility": "Validates zero hallucination, scope boundaries, citation integrity, and uncertainty consistency."
+    },
+    {
+      "stage_id": "STAGE_07_FEEDBACK_CALIBRATION",
+      "stage_name": "Context-Aware Prioritization Calibration",
+      "classification": "NON_LLM",
+      "engine": "FeedbackLearningEngine (Bounded +/-0.15)",
+      "responsibility": "Applies bounded arithmetic adjustments to future driver prioritization without modifying evidence."
+    },
+    {
+      "stage_id": "STAGE_08_PERSONA_ADAPTATION",
+      "stage_name": "Persona-Specific Narrative Framing",
+      "classification": "LLM",
+      "engine": "Google Gemini / Deterministic Templated Fallback",
+      "responsibility": "Adapts tone, decision emphasis, and detail level for Executive vs Domain Analyst personas."
+    }
+  ]
+}
